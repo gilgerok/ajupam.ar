@@ -1,0 +1,337 @@
+/* --- ESTILOS PARA IMPRESIÓN DIRECTA DEL DOSSIER DE PROVEEDORES --- */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500;700&display=swap');
+
+:root {
+    --primary-blue: #035aa6;
+    --accent-lime: #dff24b;
+    --dark-color: #1a1a1a;
+    --light-color: #ffffff;
+    --light-gray: #f8f9fa;
+    --text-color: #333;
+    --font-title: 'Bebas Neue', sans-serif !important;
+    --font-body: 'Poppins', sans-serif !important;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--light-color);
+    font-family: var(--font-body);
+}
+
+#dossier-container {
+    margin: 0;
+    transform: none !important;
+}
+
+.page {
+    width: 21cm;
+    height: 29.7cm;
+    padding: 2.5cm;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    page-break-after: always;
+}
+
+.page:last-child {
+    page-break-after: auto;
+}
+
+h1,
+h2,
+h3 {
+    font-family: var(--font-title);
+    letter-spacing: 1.5px;
+    font-weight: normal;
+    color: var(--dark-color);
+}
+
+h1 {
+    font-size: 52pt;
+    line-height: 1.1;
+    margin: 20px 0;
+    color: var(--primary-blue);
+}
+
+h2 {
+    font-size: 28pt;
+    border-bottom: 2px solid var(--primary-blue);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    margin-top: 0px;
+}
+
+h3 {
+    font-size: 16pt;
+    margin-top: 0px;
+    margin-bottom: 10px;
+    color: var(--primary-blue);
+}
+
+p {
+    font-size: 11pt;
+    margin-bottom: 1em;
+}
+
+a {
+    color: var(--primary-blue);
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+li {
+    margin-bottom: 8px;
+    font-size: 11pt;
+}
+
+.page-number {
+    position: absolute;
+    bottom: 1cm;
+    right: 1.5cm;
+    font-size: 10pt;
+    color: #888;
+    z-index: 10;
+}
+
+.page-number.text-light {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.footnote {
+    font-size: 9pt;
+    color: #777;
+    margin-top: auto;
+}
+
+.cover {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.cover .logo {
+    max-width: 400px;
+    margin-bottom: 2rem;
+}
+
+.cover .cover-content {
+    position: relative;
+    z-index: 2;
+}
+
+.cover p {
+    font-size: 14pt;
+    max-width: 600px;
+}
+
+.cover-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+}
+
+.cover-background::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.cover-background+.cover-content h1,
+.cover-background+.cover-content h2,
+.cover-background+.cover-content h3,
+.cover-background+.cover-content p,
+.cover-background+.cover-content a,
+.cover-background+.cover-content i {
+    color: var(--light-color) !important;
+}
+
+.check-list li {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+.check-list i {
+    color: var(--primary-blue);
+    margin-right: 15px;
+    font-size: 1.2em;
+    margin-top: 4px;
+}
+
+.image-container {
+    margin-top: auto;
+}
+
+.image-container img {
+    width: 100%;
+    height: auto;
+    max-height: 150px;
+    object-fit: cover;
+    display: block;
+    border-radius: 8px;
+}
+
+.image-container .caption {
+    font-size: 9pt;
+    text-align: center;
+    color: #666;
+    margin-top: 5px;
+}
+
+.highlight-page {
+    background-color: var(--dark-color);
+    color: var(--light-color);
+    justify-content: center;
+}
+
+.highlight-page h2 {
+    color: var(--light-color);
+    border-bottom-color: var(--accent-lime);
+}
+
+.impact-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-top: 30px;
+    width: 100%;
+    text-align: center;
+}
+
+.impact-card {
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.impact-card i {
+    font-size: 24pt;
+    color: var(--accent-lime);
+    margin-bottom: 10px;
+}
+
+.impact-card .impact-number {
+    display: block;
+    font-family: var(--font-title);
+    font-size: 26pt;
+}
+
+.impact-card .impact-label {
+    font-size: 9pt;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.benefits-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    margin-top: 20px;
+}
+
+.benefit-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.benefit-item .icon-wrapper {
+    flex-shrink: 0;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--light-gray);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.benefit-item .icon-wrapper i {
+    color: var(--primary-blue);
+    font-size: 20pt;
+}
+
+.benefit-item h3 {
+    margin: 0 0 5px 0;
+    border: none;
+    font-size: 14pt;
+    color: var(--primary-blue);
+}
+
+.benefit-item p {
+    font-size: 10pt;
+    margin: 0;
+}
+
+/* CAMBIOS: Se elimina el margen superior y se ajusta el espaciado y la grilla para 6 logos */
+.provider-logos-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0;
+    /* Margen eliminado */
+    padding-top: 2cm;
+    /* Se añade padding para separar del texto de arriba */
+}
+
+.provider-logo-item {
+    background-color: var(--light-gray);
+    border-radius: 10px;
+    padding: 20px;
+    height: 5cm;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #e0e0e0;
+}
+
+.provider-logo-item img {
+    max-height: 80px;
+    max-width: 160px;
+    width: auto;
+    object-fit: contain;
+}
+
+/* CAMBIO: Nueva regla para aplicar filtro de color a Bruno Brown */
+.provider-logo-item .bruno-brown-logo {
+    filter: brightness(0) saturate(100%) sepia(1) hue-rotate(-30deg) brightness(0.6);
+}
+
+.contact-info {
+    margin-top: auto;
+    border-top: 2px solid rgba(255, 255, 255, 0.3);
+    padding-top: 2rem;
+}
+
+.contact-info p {
+    font-size: 12pt;
+    margin: 10px 0;
+}
+
+.contact-info i {
+    width: 30px;
+    text-align: center;
+    margin-right: 10px;
+}

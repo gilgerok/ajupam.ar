@@ -1,0 +1,558 @@
+/* --- ESTILOS ESPECÍFICOS OPTIMIZADOS PARA PROVEEDORES --- */
+
+#hero-proveedores { 
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('/images/publi-adlanto.jpg') no-repeat center center/cover; 
+    color: var(--light-color); 
+    min-height: 90vh; 
+}
+
+#hero-proveedores .hero-content { 
+    text-align: left; 
+    width: 100%; 
+}
+
+#hero-proveedores .btn-secondary { 
+    color: var(--light-color); 
+    border-color: var(--light-color); 
+    transition: all var(--transition);
+}
+
+#hero-proveedores .btn-secondary:hover { 
+    background-color: var(--light-color); 
+    color: var(--dark-color); 
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(255,255,255,0.3);
+}
+
+/* CAMBIO: De grid a flex para alliance */
+.alliance-flex { 
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px; 
+    width: 100%; 
+    justify-content: center;
+}
+
+.alliance-flex .feature-item {
+    flex: 1 1 240px;
+    max-width: 280px;
+}
+
+/* CAMBIO: De grid a flex para categorías */
+.categories-flex { 
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px; 
+    width: 100%; 
+    justify-content: center;
+}
+
+.category-card { 
+    background-color: rgba(255,255,255,0.1); 
+    padding: 30px; 
+    border-radius: var(--border-radius); 
+    text-align: center;
+    transition: all var(--transition);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.1);
+    flex: 1 1 280px;
+    max-width: 350px;
+}
+
+.category-card:hover {
+    background-color: rgba(255,255,255,0.15);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.category-card i { 
+    font-size: 3rem; 
+    color: var(--accent-lime); 
+    margin-bottom: 15px;
+    transition: all var(--transition);
+}
+
+.category-card:hover i {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 10px var(--accent-lime));
+}
+
+.category-card h3 { 
+    color: var(--light-color);
+    margin-bottom: 15px;
+}
+
+.category-card p { 
+    color: rgba(255,255,255,0.9);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* CAMBIO: De grid a flex para stats */
+.stats-flex { 
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px; 
+    width: 100%; 
+    justify-content: center;
+    align-items: stretch;
+}
+
+.stat-card { 
+    background: var(--light-color); 
+    padding: 30px; 
+    border-radius: var(--border-radius); 
+    box-shadow: var(--shadow);
+    transition: all var(--transition);
+    position: relative;
+    overflow: hidden;
+    flex: 1 1 200px;
+    max-width: 250px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(3, 90, 166, 0.05), transparent);
+    transform: rotate(45deg);
+    transition: all 0.6s ease;
+    opacity: 0;
+}
+
+.stat-card:hover::before {
+    opacity: 1;
+    transform: rotate(45deg) translate(50%, 50%);
+}
+
+.stat-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-hover);
+}
+
+.stat-card i { 
+    font-size: 2.5rem; 
+    color: var(--primary-blue); 
+    margin-bottom: 15px;
+    transition: all var(--transition);
+}
+
+.stat-card:hover i {
+    transform: scale(1.1);
+    color: var(--accent-lime);
+}
+
+.stat-card .stat-number { 
+    font-family: var(--font-title); 
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    line-height: 1.1; 
+    color: var(--primary-blue); 
+}
+
+.stat-card .stat-text {
+    font-family: var(--font-title);
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    line-height: 1.1;
+    color: var(--primary-blue);
+}
+
+.stat-card .stat-label { 
+    font-weight: 600; 
+    color: #555;
+    font-size: 0.9rem;
+    margin-top: 10px;
+}
+
+.stat-card-special {
+    background: linear-gradient(135deg, var(--light-gray), var(--light-color));
+}
+
+.subsection-title { 
+    text-align: center; 
+    width: 100%; 
+    margin-top: 60px; 
+    margin-bottom: 40px; 
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    color: var(--text-color); 
+}
+
+/* CAMBIO: De grid a flex para beneficios */
+.benefits-flex { 
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px; 
+    width: 100%; 
+    justify-content: center;
+}
+
+.benefit-item { 
+    text-align: center; 
+    background: var(--light-color); 
+    padding: 30px; 
+    border-radius: var(--border-radius); 
+    box-shadow: var(--shadow);
+    transition: all var(--transition);
+    position: relative;
+    overflow: hidden;
+    flex: 1 1 280px;
+    max-width: 350px;
+}
+
+.benefit-item::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-blue), var(--accent-lime));
+    transition: all var(--transition);
+    transform: translateX(-50%);
+}
+
+.benefit-item:hover::after {
+    width: 100%;
+}
+
+.benefit-item:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-hover);
+}
+
+.benefit-item i { 
+    font-size: 2.5rem; 
+    color: var(--primary-blue); 
+    margin-bottom: 15px;
+    transition: all var(--transition);
+}
+
+.benefit-item:hover i {
+    transform: scale(1.1);
+    color: var(--accent-lime);
+}
+
+.benefit-item h4 {
+    color: var(--text-color);
+    font-family: var(--font-title);
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+}
+
+.benefit-item p { 
+    font-size: 0.9rem; 
+    margin-bottom: 0;
+    color: #666;
+    line-height: 1.6;
+}
+
+.dossier-download-wrapper { 
+    width: 100%; 
+    text-align: center; 
+    margin-top: 50px; 
+}
+
+.dossier-download-wrapper .btn-pdf {
+    position: relative;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.dossier-download-wrapper .btn-pdf::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.6s ease;
+}
+
+.dossier-download-wrapper .btn-pdf:hover::before {
+    left: 100%;
+}
+
+/* CAMBIO: De grid a flex para logos de proveedores */
+.providers-logo-flex {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.provider-logo-item { 
+    background-color: var(--light-color); 
+    border-radius: var(--border-radius); 
+    padding: 20px; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    box-shadow: var(--shadow); 
+    transition: all var(--transition); 
+    min-height: 120px;
+    position: relative;
+    overflow: hidden;
+    flex: 1 1 200px;
+    max-width: 250px;
+}
+
+.provider-logo-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(3, 90, 166, 0.1), transparent);
+    transition: left 0.8s ease;
+}
+
+.provider-logo-item:hover::before {
+    left: 100%;
+}
+
+.provider-logo-item:hover { 
+    transform: translateY(-5px); 
+    box-shadow: var(--shadow-hover);
+}
+
+.provider-logo-item img { 
+    max-height: 80px; 
+    max-width: 160px; 
+    width: auto; 
+    object-fit: contain;
+    transition: all var(--transition);
+    filter: grayscale(100%);
+}
+
+.provider-logo-item:hover img {
+    filter: grayscale(0%);
+    transform: scale(1.05);
+}
+
+.provider-logo-item .bruno-brown-logo {
+    filter: brightness(0) saturate(100%) sepia(1) hue-rotate(-30deg) brightness(0.6);
+}
+
+.provider-logo-item:hover .bruno-brown-logo {
+    filter: none;
+}
+
+/* Estados de carga para elementos específicos de proveedores */
+.stats-flex.loading .stat-card,
+.benefits-flex.loading .benefit-item {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+/* Animaciones adicionales */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.benefit-item {
+    animation: slideInUp 0.6s ease forwards;
+    animation-play-state: paused;
+}
+
+.benefit-item.aos-animate {
+    animation-play-state: running;
+}
+
+.benefit-item:nth-child(1) { animation-delay: 0.1s; }
+.benefit-item:nth-child(2) { animation-delay: 0.2s; }
+.benefit-item:nth-child(3) { animation-delay: 0.3s; }
+.benefit-item:nth-child(4) { animation-delay: 0.4s; }
+.benefit-item:nth-child(5) { animation-delay: 0.5s; }
+.benefit-item:nth-child(6) { animation-delay: 0.6s; }
+
+/* Responsive mejorado para proveedores */
+@media(max-width: 992px) {
+    .stats-flex,
+    .benefits-flex { 
+        gap: 25px;
+    }
+    
+    .stat-card,
+    .benefit-item {
+        flex: 1 1 45%;
+        max-width: 100%;
+    }
+    
+    .providers-logo-flex { 
+        gap: 15px;
+    }
+    
+    .provider-logo-item {
+        flex: 1 1 30%;
+        min-width: 150px;
+    }
+}
+
+@media(max-width: 768px) {
+    #hero-proveedores .hero-content { 
+        text-align: center; 
+    }
+    
+    .alliance-flex,
+    .categories-flex,
+    .stats-flex,
+    .benefits-flex { 
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .category-card,
+    .stat-card,
+    .benefit-item {
+        flex: 1 1 100%;
+        max-width: 100%;
+        width: 100%;
+    }
+    
+    .providers-logo-flex { 
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    
+    .provider-logo-item {
+        flex: 1 1 45%;
+        max-width: 48%;
+    }
+    
+    .stat-card {
+        padding: 25px 20px;
+    }
+    
+    .benefit-item {
+        padding: 25px 20px;
+    }
+    
+    .category-card {
+        padding: 25px 20px;
+    }
+    
+    .subsection-title {
+        margin-top: 40px;
+        margin-bottom: 30px;
+    }
+}
+
+@media(max-width: 480px) {
+    .providers-logo-flex { 
+        gap: 10px;
+    }
+    
+    .provider-logo-item {
+        flex: 1 1 100%;
+        max-width: 280px;
+        min-height: 100px;
+        padding: 15px;
+    }
+    
+    .provider-logo-item img {
+        max-height: 60px;
+        max-width: 120px;
+    }
+    
+    .stat-card,
+    .benefit-item,
+    .category-card {
+        padding: 20px 15px;
+    }
+    
+    .stat-card .stat-number {
+        font-size: 2rem;
+    }
+    
+    .stat-card .stat-text {
+        font-size: 1.5rem;
+    }
+    
+    .benefit-item h4 {
+        font-size: 1.1rem;
+    }
+    
+    .category-card h3 {
+        font-size: 1.2rem;
+    }
+}
+
+/* Estados de accesibilidad mejorados */
+@media (prefers-reduced-motion: reduce) {
+    .benefit-item {
+        animation: none;
+    }
+    
+    .provider-logo-item::before,
+    .benefit-item::after,
+    .stat-card::before {
+        display: none;
+    }
+    
+    * {
+        animation-play-state: paused !important;
+    }
+}
+
+/* Mejoras de contraste para modo oscuro del sistema */
+@media (prefers-color-scheme: dark) {
+    .category-card {
+        background-color: rgba(255,255,255,0.15);
+    }
+    
+    .category-card:hover {
+        background-color: rgba(255,255,255,0.2);
+    }
+    
+    .provider-logo-item {
+        background-color: #f5f5f5;
+    }
+}
+
+/* Print styles para proveedores */
+@media print {
+    .providers-logo-flex {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+    
+    .provider-logo-item {
+        background: white;
+        border: 1px solid #ddd;
+        padding: 10px;
+    }
+    
+    .provider-logo-item img {
+        filter: none !important;
+    }
+    
+    .benefit-item,
+    .stat-card,
+    .category-card {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+}
