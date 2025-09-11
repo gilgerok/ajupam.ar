@@ -276,6 +276,10 @@ abbr[title] {
     background-color: var(--dark-color); 
 }
 
+.gray-bg {
+background: var(--light-gray);
+}
+
 /* --- HEADER Y NAVEGACIÓN MEJORADOS --- */
 .main-header { 
     position: fixed; 
