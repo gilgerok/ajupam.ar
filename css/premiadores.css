@@ -1,0 +1,607 @@
+/* --- ESTILOS ESPECÍFICOS PARA SPONSORS PREMIADORES --- */
+
+/* Hero Section */
+#hero-premiadores { 
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url('/images/mesa-premiacion.jpg') no-repeat center center/cover; 
+    color: var(--light-color); 
+    min-height: 100vh;
+    position: relative;
+}
+
+#hero-premiadores .hero-content { 
+    text-align: center; 
+    width: 100%; 
+}
+
+/* Badge de urgencia */
+.urgency-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(220, 53, 69, 0.9);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 50px;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    animation: pulse 2s infinite;
+}
+
+.urgency-badge i {
+    font-size: 1.2rem;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+}
+
+/* Estadísticas del hero */
+.hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin: 30px 0;
+    flex-wrap: wrap;
+}
+
+.hero-stat {
+    text-align: center;
+}
+
+.stat-big {
+    display: block;
+    font-family: var(--font-title);
+    font-size: 3rem;
+    color: var(--accent-lime);
+    line-height: 1;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.hero-stat .stat-label {
+    display: block;
+    margin-top: 5px;
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+/* Sección comparación */
+.comparacion-flex {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 40px;
+}
+
+.comparacion-card {
+    flex: 1 1 350px;
+    max-width: 450px;
+    padding: 30px;
+    border-radius: var(--border-radius);
+    background: white;
+    box-shadow: var(--shadow);
+}
+
+.comparacion-card.tradicional {
+    border-top: 5px solid var(--error-color);
+}
+
+.comparacion-card.ajupam {
+    border-top: 5px solid var(--success-color);
+    transform: scale(1.02);
+}
+
+.comparacion-card h3 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+.comparacion-card.tradicional h3 i {
+    color: var(--error-color);
+}
+
+.comparacion-card.ajupam h3 i {
+    color: var(--success-color);
+}
+
+.comparacion-card ul {
+    list-style: none;
+    padding: 0;
+}
+
+.comparacion-card li {
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.comparacion-card li:last-child {
+    border-bottom: none;
+}
+
+/* Proceso */
+.proceso-flex {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    margin-top: 50px;
+    flex-wrap: wrap;
+}
+
+.proceso-step {
+    flex: 1 1 220px;
+    text-align: center;
+    position: relative;
+}
+
+.step-number {
+    width: 60px;
+    height: 60px;
+    background: var(--primary-blue);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-title);
+    font-size: 2rem;
+    margin: 0 auto 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.proceso-step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 30px;
+    left: 60%;
+    width: calc(100% - 20px);
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary-blue), transparent);
+    z-index: 1;
+}
+
+.proceso-step h3 {
+    color: var(--primary-blue);
+    margin-bottom: 10px;
+}
+
+/* Beneficios */
+.beneficios-flex {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.beneficio-card {
+    flex: 1 1 300px;
+    max-width: 350px;
+    background: rgba(255,255,255,0.1);
+    padding: 30px;
+    border-radius: var(--border-radius);
+    text-align: center;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+    transition: all var(--transition);
+}
+
+.beneficio-card:hover {
+    transform: translateY(-5px);
+    background: rgba(255,255,255,0.15);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.beneficio-card i {
+    font-size: 3rem;
+    color: var(--accent-lime);
+    margin-bottom: 15px;
+    transition: all var(--transition);
+}
+
+.beneficio-card:hover i {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 10px var(--accent-lime));
+}
+
+.beneficio-card h3 {
+    color: var(--light-color);
+    margin-bottom: 10px;
+    font-size: 1.3rem;
+}
+
+.beneficio-card p {
+    color: rgba(255,255,255,0.9);
+    font-size: 0.95rem;
+}
+
+/* Categorías */
+.categorias-info {
+    margin-top: 40px;
+}
+
+.categoria-stats {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-bottom: 50px;
+    flex-wrap: wrap;
+}
+
+.stat-premiacion {
+    text-align: center;
+    flex: 1 1 200px;
+    max-width: 250px;
+}
+
+.stat-premiacion i {
+    font-size: 3rem;
+    color: var(--primary-blue);
+    margin-bottom: 15px;
+}
+
+.stat-premiacion h3 {
+    font-family: var(--font-title);
+    font-size: 2rem;
+    color: var(--primary-blue);
+    margin-bottom: 5px;
+}
+
+.categoria-detail {
+    background: var(--light-gray);
+    padding: 40px;
+    border-radius: var(--border-radius);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.categorias-list {
+    display: flex;
+    gap: 40px;
+    margin: 20px 0;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.categoria-item {
+    flex: 1 1 250px;
+}
+
+.categoria-item h4 {
+    color: var(--primary-blue);
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+}
+
+.categoria-item ul {
+    list-style: none;
+    padding: 0;
+}
+
+.categoria-item li {
+    padding: 8px 0;
+    border-left: 3px solid var(--accent-lime);
+    padding-left: 15px;
+    margin-bottom: 5px;
+}
+
+.categoria-note {
+    background: white;
+    padding: 15px;
+    border-radius: 5px;
+    margin-top: 20px;
+    border-left: 4px solid var(--primary-blue);
+}
+
+.categoria-note i {
+    color: var(--primary-blue);
+    margin-right: 10px;
+}
+
+/* Tipos de negocios */
+.negocios-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin: 40px 0;
+}
+
+.negocio-tipo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 20px;
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    flex: 1 1 140px;
+    min-width: 120px;
+    max-width: 160px;
+    transition: all var(--transition);
+}
+
+.negocio-tipo:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+    background: var(--accent-lime);
+}
+
+.negocio-tipo i {
+    font-size: 2rem;
+    color: var(--primary-blue);
+}
+
+.negocio-tipo span {
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* Logos premiadores */
+.logos-premiadores-flex {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.premiador-logo-item {
+    background: white;
+    padding: 15px;
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 80px;
+    flex: 1 1 160px;
+    max-width: 180px;
+    transition: all var(--transition);
+}
+
+.premiador-logo-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(255,255,255,0.3);
+}
+
+.premiador-logo-item img {
+    max-height: 60px;
+    max-width: 140px;
+    width: auto;
+    object-fit: contain;
+    filter: grayscale(100%);
+    transition: all var(--transition);
+}
+
+.premiador-logo-item:hover img {
+    filter: grayscale(0%);
+}
+
+/* Sección CTA Urgencia */
+.cta-urgencia {
+    background: linear-gradient(135deg, var(--primary-blue), #023e7d);
+    color: white;
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.urgencia-content {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.urgencia-content > i {
+    font-size: 4rem;
+    color: var(--accent-lime);
+    margin-bottom: 20px;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.countdown-wrapper {
+    background: rgba(0,0,0,0.2);
+    padding: 30px;
+    border-radius: var(--border-radius);
+    margin: 30px 0;
+}
+
+.deadline-text {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    opacity: 0.9;
+}
+
+.deadline-date {
+    font-family: var(--font-title);
+    font-size: 3rem;
+    color: var(--accent-lime);
+    margin: 0;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.urgencia-text {
+    font-size: 1.1rem;
+    margin: 30px 0;
+}
+
+.btn-large {
+    padding: 15px 40px;
+    font-size: 1.1rem;
+}
+
+/* Contacto específico */
+.contact-checklist {
+    margin: 30px 0;
+}
+
+.checklist-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.checklist-item i {
+    color: var(--success-color);
+    font-size: 1.5rem;
+}
+
+.checklist-item span {
+    font-weight: 500;
+}
+
+/* Ajustes para el formulario */
+#contacto .contacto-form textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 5px;
+    border: 2px solid #ddd;
+    font-family: var(--font-body);
+    font-size: 16px;
+    transition: all var(--transition);
+    resize: vertical;
+    min-height: 80px;
+}
+
+#contacto .contacto-form textarea:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+    box-shadow: var(--focus-shadow);
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .proceso-step:not(:last-child)::after {
+        display: none;
+    }
+    
+    .categorias-list {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 768px) {
+    #hero-premiadores .hero-content {
+        text-align: center;
+    }
+    
+    .hero-stats {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .comparacion-flex {
+        flex-direction: column;
+    }
+    
+    .comparacion-card.ajupam {
+        transform: scale(1);
+    }
+    
+    .proceso-flex {
+        flex-direction: column;
+    }
+    
+    .beneficios-flex {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .beneficio-card {
+        max-width: 100%;
+    }
+    
+    .categoria-stats {
+        flex-direction: column;
+        gap: 30px;
+    }
+    
+    .negocios-grid {
+        gap: 15px;
+    }
+    
+    .negocio-tipo {
+        flex: 1 1 100px;
+        min-width: 90px;
+        padding: 15px 10px;
+    }
+    
+    .negocio-tipo i {
+        font-size: 1.5rem;
+    }
+    
+    .negocio-tipo span {
+        font-size: 0.8rem;
+    }
+    
+    .logos-premiadores-flex {
+        gap: 10px;
+    }
+    
+    .premiador-logo-item {
+        flex: 1 1 45%;
+    }
+    
+    .deadline-date {
+        font-size: 2rem;
+    }
+    
+    .urgencia-content > i {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .stat-big {
+        font-size: 2rem;
+    }
+    
+    .proceso-step {
+        padding: 0 10px;
+    }
+    
+    .categoria-detail {
+        padding: 20px;
+    }
+    
+    .premiador-logo-item {
+        flex: 1 1 100%;
+        max-width: 200px;
+    }
+}
+
+/* Estados hover especiales */
+.proceso-step:hover .step-number {
+    background: var(--accent-lime);
+    color: var(--dark-color);
+    transform: scale(1.1);
+    transition: all var(--transition);
+}
+
+/* Print styles */
+@media print {
+    .urgency-badge,
+    .whatsapp-float,
+    .btn,
+    form {
+        display: none;
+    }
+    
+    .logos-premiadores-flex {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+    }
+}
