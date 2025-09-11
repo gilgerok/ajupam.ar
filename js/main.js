@@ -613,7 +613,7 @@ function initCarousel() {
             pauseOnFocus: true,
             gap: '30px',
             padding: '20px',
-            pagination: true,
+            pagination: false,
             arrows: true,
             lazyLoad: 'nearby',
             preloadPages: 1,

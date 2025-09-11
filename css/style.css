@@ -102,6 +102,12 @@ p {
     max-width: 650px; 
 }
 
+.center-p {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 a { 
     color: var(--primary-blue); 
     text-decoration: none; 
