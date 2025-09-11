@@ -2,7 +2,7 @@
 
 /* Hero Section */
 #hero-premiadores { 
-    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url('/images/mesa-premiacion.jpg') no-repeat center center/cover; 
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url('/images/entrega-premios.jpg') no-repeat center center/cover; 
     color: var(--light-color); 
     min-height: 100vh;
     position: relative;
@@ -303,6 +303,10 @@
 }
 
 /* Tipos de negocios */
+section#tipos-negocios, section#problema {
+    background: var(--light-gray);
+}
+
 .negocios-grid {
     display: flex;
     flex-wrap: wrap;
