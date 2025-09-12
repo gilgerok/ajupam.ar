@@ -526,7 +526,8 @@
                         </div>
                     </div>
                     <div class="contacto-form" data-form-type="premiadores">
-                        <form action="https://formspree.io/f/xvgqvngn" method="POST" novalidate aria-label="Formulario para ser sponsor premiador">
+                        <!-- FIX: Formulario optimizado para móvil -->
+                        <form action="https://formspree.io/f/xvgqvngn" method="POST" novalidate aria-label="Formulario para ser sponsor premiador" class="form-premiadores">
                             <div class="form-group">
                                 <label for="name">Nombre *</label>
                                 <input type="text" 
@@ -535,7 +536,8 @@
                                        required 
                                        aria-required="true"
                                        aria-describedby="name-error" 
-                                       autocomplete="given-name">
+                                       autocomplete="given-name"
+                                       placeholder="Tu nombre">
                                 <div id="name-error" class="error-message" role="alert" aria-live="polite"></div>
                             </div>
                             <div class="form-group">
@@ -546,7 +548,8 @@
                                        required 
                                        aria-required="true"
                                        aria-describedby="company-error"  
-                                       autocomplete="organization">
+                                       autocomplete="organization"
+                                       placeholder="Nombre de tu empresa">
                                 <div id="company-error" class="error-message" role="alert" aria-live="polite"></div>
                             </div>
                             <div class="form-group">
@@ -557,7 +560,8 @@
                                        required 
                                        aria-required="true"
                                        aria-describedby="email-error" 
-                                       autocomplete="email">
+                                       autocomplete="email"
+                                       placeholder="tu@email.com">
                                 <div id="email-error" class="error-message" role="alert" aria-live="polite"></div>
                             </div>
                             <div class="form-group">
@@ -569,7 +573,7 @@
                                        aria-required="true"
                                        aria-describedby="phone-error" 
                                        autocomplete="tel"
-                                       placeholder="Ej: 2612534840">
+                                       placeholder="2612534840">
                                 <div id="phone-error" class="error-message" role="alert" aria-live="polite"></div>
                             </div>
                             <div class="form-group">

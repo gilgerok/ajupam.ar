@@ -36,6 +36,9 @@
 .alliance-flex .feature-item {
     flex: 1 1 240px;
     max-width: 280px;
+    /* FIX: Altura flexible para evitar espacios vacíos */
+    min-height: auto;
+    height: auto;
 }
 
 /* CAMBIO: De grid a flex para categorías */
@@ -57,6 +60,12 @@
     border: 1px solid rgba(255,255,255,0.1);
     flex: 1 1 280px;
     max-width: 350px;
+    /* FIX: Altura flexible para mejor adaptabilidad */
+    min-height: auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
 .category-card:hover {
@@ -70,6 +79,7 @@
     color: var(--accent-lime); 
     margin-bottom: 15px;
     transition: all var(--transition);
+    flex-shrink: 0;
 }
 
 .category-card:hover i {
@@ -80,12 +90,14 @@
 .category-card h3 { 
     color: var(--light-color);
     margin-bottom: 15px;
+    flex-shrink: 0;
 }
 
 .category-card p { 
     color: rgba(255,255,255,0.9);
     font-size: 0.95rem;
     line-height: 1.6;
+    flex-grow: 1;
 }
 
 /* CAMBIO: De grid a flex para stats */
@@ -113,6 +125,9 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    /* FIX: Altura flexible en lugar de fija */
+    min-height: auto;
+    height: auto;
 }
 
 .stat-card::before {
@@ -143,6 +158,7 @@
     color: var(--primary-blue); 
     margin-bottom: 15px;
     transition: all var(--transition);
+    flex-shrink: 0;
 }
 
 .stat-card:hover i {
@@ -155,6 +171,7 @@
     font-size: clamp(2.5rem, 5vw, 3.5rem);
     line-height: 1.1; 
     color: var(--primary-blue); 
+    flex-shrink: 0;
 }
 
 .stat-card .stat-text {
@@ -162,6 +179,7 @@
     font-size: clamp(1.8rem, 4vw, 2.5rem);
     line-height: 1.1;
     color: var(--primary-blue);
+    flex-shrink: 0;
 }
 
 .stat-card .stat-label { 
@@ -169,6 +187,11 @@
     color: #555;
     font-size: 0.9rem;
     margin-top: 10px;
+    text-align: center;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .stat-card-special {
@@ -204,6 +227,12 @@
     overflow: hidden;
     flex: 1 1 280px;
     max-width: 350px;
+    /* FIX: Altura flexible */
+    min-height: auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .benefit-item::after {
@@ -232,6 +261,7 @@
     color: var(--primary-blue); 
     margin-bottom: 15px;
     transition: all var(--transition);
+    flex-shrink: 0;
 }
 
 .benefit-item:hover i {
@@ -245,6 +275,7 @@
     font-size: 1.3rem;
     margin-bottom: 15px;
     letter-spacing: 1px;
+    flex-shrink: 0;
 }
 
 .benefit-item p { 
@@ -252,6 +283,8 @@
     margin-bottom: 0;
     color: #666;
     line-height: 1.6;
+    flex-grow: 1;
+    text-align: center;
 }
 
 .dossier-download-wrapper { 
@@ -398,6 +431,8 @@
     .benefit-item {
         flex: 1 1 45%;
         max-width: 100%;
+        /* FIX: Mantener altura flexible */
+        min-height: auto;
     }
     
     .providers-logo-flex { 
@@ -407,6 +442,11 @@
     .provider-logo-item {
         flex: 1 1 30%;
         min-width: 150px;
+    }
+    
+    .category-card {
+        flex: 1 1 45%;
+        max-width: 100%;
     }
 }
 
@@ -429,6 +469,26 @@
         flex: 1 1 100%;
         max-width: 100%;
         width: 100%;
+        /* FIX: Altura completamente flexible en móvil */
+        height: auto;
+        min-height: auto;
+    }
+    
+    /* FIX: Asegurar que el contenido de las cards se distribuya bien */
+    .category-card,
+    .stat-card,
+    .benefit-item {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+    }
+    
+    .category-card p,
+    .benefit-item p {
+        text-align: center;
+        margin-bottom: 0;
+        flex-grow: 0;
     }
     
     .providers-logo-flex { 
@@ -439,18 +499,22 @@
     .provider-logo-item {
         flex: 1 1 45%;
         max-width: 48%;
+        min-height: 100px;
     }
     
     .stat-card {
         padding: 25px 20px;
+        text-align: center;
     }
     
     .benefit-item {
         padding: 25px 20px;
+        text-align: center;
     }
     
     .category-card {
         padding: 25px 20px;
+        text-align: center;
     }
     
     .subsection-title {
@@ -469,6 +533,7 @@
         max-width: 280px;
         min-height: 100px;
         padding: 15px;
+        margin: 0 auto;
     }
     
     .provider-logo-item img {
@@ -480,6 +545,10 @@
     .benefit-item,
     .category-card {
         padding: 20px 15px;
+        margin: 0 auto;
+        /* FIX: Asegurar altura completamente flexible */
+        height: auto;
+        min-height: auto;
     }
     
     .stat-card .stat-number {
@@ -496,6 +565,14 @@
     
     .category-card h3 {
         font-size: 1.2rem;
+    }
+    
+    .category-card i {
+        font-size: 2.5rem;
+    }
+    
+    .benefit-item i {
+        font-size: 2rem;
     }
 }
 
@@ -543,6 +620,8 @@
         background: white;
         border: 1px solid #ddd;
         padding: 10px;
+        height: auto;
+        min-height: auto;
     }
     
     .provider-logo-item img {
@@ -554,5 +633,7 @@
     .category-card {
         break-inside: avoid;
         page-break-inside: avoid;
+        height: auto;
+        min-height: auto;
     }
 }

@@ -66,6 +66,8 @@
 
 .hero-stat {
     text-align: center;
+    flex: 1 1 150px;
+    max-width: 200px;
 }
 
 .stat-big {
@@ -102,6 +104,11 @@
     background: white;
     box-shadow: var(--shadow);
     text-align: left;
+    /* FIX: Altura flexible */
+    min-height: auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
 }
 
 .comparacion-card.tradicional {
@@ -121,6 +128,7 @@
     margin-bottom: 20px;
     font-size: 1.5rem;
     text-align: center;
+    flex-shrink: 0;
 }
 
 .comparacion-card.tradicional h3 i {
@@ -134,6 +142,7 @@
 .comparacion-card ul {
     list-style: none;
     padding: 0;
+    flex-grow: 1;
 }
 
 .comparacion-card li {
@@ -160,6 +169,12 @@
     text-align: center;
     position: relative;
     padding: 0 15px;
+    /* FIX: Altura flexible */
+    min-height: auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .step-number {
@@ -176,6 +191,7 @@
     margin: 0 auto 20px;
     position: relative;
     z-index: 2;
+    flex-shrink: 0;
 }
 
 .proceso-step:not(:last-child)::after {
@@ -192,6 +208,13 @@
 .proceso-step h3 {
     color: var(--primary-blue);
     margin-bottom: 10px;
+    flex-shrink: 0;
+}
+
+.proceso-step p {
+    flex-grow: 1;
+    text-align: center;
+    margin: 0;
 }
 
 /* Beneficios */
@@ -214,6 +237,12 @@
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255,255,255,0.2);
     transition: all var(--transition);
+    /* FIX: Altura flexible */
+    min-height: auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .beneficio-card:hover {
@@ -227,6 +256,7 @@
     color: var(--accent-lime);
     margin-bottom: 15px;
     transition: all var(--transition);
+    flex-shrink: 0;
 }
 
 .beneficio-card:hover i {
@@ -238,11 +268,14 @@
     color: var(--light-color);
     margin-bottom: 10px;
     font-size: 1.3rem;
+    flex-shrink: 0;
 }
 
 .beneficio-card p {
     color: rgba(255,255,255,0.9);
     font-size: 0.95rem;
+    flex-grow: 1;
+    margin-bottom: 0;
 }
 
 /* Categorías */
@@ -263,6 +296,9 @@
     text-align: center;
     flex: 1 1 200px;
     max-width: 250px;
+    /* FIX: Altura flexible */
+    min-height: auto;
+    height: auto;
 }
 
 .stat-premiacion i {
@@ -302,6 +338,9 @@
 
 .categoria-item {
     flex: 1 1 250px;
+    /* FIX: Altura flexible */
+    min-height: auto;
+    height: auto;
 }
 
 .categoria-item h4 {
@@ -360,6 +399,9 @@
     max-width: 160px;
     transition: all var(--transition);
     text-align: center;
+    /* FIX: Altura flexible */
+    min-height: auto;
+    height: auto;
 }
 
 .negocio-tipo:hover {
@@ -371,12 +413,17 @@
 .negocio-tipo i {
     font-size: 2rem;
     color: var(--primary-blue);
+    flex-shrink: 0;
 }
 
 .negocio-tipo span {
     font-size: 0.9rem;
     font-weight: 600;
     text-align: center;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Logos premiadores */
@@ -478,28 +525,33 @@
     font-size: 1.1rem;
 }
 
-/* Galería - Estilos específicos */
+/* FIX: Galería - Estilos corregidos para móvil */
 #galeria .splide {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px 0;
+    /* FIX: Prevenir desbordamiento horizontal */
+    overflow: hidden;
 }
 
 #galeria .splide__track {
     border-radius: var(--border-radius);
-    overflow: hidden;
+    overflow: visible; /* FIX: Cambiado de hidden a visible para evitar sombras cortadas */
 }
 
 #galeria .splide__slide {
     border-radius: var(--border-radius);
     overflow: hidden;
-    box-shadow: var(--shadow);
+    /* FIX: Shadow corregida para no cortarse en los márgenes */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
     background: #f5f5f5;
     aspect-ratio: 1 / 1;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
+    /* FIX: Añadir margin para que las sombras no se corten */
+    margin: 10px 5px;
 }
 
 #galeria .splide__slide::before {
@@ -528,10 +580,16 @@
     backdrop-filter: blur(5px);
     border-radius: 50%;
     transition: all var(--transition);
+    width: 40px;
+    height: 40px;
+    /* FIX: Asegurar que las flechas estén visibles */
+    opacity: 1;
 }
 
 #galeria .splide__arrow svg {
     fill: var(--light-color);
+    width: 16px;
+    height: 16px;
 }
 
 #galeria .splide__arrow:hover {
@@ -539,9 +597,23 @@
     transform: scale(1.1);
 }
 
+/* FIX: Pagination corregida para ser visible en móvil */
+#galeria .splide__pagination {
+    margin-top: 20px;
+    padding-top: 10px;
+    position: relative;
+    bottom: auto;
+}
+
 #galeria .splide__pagination__page {
     background: #ccc;
     transition: all var(--transition);
+    width: 12px;
+    height: 12px;
+    margin: 0 6px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
 }
 
 #galeria .splide__pagination__page.is-active {
@@ -589,13 +661,15 @@
 .checklist-item i {
     color: var(--success-color);
     font-size: 1.5rem;
+    flex-shrink: 0;
 }
 
 .checklist-item span {
     font-weight: 500;
+    flex-grow: 1;
 }
 
-/* Ajustes para el formulario */
+/* FIX: Ajustes para el formulario en móvil */
 #contacto .contacto-form textarea {
     width: 100%;
     padding: 12px;
@@ -606,12 +680,38 @@
     transition: all var(--transition);
     resize: vertical;
     min-height: 80px;
+    /* FIX: Asegurar que el textarea no se desborde */
+    box-sizing: border-box;
+    max-width: 100%;
 }
 
 #contacto .contacto-form textarea:focus {
     outline: none;
     border-color: var(--primary-blue);
     box-shadow: var(--focus-shadow);
+}
+
+/* FIX: Labels en móvil para premiadores */
+#contacto .form-group label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text-color);
+    display: block;
+    /* FIX: Asegurar que los labels no escapen */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+    line-height: 1.3;
+}
+
+#contacto .form-group input,
+#contacto .form-group textarea {
+    /* FIX: Asegurar responsividad completa en móvil */
+    width: 100%;
+    box-sizing: border-box;
+    max-width: 100%;
+    font-size: 16px; /* Previene zoom en iOS */
 }
 
 /* Responsive Mobile - Correcciones críticas */
@@ -622,6 +722,17 @@
     
     .categorias-list {
         flex-direction: column;
+    }
+    
+    .beneficio-card {
+        max-width: 100%;
+        /* FIX: Altura flexible */
+        min-height: auto;
+        height: auto;
+    }
+    
+    .comparacion-card {
+        max-width: 100%;
     }
 }
 
@@ -649,6 +760,7 @@
     .hero-stat {
         text-align: center;
         width: 100%;
+        max-width: 200px;
     }
     
     /* Comparación cards */
@@ -661,6 +773,9 @@
         max-width: 100%;
         width: 100%;
         text-align: left;
+        /* FIX: Altura automática */
+        height: auto;
+        min-height: auto;
     }
     
     .comparacion-card.ajupam {
@@ -685,6 +800,9 @@
         width: 100%;
         max-width: 350px;
         margin: 0 auto;
+        /* FIX: Altura automática */
+        height: auto;
+        min-height: auto;
     }
     
     /* Beneficios */
@@ -696,6 +814,9 @@
     .beneficio-card {
         max-width: 100%;
         width: 100%;
+        /* FIX: Altura automática */
+        height: auto;
+        min-height: auto;
     }
     
     /* Categorías */
@@ -703,6 +824,12 @@
         flex-direction: column;
         align-items: center;
         gap: 30px;
+    }
+    
+    .stat-premiacion {
+        /* FIX: Altura automática */
+        height: auto;
+        min-height: auto;
     }
     
     .categorias-list {
@@ -713,6 +840,9 @@
     .categoria-item {
         width: 100%;
         text-align: left;
+        /* FIX: Altura automática */
+        height: auto;
+        min-height: auto;
     }
     
     .categoria-item h4 {
@@ -731,6 +861,9 @@
         min-width: 90px;
         text-align: center;
         padding: 15px 10px;
+        /* FIX: Altura automática */
+        height: auto;
+        min-height: auto;
     }
     
     .negocio-tipo i {
@@ -763,6 +896,20 @@
         font-size: 3rem;
     }
     
+    /* FIX: Galería en móvil */
+    #galeria .splide__slide {
+        margin: 5px 2px; /* Reducir márgenes en móvil */
+    }
+    
+    #galeria .splide__arrow {
+        display: none; /* Ocultar flechas en móvil */
+    }
+    
+    #galeria .splide__pagination {
+        display: block; /* Asegurar que la paginación sea visible */
+        margin-top: 30px;
+    }
+    
     /* Contacto */
     #contacto .contacto-flex {
         flex-direction: column;
@@ -776,6 +923,7 @@
         max-width: 100%;
     }
     
+    /* FIX: Checklist centrada pero texto alineado a la izquierda */
     .contact-checklist {
         text-align: left;
         max-width: 300px;
@@ -787,17 +935,20 @@
         text-align: center;
     }
     
-    /* Galería mobile */
-    #galeria .splide__slide {
-        margin: 0 5px;
+    /* FIX: Labels en móvil */
+    #contacto .form-group label {
+        font-size: 0.85rem;
+        line-height: 1.2;
+        margin-bottom: 6px;
+        /* FIX: Prevenir desbordamiento */
+        word-break: break-word;
+        hyphens: auto;
     }
     
-    #galeria .splide__arrow {
-        display: none;
-    }
-    
-    #galeria .splide__pagination {
-        bottom: -30px;
+    #contacto .form-group input,
+    #contacto .form-group textarea {
+        font-size: 16px; /* Mantener para evitar zoom */
+        padding: 10px;
     }
 }
 
@@ -810,7 +961,8 @@
     /* Resetear alineación solo donde es necesario */
     .comparacion-card ul,
     .categoria-item ul,
-    .checklist-item {
+    .checklist-item,
+    .contact-checklist {
         text-align: left;
     }
     
@@ -820,6 +972,9 @@
     
     .proceso-step {
         padding: 0 10px;
+        /* FIX: Altura automática */
+        height: auto;
+        min-height: auto;
     }
     
     .categoria-detail {
@@ -829,6 +984,9 @@
     /* Tipos de negocios en 2 columnas */
     .negocio-tipo {
         flex: 0 0 calc(50% - 10px);
+        /* FIX: Altura automática */
+        height: auto;
+        min-height: auto;
     }
     
     /* Un logo por fila en muy pequeño */
@@ -842,6 +1000,47 @@
     .proceso-step::after {
         display: none;
     }
+    
+    /* FIX: Todos los elementos con altura automática */
+    .beneficio-card,
+    .stat-premiacion,
+    .categoria-item,
+    .negocio-tipo,
+    .proceso-step,
+    .comparacion-card {
+        height: auto;
+        min-height: auto;
+    }
+    
+    /* FIX: Galería extra pequeña */
+    #galeria .splide__slide {
+        margin: 3px 1px;
+        /* FIX: Reducir sombra en móvil muy pequeño */
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    #galeria .splide__pagination {
+        margin-top: 20px;
+    }
+    
+    #galeria .splide__pagination__page {
+        width: 10px;
+        height: 10px;
+        margin: 0 4px;
+    }
+    
+    /* FIX: Labels en pantallas muy pequeñas */
+    #contacto .form-group label {
+        font-size: 0.8rem;
+        margin-bottom: 6px;
+        line-height: 1.2;
+    }
+    
+    #contacto .form-group input,
+    #contacto .form-group textarea {
+        padding: 8px;
+        font-size: 16px;
+    }
 }
 
 /* Estados hover especiales */
@@ -852,13 +1051,12 @@
     transition: all var(--transition);
 }
 
-/*
-Fix para imágenes fallback 
+/* Corrección adicional para evitar que las imágenes fallen */
 img {
     position: relative;
-    min-height: 100px;
+    min-height: auto;
 }
-*/
+
 /* Print styles */
 @media print {
     .urgency-badge,
@@ -872,5 +1070,11 @@ img {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         gap: 10px;
+    }
+    
+    /* FIX: Elementos con altura automática en impresión */
+    * {
+        height: auto !important;
+        min-height: auto !important;
     }
 }
