@@ -848,12 +848,13 @@
     transition: all var(--transition);
 }
 
-/* Fix para imágenes fallback */
+/*
+Fix para imágenes fallback 
 img {
     position: relative;
     min-height: 100px;
 }
-
+*/
 /* Print styles */
 @media print {
     .urgency-badge,
