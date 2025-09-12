@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>403 - Acceso Prohibido | AJuPaM Padel Mendoza</title>
+    <meta name="description" content="No tenés permisos para acceder a esta área. Contactá con AJuPaM si necesitás acceso.">
+    <meta name="robots" content="noindex, nofollow">
+    
+    <!-- Favicon básico -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png">
+    
+    <!-- Preconnect para fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Fuentes esenciales -->
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-blue: #035aa6;
+            --accent-lime: #dff24b;
+            --dark-color: #1a1a1a;
+            --light-color: #ffffff;
+            --error-color: #dc3545;
+            --warning-color: #ffc107;
+            --font-title: 'Bebas Neue', sans-serif;
+            --font-body: 'Poppins', sans-serif;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-body);
+            background: linear-gradient(135deg, var(--dark-color) 0%, #2c2c2c 100%);
+            color: var(--light-color);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .error-container {
+            max-width: 600px;
+            width: 100%;
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .logo {
+            max-width: 200px;
+            margin-bottom: 2rem;
+            filter: brightness(0) invert(1);
+        }
+        
+        .error-number {
+            font-family: var(--font-title);
+            font-size: clamp(6rem, 15vw, 12rem);
+            line-height: 0.8;
+            color: var(--error-color);
+            text-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            margin-bottom: 1rem;
+        }
+        
+        .error-title {
+            font-family: var(--font-title);
+            font-size: clamp(2rem, 5vw, 3rem);
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .error-description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .warning-box {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid var(--warning-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 2rem 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            justify-content: center;
+        }
+        
+        .warning-box i {
+            color: var(--warning-color);
+            font-size: 1.5rem;
+        }
+        
+        .warning-box span {
+            font-size: 0.9rem;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            font-family: var(--font-body);
+            cursor: pointer;
+            min-height: 44px;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-blue);
+            color: var(--light-color);
+            border-color: var(--primary-blue);
+        }
+        
+        .btn-primary:hover {
+            background-color: #023e7d;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(3, 90, 166, 0.4);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--light-color);
+            border-color: var(--light-color);
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            transform: translateY(-2px);
+        }
+        
+        .error-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: var(--error-color);
+            animation: shake 2s infinite;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-3px); }
+            20%, 40%, 60%, 80% { transform: translateX(3px); }
+        }
+        
+        @media (max-width: 600px) {
+            .actions {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 280px;
+                justify-content: center;
+            }
+            
+            .warning-box {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <img src="/images/logo-ajupam-blanco.png" alt="AJuPaM Logo" class="logo">
+        
+        <div class="error-icon">
+            <i class="fas fa-ban" aria-hidden="true"></i>
+        </div>
+        
+        <div class="error-number" aria-label="Error 403">403</div>
+        
+        <h1 class="error-title">Acceso Restringido</h1>
+        
+        <p class="error-description">
+            Esta área está reservada para jugadores y organizadores autorizados. 
+            Como en una cancha privada, necesitás permisos especiales para ingresar.
+        </p>
+        
+        <div class="warning-box">
+            <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
+            <span>Si creés que deberías tener acceso, contactá con nuestro equipo</span>
+        </div>
+        
+        <div class="actions">
+            <a href="/" class="btn btn-primary">
+                <i class="fas fa-home" aria-hidden="true"></i>
+                <span>Volver al Inicio</span>
+            </a>
+            <a href="https://wa.me/5492612534840" target="_blank" rel="noopener" class="btn btn-secondary">
+                <i class="fab fa-whatsapp" aria-hidden="true"></i>
+                <span>Contactar</span>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
