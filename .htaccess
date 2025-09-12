@@ -1,101 +1,62 @@
 ########################################
-# 🔐 SEGURIDAD BÁSICA (tu configuración original)
+# 🔐 SEGURIDAD BÁSICA
 ########################################
 
-# Bloquear acceso a archivos sensibles
 <FilesMatch "\.(env|git|yml|log|sql|sh)$">
   Order allow,deny
   Deny from all
 </FilesMatch>
 
-# Evitar listado de directorios
 Options -Indexes
 
-# Proteger archivos ocultos (.htaccess, .htpasswd, etc.)
 <Files ~ "^\.ht">
   Order allow,deny
   Deny from all
 </Files>
 
 ########################################
-# 🛡️ MEJORAS DE SEGURIDAD (simplificadas)
+# 🛡️ HEADERS DE SEGURIDAD (ACTIVABLE)
 ########################################
 
-# Headers de seguridad básicos y seguros
 # <IfModule mod_headers.c>
-    # Prevenir clickjacking
-    # Header always append X-Frame-Options SAMEORIGIN
-    
-    # Prevenir XSS attacks
-    # Header set X-XSS-Protection "1; mode=block"
-    
-    # Prevenir MIME type sniffing
-    # Header set X-Content-Type-Options nosniff
-    
-    # Política de referrer
-    # Header set Referrer-Policy "strict-origin-when-cross-origin"
-    
-    # Ocultar información del servidor
-    # Header unset Server
-    # Header unset X-Powered-By
+#   Header always append X-Frame-Options SAMEORIGIN
+#   Header set X-XSS-Protection "1; mode=block"
+#   Header set X-Content-Type-Options nosniff
+#   Header set Referrer-Policy "strict-origin-when-cross-origin"
+#   Header unset Server
+#   Header unset X-Powered-By
 # </IfModule>
 
 ########################################
-# 🚀 RENDIMIENTO Y OPTIMIZACIÓN (tu configuración mejorada)
+# 🚀 RENDIMIENTO Y OPTIMIZACIÓN
 ########################################
 
-# Activar compresión GZIP (tu configuración + mejoras)
-# <IfModule mod_deflate.c>
-  # AddOutputFilterByType DEFLATE text/html text/plain text/css application/javascript application/json image/svg+xml image/webp
-  
-  # Tipos adicionales seguros
-  # AddOutputFilterByType DEFLATE text/xml application/xml application/xhtml+xml
-  # AddOutputFilterByType DEFLATE application/rss+xml application/atom+xml
-  # AddOutputFilterByType DEFLATE font/ttf font/otf font/eot font/woff font/woff2
-# </IfModule>
+# Compresión GZIP
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css application/javascript application/json image/svg+xml image/webp
+</IfModule>
 
-# Cache de archivos estáticos (tu configuración + mejoras)
+# Cache de imágenes
 <IfModule mod_expires.c>
   ExpiresActive On
-  
-  # Tu configuración original de imágenes (mantenida exacta)
-  <Directory "/home3/ajupam/public_html/images">
-    ExpiresActive On
-    ExpiresByType image/jpeg "access plus 1 month"
-    ExpiresByType image/png "access plus 1 month"
-    ExpiresByType image/webp "access plus 1 month"
-    ExpiresByType image/svg+xml "access plus 1 month"
-    ExpiresByType image/gif "access plus 1 month"
-  </Directory>
-  
-  # Cache global para otros recursos (seguro)
-  # ExpiresByType text/css "access plus 1 month"
-  # ExpiresByType application/javascript "access plus 1 month"
-  # ExpiresByType font/woff2 "access plus 1 year"
-  # ExpiresByType font/woff "access plus 1 year"
-  # ExpiresByType application/pdf "access plus 1 month"
-  
-  # NO cachear páginas de error (importante)
-  <Directory "/home3/ajupam/public_html/error">
-    ExpiresActive Off
-    Header set Cache-Control "no-cache, no-store, must-revalidate"
-    Header set Pragma "no-cache"
-    Header set Expires 0
-  </Directory>
+  ExpiresByType image/jpeg "access plus 1 month"
+  ExpiresByType image/png "access plus 1 month"
+  ExpiresByType image/webp "access plus 1 month"
+  ExpiresByType image/svg+xml "access plus 1 month"
+  ExpiresByType image/gif "access plus 1 month"
 </IfModule>
 
 ########################################
-# 🔁 REDIRECCIONES Y REESCRITURA (tu configuración ORIGINAL)
+# 🔁 REDIRECCIONES Y REESCRITURA
 ########################################
 
-# ⚠️ MANTENER EXACTAMENTE TU CONFIGURACIÓN ORIGINAL
+RewriteEngine On
 
 # Redirigir HTTP a HTTPS
-RewriteEngine On
 RewriteCond %{HTTPS} off
 RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
 
-# Redirigir /sponsors/ a su landing
+# Redirigir /sponsors/ a landing
 RewriteRule ^sponsors/?$ /sponsors/economicos.html [L]
 
 # Ocultar extensiones en /sponsors/
@@ -103,7 +64,7 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^sponsors/([a-zA-Z0-9_-]+)$ sponsors/$1.html [L]
 
 ########################################
-# ⚠️ PÁGINAS DE ERROR PERSONALIZADAS (tu configuración original)
+# ⚠️ PÁGINAS DE ERROR PERSONALIZADAS
 ########################################
 
 ErrorDocument 404 /error/404.html
@@ -111,59 +72,52 @@ ErrorDocument 403 /error/403.html
 ErrorDocument 500 /error/500.html
 
 ########################################
-# 🔒 PROTECCIONES BÁSICAS ADICIONALES
+# 🔒 PROTECCIONES ADICIONALES
 ########################################
 
-# Proteger archivos de configuración
 <Files "*.yml">
-    Order allow,deny
-    Deny from all
+  Order allow,deny
+  Deny from all
 </Files>
 
 <Files "*.json">
-    Order allow,deny
-    Deny from all
+  Order allow,deny
+  Deny from all
 </Files>
 
-# Permitir archivos específicos necesarios
 <Files "manifest.json">
-    Order deny,allow
-    Allow from all
+  Order deny,allow
+  Allow from all
 </Files>
 
-# Proteger archivos de backup
 <FilesMatch "\.(bak|backup|old|orig|save)$">
-    Order allow,deny
-    Deny from all
+  Order allow,deny
+  Deny from all
 </FilesMatch>
 
 ########################################
-# 📧 CONFIGURACIÓN BÁSICA PARA FORMULARIOS
+# 📧 HEADERS PARA FORMULARIOS
 ########################################
 
-# Headers para formularios de contacto (simplificado)
 <FilesMatch "\.html$">
-    <IfModule mod_headers.c>
-        Header set Access-Control-Allow-Methods "POST, GET, OPTIONS"
-    </IfModule>
+  <IfModule mod_headers.c>
+    Header set Access-Control-Allow-Methods "POST, GET, OPTIONS"
+  </IfModule>
 </FilesMatch>
 
 ########################################
 # 🌐 CONFIGURACIÓN ARGENTINA
 ########################################
 
-# Zona horaria Argentina
 <IfModule mod_env.c>
-    SetEnv TZ America/Argentina/Mendoza
+  SetEnv TZ America/Argentina/Mendoza
 </IfModule>
 
 ########################################
-# 🛠️ MODO MANTENIMIENTO (comentado y seguro)
+# 🛠️ MODO MANTENIMIENTO (DESACTIVADO)
 ########################################
 
-# Para activar mantenimiento, descomentar estas líneas:
-# IMPORTANTE: Reemplazar TU_IP_AQUI con tu IP real
-
+# Para activar, reemplazá TU_IP_AQUI por tu IP real
 # RewriteEngine On
 # RewriteCond %{REQUEST_URI} !^/error/maintenance\.html$
 # RewriteCond %{REQUEST_URI} !^/images/
