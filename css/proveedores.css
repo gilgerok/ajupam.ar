@@ -34,11 +34,10 @@
 }
 
 .alliance-flex .feature-item {
-    flex: 1 1 240px;
+    /* FIX: Removida altura fija del flex */
+    flex: 0 1 240px;
     max-width: 280px;
-    /* FIX: Altura flexible para evitar espacios vacíos */
-    min-height: auto;
-    height: auto;
+    padding: 20px 15px; /* Agregado padding para aire */
 }
 
 /* CAMBIO: De grid a flex para categorías */
@@ -58,11 +57,9 @@
     transition: all var(--transition);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255,255,255,0.1);
-    flex: 1 1 280px;
+    /* FIX: Removida altura fija del flex */
+    flex: 0 1 280px;
     max-width: 350px;
-    /* FIX: Altura flexible para mejor adaptabilidad */
-    min-height: auto;
-    height: auto;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -112,22 +109,20 @@
 
 .stat-card { 
     background: var(--light-color); 
-    padding: 30px; 
+    padding: 25px; /* Reducido padding base */
     border-radius: var(--border-radius); 
     box-shadow: var(--shadow);
     transition: all var(--transition);
     position: relative;
     overflow: hidden;
-    flex: 1 1 200px;
+    /* FIX: Removida altura fija del flex */
+    flex: 0 1 200px;
     max-width: 250px;
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    /* FIX: Altura flexible en lugar de fija */
-    min-height: auto;
-    height: auto;
 }
 
 .stat-card::before {
@@ -219,17 +214,15 @@
 .benefit-item { 
     text-align: center; 
     background: var(--light-color); 
-    padding: 30px; 
+    padding: 25px; /* Reducido padding base */
     border-radius: var(--border-radius); 
     box-shadow: var(--shadow);
     transition: all var(--transition);
     position: relative;
     overflow: hidden;
-    flex: 1 1 280px;
+    /* FIX: Removida altura fija del flex */
+    flex: 0 1 280px;
     max-width: 350px;
-    /* FIX: Altura flexible */
-    min-height: auto;
-    height: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -339,7 +332,8 @@
     min-height: 120px;
     position: relative;
     overflow: hidden;
-    flex: 1 1 200px;
+    /* FIX: Removida altura fija del flex */
+    flex: 0 1 200px;
     max-width: 250px;
 }
 
@@ -429,10 +423,8 @@
     
     .stat-card,
     .benefit-item {
-        flex: 1 1 45%;
+        flex: 0 1 45%;
         max-width: 100%;
-        /* FIX: Mantener altura flexible */
-        min-height: auto;
     }
     
     .providers-logo-flex { 
@@ -440,12 +432,12 @@
     }
     
     .provider-logo-item {
-        flex: 1 1 30%;
+        flex: 0 1 30%;
         min-width: 150px;
     }
     
     .category-card {
-        flex: 1 1 45%;
+        flex: 0 1 45%;
         max-width: 100%;
     }
 }
@@ -466,18 +458,10 @@
     .category-card,
     .stat-card,
     .benefit-item {
-        flex: 1 1 100%;
+        /* FIX: Elementos flex sin altura fija en móvil */
+        flex: 0 1 100%;
         max-width: 100%;
         width: 100%;
-        /* FIX: Altura completamente flexible en móvil */
-        height: auto;
-        min-height: auto;
-    }
-    
-    /* FIX: Asegurar que el contenido de las cards se distribuya bien */
-    .category-card,
-    .stat-card,
-    .benefit-item {
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
@@ -497,23 +481,23 @@
     }
     
     .provider-logo-item {
-        flex: 1 1 45%;
+        flex: 0 1 45%;
         max-width: 48%;
         min-height: 100px;
     }
     
     .stat-card {
-        padding: 25px 20px;
+        padding: 20px;
         text-align: center;
     }
     
     .benefit-item {
-        padding: 25px 20px;
+        padding: 20px;
         text-align: center;
     }
     
     .category-card {
-        padding: 25px 20px;
+        padding: 20px;
         text-align: center;
     }
     
@@ -529,7 +513,8 @@
     }
     
     .provider-logo-item {
-        flex: 1 1 100%;
+        /* FIX: Un elemento por fila con flex automático */
+        flex: 0 1 100%;
         max-width: 280px;
         min-height: 100px;
         padding: 15px;
@@ -544,11 +529,8 @@
     .stat-card,
     .benefit-item,
     .category-card {
-        padding: 20px 15px;
+        padding: 15px;
         margin: 0 auto;
-        /* FIX: Asegurar altura completamente flexible */
-        height: auto;
-        min-height: auto;
     }
     
     .stat-card .stat-number {
@@ -620,6 +602,7 @@
         background: white;
         border: 1px solid #ddd;
         padding: 10px;
+        /* FIX: Altura automática en impresión */
         height: auto;
         min-height: auto;
     }
@@ -633,6 +616,7 @@
     .category-card {
         break-inside: avoid;
         page-break-inside: avoid;
+        /* FIX: Altura automática en impresión */
         height: auto;
         min-height: auto;
     }
