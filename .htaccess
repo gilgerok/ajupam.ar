@@ -1,5 +1,5 @@
 ########################################
-# 🔐 SEGURIDAD BÁSICA (tu configuración actual)
+# 🔐 SEGURIDAD BÁSICA (tu configuración original)
 ########################################
 
 # Bloquear acceso a archivos sensibles
@@ -18,10 +18,10 @@ Options -Indexes
 </Files>
 
 ########################################
-# 🛡️ MEJORAS DE SEGURIDAD ADICIONALES
+# 🛡️ MEJORAS DE SEGURIDAD (simplificadas)
 ########################################
 
-# Headers de seguridad avanzados
+# Headers de seguridad básicos y seguros
 <IfModule mod_headers.c>
     # Prevenir clickjacking
     Header always append X-Frame-Options SAMEORIGIN
@@ -32,58 +32,33 @@ Options -Indexes
     # Prevenir MIME type sniffing
     Header set X-Content-Type-Options nosniff
     
-    # Política de referrer mejorada
+    # Política de referrer
     Header set Referrer-Policy "strict-origin-when-cross-origin"
-    
-    # Content Security Policy básico pero efectivo
-    Header set Content-Security-Policy "default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://cdn.jsdelivr.net https://unpkg.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src https://www.youtube.com https://player.vimeo.com;"
     
     # Ocultar información del servidor
     Header unset Server
     Header unset X-Powered-By
 </IfModule>
 
-# Protección adicional contra inyecciones
-<IfModule mod_rewrite.c>
-    RewriteCond %{QUERY_STRING} (eval\(|javascript:|base64_|script\.|<script|GLOBALS|mosConfig) [NC,OR]
-    RewriteCond %{QUERY_STRING} (<|>|'|%0A|%0D|%27|%3C|%3E|%00) [NC,OR]
-    RewriteCond %{QUERY_STRING} (boot\.ini|etc/passwd|self/environ) [NC,OR]
-    RewriteCond %{QUERY_STRING} (thumbs?(_editor|open)?|tim(thumb)?)\.php [NC,OR]
-    RewriteCond %{QUERY_STRING} (\'|\")(.*)(drop|insert|md5|select|union) [NC]
-    RewriteRule .* - [F]
-</IfModule>
-
-# Bloquear user agents maliciosos comunes
-<IfModule mod_rewrite.c>
-    RewriteCond %{HTTP_USER_AGENT} (libwww-perl|wget|python|nikto|curl|scan|java|winhttp|clshttp|loader) [NC,OR]
-    RewriteCond %{HTTP_USER_AGENT} (%0A|%0D|%27|%3C|%3E|%00) [NC,OR]
-    RewriteCond %{HTTP_USER_AGENT} (;|<|>|'|"|\)|\(|%0A|%0D|%22|%27|%28|%3C|%3E|%00).*(libwww-perl|wget|python|nikto|curl|scan|java|winhttp|HTTrack|clshttp|archiver|loader|email|harvest|extract|grab|miner) [NC]
-    RewriteRule .* - [F]
-</IfModule>
-
 ########################################
-# 🚀 RENDIMIENTO Y OPTIMIZACIÓN (mejorado)
+# 🚀 RENDIMIENTO Y OPTIMIZACIÓN (tu configuración mejorada)
 ########################################
 
-# Activar compresión GZIP mejorada
+# Activar compresión GZIP (tu configuración + mejoras)
 <IfModule mod_deflate.c>
   AddOutputFilterByType DEFLATE text/html text/plain text/css application/javascript application/json image/svg+xml image/webp
   
-  # Tipos adicionales para mejor compresión
+  # Tipos adicionales seguros
   AddOutputFilterByType DEFLATE text/xml application/xml application/xhtml+xml
   AddOutputFilterByType DEFLATE application/rss+xml application/atom+xml
   AddOutputFilterByType DEFLATE font/ttf font/otf font/eot font/woff font/woff2
-  AddOutputFilterByType DEFLATE application/pdf
-  
-  # Evitar comprimir archivos ya comprimidos
-  SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png|zip|gz|rar|bz2|7z)$ no-gzip dont-vary
 </IfModule>
 
-# Cache de archivos estáticos mejorado
+# Cache de archivos estáticos (tu configuración + mejoras)
 <IfModule mod_expires.c>
   ExpiresActive On
   
-  # Tu configuración actual de imágenes (mantenida)
+  # Tu configuración original de imágenes (mantenida exacta)
   <Directory "/home3/ajupam/public_html/images">
     ExpiresActive On
     ExpiresByType image/jpeg "access plus 1 month"
@@ -91,21 +66,14 @@ Options -Indexes
     ExpiresByType image/webp "access plus 1 month"
     ExpiresByType image/svg+xml "access plus 1 month"
     ExpiresByType image/gif "access plus 1 month"
-    ExpiresByType image/ico "access plus 1 year"
   </Directory>
   
-  # Cache global para otros recursos
+  # Cache global para otros recursos (seguro)
   ExpiresByType text/css "access plus 1 month"
   ExpiresByType application/javascript "access plus 1 month"
   ExpiresByType font/woff2 "access plus 1 year"
   ExpiresByType font/woff "access plus 1 year"
-  ExpiresByType font/ttf "access plus 1 year"
   ExpiresByType application/pdf "access plus 1 month"
-  
-  # Cache específico para documentos de sponsors
-  <Directory "/home3/ajupam/public_html/assets">
-    ExpiresByType application/pdf "access plus 3 months"
-  </Directory>
   
   # NO cachear páginas de error (importante)
   <Directory "/home3/ajupam/public_html/error">
@@ -116,20 +84,11 @@ Options -Indexes
   </Directory>
 </IfModule>
 
-# Configuración MIME types optimizada
-<IfModule mod_mime.c>
-    AddType application/javascript .js
-    AddType text/css .css
-    AddType image/webp .webp
-    AddType font/woff2 .woff2
-    AddType font/woff .woff
-    AddType application/pdf .pdf
-    AddType image/svg+xml .svg
-</IfModule>
+########################################
+# 🔁 REDIRECCIONES Y REESCRITURA (tu configuración ORIGINAL)
+########################################
 
-########################################
-# 🔁 REDIRECCIONES Y REESCRITURA (tu configuración actual)
-########################################
+# ⚠️ MANTENER EXACTAMENTE TU CONFIGURACIÓN ORIGINAL
 
 # Redirigir HTTP a HTTPS
 RewriteEngine On
@@ -144,58 +103,18 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^sponsors/([a-zA-Z0-9_-]+)$ sponsors/$1.html [L]
 
 ########################################
-# 🌐 REDIRECCIONES ADICIONALES ÚTILES
-########################################
-
-# Redirigir URLs antiguas comunes (ajustar según necesidad)
-# Redirect 301 /old-sponsors.html /sponsors/economicos.html
-# Redirect 301 /patrocinadores.html /sponsors/
-# Redirect 301 /contacto.html /#contacto
-
-# Redirección de trailing slash para consistencia
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_URI} ^(.+)/$
-RewriteRule ^(.+)/$ /$1 [R=301,L]
-
-########################################
-# ⚠️ PÁGINAS DE ERROR PERSONALIZADAS (tu configuración actual)
+# ⚠️ PÁGINAS DE ERROR PERSONALIZADAS (tu configuración original)
 ########################################
 
 ErrorDocument 404 /error/404.html
 ErrorDocument 403 /error/403.html
 ErrorDocument 500 /error/500.html
 
-# Errores adicionales que redirigen a páginas similares
-ErrorDocument 401 /error/403.html
-ErrorDocument 502 /error/500.html
-ErrorDocument 503 /error/500.html
-ErrorDocument 504 /error/500.html
-
 ########################################
-# 🛠️ CONFIGURACIÓN PARA MANTENIMIENTO
+# 🔒 PROTECCIONES BÁSICAS ADICIONALES
 ########################################
 
-# ⚠️ ACTIVAR SOLO CUANDO NECESITES MANTENIMIENTO
-# Descomenta las siguientes líneas y agrega tu IP:
-
-# RewriteEngine On
-# RewriteCond %{REQUEST_URI} !^/error/maintenance\.html$
-# RewriteCond %{REQUEST_URI} !^/images/
-# RewriteCond %{REQUEST_URI} !^/css/
-# RewriteCond %{REQUEST_URI} !^/js/
-# RewriteCond %{REQUEST_URI} !^/assets/
-# RewriteCond %{REMOTE_ADDR} !^TU_IP_AQUI$  # Reemplazar con tu IP real
-# RewriteRule ^(.*)$ /error/maintenance.html [R=503,L]
-# Header always set Retry-After "1800"  # 30 minutos
-
-########################################
-# 🔒 PROTECCIONES ESPECÍFICAS CPANEL
-########################################
-
-# Bloquear acceso a directorios del sistema cPanel
-RedirectMatch 404 ^/(cgi-bin|cpanel|webmail|whm|\.well-known)
-
-# Proteger archivos de configuración específicos
+# Proteger archivos de configuración
 <Files "*.yml">
     Order allow,deny
     Deny from all
@@ -206,15 +125,10 @@ RedirectMatch 404 ^/(cgi-bin|cpanel|webmail|whm|\.well-known)
     Deny from all
 </Files>
 
-# Excepciones para archivos necesarios
+# Permitir archivos específicos necesarios
 <Files "manifest.json">
     Order deny,allow
     Allow from all
-</Files>
-
-<Files "package.json">
-    Order allow,deny
-    Deny from all
 </Files>
 
 # Proteger archivos de backup
@@ -224,66 +138,36 @@ RedirectMatch 404 ^/(cgi-bin|cpanel|webmail|whm|\.well-known)
 </FilesMatch>
 
 ########################################
-# 📧 OPTIMIZACIONES ESPECÍFICAS AJUPAM
+# 📧 CONFIGURACIÓN BÁSICA PARA FORMULARIOS
 ########################################
 
-# Configuración de zona horaria Argentina
+# Headers para formularios de contacto (simplificado)
+<FilesMatch "\.html$">
+    <IfModule mod_headers.c>
+        Header set Access-Control-Allow-Methods "POST, GET, OPTIONS"
+    </IfModule>
+</FilesMatch>
+
+########################################
+# 🌐 CONFIGURACIÓN ARGENTINA
+########################################
+
+# Zona horaria Argentina
 <IfModule mod_env.c>
     SetEnv TZ America/Argentina/Mendoza
 </IfModule>
 
-# Headers específicos para formularios de contacto
-<FilesMatch "\.html$">
-    <IfModule mod_headers.c>
-        # Permitir envío de formularios a Formspree
-        Header set Access-Control-Allow-Origin "https://formspree.io"
-        Header set Access-Control-Allow-Methods "POST, GET, OPTIONS"
-        Header set Access-Control-Allow-Headers "Content-Type"
-    </IfModule>
-</FilesMatch>
-
-# Optimización para archivos de sponsors/dossiers
-<Directory "/home3/ajupam/public_html/assets/docs">
-    <IfModule mod_headers.c>
-        # Forzar descarga de PDFs en lugar de visualización
-        Header set Content-Disposition "attachment"
-        # Pero permitir visualización inline para ciertos archivos
-        <FilesMatch "dossier.*\.pdf$">
-            Header set Content-Disposition "inline"
-        </FilesMatch>
-    </IfModule>
-</Directory>
-
 ########################################
-# 🎯 CONFIGURACIONES AVANZADAS
+# 🛠️ MODO MANTENIMIENTO (comentado y seguro)
 ########################################
 
-# Prevenir hotlinking de imágenes (opcional - activar si hay problemas)
-# RewriteCond %{HTTP_REFERER} !^$
-# RewriteCond %{HTTP_REFERER} !^https://(www\.)?ajupam\.ar [NC]
-# RewriteCond %{HTTP_REFERER} !^https://(www\.)?tandempadel\.pro [NC]
-# RewriteRule \.(jpg|jpeg|png|gif|webp)$ - [F]
+# Para activar mantenimiento, descomentar estas líneas:
+# IMPORTANTE: Reemplazar TU_IP_AQUI con tu IP real
 
-# Límite de tamaño de request (protección contra ataques)
-LimitRequestBody 10485760  # 10MB
-
-# Configuración de keep-alive para mejor performance
-<IfModule mod_headers.c>
-    Header set Connection keep-alive
-</IfModule>
-
-# Optimización para shared hosting
-<IfModule mod_fcgid.c>
-    FcgidMaxRequestLen 10485760
-</IfModule>
-
-########################################
-# 📝 LOGGING Y MONITOREO (opcional)
-########################################
-
-# Log de errores personalizado (comentado por defecto)
-# ErrorLog /home3/ajupam/logs/error_log
-# CustomLog /home3/ajupam/logs/access_log combined
-
-# Registrar solo errores importantes
-LogLevel warn
+# RewriteEngine On
+# RewriteCond %{REQUEST_URI} !^/error/maintenance\.html$
+# RewriteCond %{REQUEST_URI} !^/images/
+# RewriteCond %{REQUEST_URI} !^/css/
+# RewriteCond %{REQUEST_URI} !^/js/
+# RewriteCond %{REMOTE_ADDR} !^TU_IP_AQUI$
+# RewriteRule ^(.*)$ /error/maintenance.html [R=503,L]
