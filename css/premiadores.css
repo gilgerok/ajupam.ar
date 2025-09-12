@@ -28,6 +28,10 @@
     margin: 0 auto;
 }
 
+#hero-premiadores .hero-buttons {
+    justify-content: center;
+}
+
 /* Badge de urgencia */
 .urgency-badge {
     display: inline-flex;
