@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - echo "Desplegando AJuPaM..."
+    - cp -r * /home3/ajupam/public_html/
