@@ -786,13 +786,13 @@
 
 /* FIX: Contadores que no se animan */
 .stat-number:not(.is-visible)::after {
-    content: " (no animado)" !important;
+    content: "" !important;
     font-size: 0.5rem !important;
     color: red !important;
 }
 
 .stat-number.is-visible::after {
-    content: " (animado)" !important;
+    content: "" !important;
     font-size: 0.5rem !important;
     color: green !important;
 }
