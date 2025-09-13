@@ -291,6 +291,7 @@ background: var(--light-gray);
     backdrop-filter: blur(10px); 
     box-shadow: var(--shadow); 
     transition: all var(--transition); 
+    padding: 0 16px;
 }
 
 .main-header nav { 
@@ -507,7 +508,7 @@ background: var(--light-gray);
     border-radius: var(--border-radius); 
     text-align: center;
     /* FIX: Removida altura fija del flex */
-    flex: 0 1 250px;
+    flex: 1 1 auto;
     min-width: 250px;
     max-width: 300px;
     transition: all var(--transition);
@@ -570,7 +571,7 @@ background: var(--light-gray);
     position: relative;
     overflow: hidden;
     /* FIX: Removida altura fija del flex */
-    flex: 0 1 300px;
+    flex: 1 1 auto;
     max-width: 350px;
 }
 
@@ -734,14 +735,14 @@ background: var(--light-gray);
 
 .contacto-info {
     /* FIX: Removida altura fija del flex */
-    flex: 0 1 45%;
+    flex: 1 1 45%;
     min-width: 280px;
     padding: 10px 0; /* Agregado padding para aire */
 }
 
 .contacto-form {
     /* FIX: Removida altura fija del flex */
-    flex: 0 1 45%;
+    flex: 1 1 45%;
     min-width: 280px;
     padding: 10px 0; /* Agregado padding para aire */
 }
@@ -935,7 +936,7 @@ background: var(--light-gray);
 
 .feature-item { 
     /* FIX: Removida altura fija del flex */
-    flex: 0 1 240px;
+    flex: 1 1 auto;
     max-width: 280px;
     text-align: center;
     transition: transform var(--transition);
@@ -1025,7 +1026,7 @@ background: var(--light-gray);
     align-items: center;
     transition: transform var(--transition);
     /* FIX: Removida altura fija del flex */
-    flex: 0 1 auto;
+    flex: 1 1 auto;
     padding: 10px; /* Agregado padding para aire */
 }
 
@@ -1066,14 +1067,14 @@ background: var(--light-gray);
 
 .footer-col { 
     /* FIX: Removida altura fija del flex */
-    flex: 0 1 200px;
+    flex: 1 1 auto;
     min-width: 200px;
     padding: 15px 0; /* Agregado padding para aire */
 }
 
 #footer-brand {
     /* FIX: Removida altura fija del flex */
-    flex: 0 1 300px;
+    flex: 1 1 auto;
     padding: 15px 0; /* Agregado padding para aire */
 }
 
@@ -1443,11 +1444,11 @@ background: var(--light-gray);
     }
     
     .sponsor-card {
-        flex: 0 1 280px;
+        flex: 1 1 auto;
     }
     
     .feature-item {
-        flex: 0 1 200px;
+        flex: 1 1 auto;
     }
 }
 
@@ -1595,7 +1596,7 @@ background: var(--light-gray);
     }
     
     .container {
-        padding: 0 15px;
+        padding: 0;
     }
     
     .contacto-flex {
@@ -1609,7 +1610,7 @@ background: var(--light-gray);
     
     .feature-item {
         max-width: 100%;
-        flex: 0 1 100%;
+        flex: 1 1100%;
     }
     
     .form-group label {

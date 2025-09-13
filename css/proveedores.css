@@ -35,7 +35,7 @@
 
 .alliance-flex .feature-item {
     /* FIX: Removida altura fija del flex */
-    flex: 0 1 240px;
+    flex: 1 1 auto;
     max-width: 280px;
     padding: 20px 15px; /* Agregado padding para aire */
 }
@@ -58,7 +58,7 @@
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255,255,255,0.1);
     /* FIX: Removida altura fija del flex */
-    flex: 0 1 280px;
+    flex: 1 1 auto;
     max-width: 350px;
     display: flex;
     flex-direction: column;
@@ -116,7 +116,7 @@
     position: relative;
     overflow: hidden;
     /* FIX: Removida altura fija del flex */
-    flex: 0 1 200px;
+    flex: 1 1 auto;
     max-width: 250px;
     text-align: center;
     display: flex;
@@ -221,7 +221,7 @@
     position: relative;
     overflow: hidden;
     /* FIX: Removida altura fija del flex */
-    flex: 0 1 280px;
+    flex: 1 1 auto;
     max-width: 350px;
     display: flex;
     flex-direction: column;
@@ -333,7 +333,7 @@
     position: relative;
     overflow: hidden;
     /* FIX: Removida altura fija del flex */
-    flex: 0 1 200px;
+    flex: 1 1 auto;
     max-width: 250px;
 }
 
@@ -423,7 +423,7 @@
     
     .stat-card,
     .benefit-item {
-        flex: 0 1 45%;
+        flex: 1 1 45%;
         max-width: 100%;
     }
     
@@ -432,12 +432,12 @@
     }
     
     .provider-logo-item {
-        flex: 0 1 30%;
+        flex: 1 1 30%;
         min-width: 150px;
     }
     
     .category-card {
-        flex: 0 1 45%;
+        flex: 1 1 45%;
         max-width: 100%;
     }
 }
@@ -459,7 +459,7 @@
     .stat-card,
     .benefit-item {
         /* FIX: Elementos flex sin altura fija en móvil */
-        flex: 0 1 100%;
+        flex: 1 1 100%;
         max-width: 100%;
         width: 100%;
         display: flex;
@@ -481,7 +481,7 @@
     }
     
     .provider-logo-item {
-        flex: 0 1 45%;
+        flex: 1 1 45%;
         max-width: 48%;
         min-height: 100px;
     }
@@ -514,7 +514,7 @@
     
     .provider-logo-item {
         /* FIX: Un elemento por fila con flex automático */
-        flex: 0 1 100%;
+        flex: 1 1 100%;
         max-width: 280px;
         min-height: 100px;
         padding: 15px;
