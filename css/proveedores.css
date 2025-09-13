@@ -621,3 +621,192 @@
         min-height: auto;
     }
 }
+
+/* FIX: Correcciones específicas para contadores en móvil - proveedores.css */
+
+/* FIX CRÍTICO: Asegurar que los contadores sean visibles y funcionen en móvil */
+@media (max-width: 768px) {
+    
+    /* FIX: Stats específicos para proveedores en móvil */
+    .stats-flex {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 20px !important;
+        width: 100% !important;
+        margin: 0 auto !important;
+    }
+    
+    .stat-card {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 100% !important;
+        max-width: 300px !important;
+        padding: 20px !important;
+        min-height: auto !important;
+        height: auto !important;
+        /* FIX: Asegurar visibilidad completa */
+        visibility: visible !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+    
+    .stat-card .stat-number {
+        display: block !important;
+        font-family: var(--font-title) !important;
+        font-size: clamp(2.5rem, 8vw, 3.5rem) !important;
+        line-height: 1.1 !important;
+        color: var(--primary-blue) !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        /* FIX: Forzar visibilidad */
+        visibility: visible !important;
+        opacity: 1 !important;
+        transform: none !important;
+        text-align: center !important;
+    }
+    
+    .stat-card .stat-text {
+        display: block !important;
+        font-family: var(--font-title) !important;
+        font-size: clamp(1.8rem, 6vw, 2.5rem) !important;
+        line-height: 1.1 !important;
+        color: var(--primary-blue) !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        /* FIX: Forzar visibilidad */
+        visibility: visible !important;
+        opacity: 1 !important;
+        transform: none !important;
+        text-align: center !important;
+    }
+    
+    .stat-card .stat-label {
+        display: block !important;
+        font-size: 0.9rem !important;
+        font-weight: 600 !important;
+        color: #555 !important;
+        margin-top: 10px !important;
+        text-align: center !important;
+        /* FIX: Forzar visibilidad */
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    
+    /* FIX: Asegurar que los elementos con data-target sean visibles */
+    .stat-number[data-target] {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        font-family: var(--font-title) !important;
+        color: var(--primary-blue) !important;
+    }
+    
+    /* FIX: Prevenir que AOS oculte elementos */
+    .stat-card[data-aos] {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+    
+    .stat-card[data-aos].aos-animate {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+    
+    /* FIX: Específico para el estado de loading */
+    .stats-flex.loading .stat-card {
+        opacity: 1 !important;
+        pointer-events: auto !important;
+    }
+    
+    /* FIX: Hero stats también (si existen en proveedores) */
+    .hero-stat {
+        text-align: center !important;
+        width: 100% !important;
+        max-width: 200px !important;
+        margin: 0 auto !important;
+    }
+    
+    .hero-stat .stat-big {
+        display: block !important;
+        font-family: var(--font-title) !important;
+        font-size: clamp(2rem, 8vw, 3rem) !important;
+        color: var(--accent-lime) !important;
+        line-height: 1 !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    
+    /* FIX: Asegurar que las secciones después de la galería sean visibles */
+    #propuesta,
+    #contacto {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+    
+    /* FIX: Contadores específicos que pueden estar ocultos */
+    .stat-item .stat-number {
+        display: block !important;
+        font-family: var(--font-title) !important;
+        font-size: clamp(2.5rem, 8vw, 4rem) !important;
+        color: var(--primary-blue) !important;
+        line-height: 1 !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    
+    /* FIX: Debug temporal - remover en producción */
+    .stat-number:not(.is-visible) {
+        border: 1px solid red !important;
+        background: rgba(255,0,0,0.1) !important;
+    }
+    
+    .stat-number.is-visible {
+        border: 1px solid green !important;
+        background: rgba(0,255,0,0.1) !important;
+    }
+}
+
+/* FIX: Para todos los tamaños de pantalla */
+.stat-number {
+    /* Asegurar que siempre sean visibles */
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    font-family: var(--font-title) !important;
+    color: var(--primary-blue) !important;
+    line-height: 1.1 !important;
+}
+
+/* FIX: Contadores que no se animan */
+.stat-number:not(.is-visible)::after {
+    content: " (no animado)" !important;
+    font-size: 0.5rem !important;
+    color: red !important;
+}
+
+.stat-number.is-visible::after {
+    content: " (animado)" !important;
+    font-size: 0.5rem !important;
+    color: green !important;
+}
+
+/* FIX: Elementos stat-card que pueden tener problemas */
+.stat-card {
+    /* Forzar layout correcto */
+    contain: layout style;
+    isolation: isolate;
+}
+
+/* FIX: IntersectionObserver puede no detectar elementos */
+.stat-card {
+    /* Asegurar que tenga dimensiones detectables */
+    min-height: 100px !important;
+    min-width: 100px !important;
+}

@@ -1297,6 +1297,145 @@ background: var(--light-gray);
     }
 }
 
+/* FIX: Correcciones críticas para contadores y visibilidad de secciones */
+
+/* Asegurar que las secciones sean visibles después de la galería */
+#galeria ~ section,
+#galeria + section {
+    display: flex !important;
+    visibility: visible !important;
+    min-height: auto !important;
+}
+
+/* FIX: Contadores - asegurar visibilidad inicial en móvil */
+.stat-number {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    min-height: auto !important;
+}
+
+/* FIX: Estadísticas específicas para proveedores */
+.stats-flex .stat-card {
+    display: flex !important;
+    flex-direction: column !important;
+    visibility: visible !important;
+}
+
+.stats-flex .stat-card .stat-number {
+    font-family: var(--font-title) !important;
+    font-weight: normal !important;
+    line-height: 1 !important;
+    color: var(--primary-blue) !important;
+}
+
+/* FIX: Forzar re-layout después de galería */
+#galeria {
+    contain: layout style paint;
+}
+
+#galeria .splide {
+    contain: layout style;
+    isolation: isolate;
+}
+
+/* FIX: Asegurar que el formulario de contacto sea visible */
+#contacto {
+    display: flex !important;
+    visibility: visible !important;
+    z-index: 1 !important;
+}
+
+#contacto .contacto-flex {
+    display: flex !important;
+    visibility: visible !important;
+}
+
+/* FIX: Específico para móvil - contadores */
+@media (max-width: 768px) {
+    .stat-number {
+        font-size: clamp(2rem, 8vw, 3rem) !important;
+        line-height: 1.1 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    .stat-card {
+        min-height: auto !important;
+        height: auto !important;
+    }
+    
+    /* FIX: Forzar visibilidad de secciones en móvil */
+    section {
+        display: flex !important;
+        visibility: visible !important;
+    }
+    
+    /* FIX: Galería en móvil - prevenir overflow */
+    #galeria .splide {
+        overflow: visible !important;
+    }
+    
+    #galeria .splide__track {
+        overflow: hidden !important;
+    }
+}
+
+/* FIX: Animación específica para números que no aparecen */
+.stat-number:not(.is-visible) {
+    opacity: 1 !important;
+    transform: none !important;
+}
+
+.stat-number.is-visible {
+    opacity: 1 !important;
+    transform: none !important;
+}
+
+/* FIX: Estadísticas específicas para diferentes páginas */
+.hero-stat .stat-big {
+    display: block !important;
+    font-family: var(--font-title) !important;
+    color: var(--accent-lime) !important;
+    line-height: 1 !important;
+}
+
+/* FIX: Asegurar que AOS no interfiera con la visibilidad */
+[data-aos] {
+    opacity: 1 !important;
+    transform: none !important;
+}
+
+[data-aos].aos-animate {
+    opacity: 1 !important;
+    transform: none !important;
+}
+
+/* FIX: Prevenir que Splide oculte elementos siguientes */
+.splide__track {
+    overflow: hidden !important;
+}
+
+.splide:not(.is-active) {
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* FIX: Forzar visualización de secciones críticas */
+#contacto,
+#urgencia,
+#beneficios {
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: flex !important;
+}
+
+/* FIX: Asegurar que los observadores funcionen */
+.stat-number[data-target] {
+    visibility: visible !important;
+    display: block !important;
+}
+
 /* --- RESPONSIVE MEJORADO --- */
 @media(max-width: 1024px) {
     .alcance-card {

@@ -1,6 +1,6 @@
 /**
  * main.js - AJuPaM Web App
- * Version 2.0 - Con mejoras de UX, accesibilidad y performance
+ * Version 2.1 - Corregido problemas de carga de elementos y contadores móvil
  */
 
 /**
@@ -68,7 +68,7 @@ function getPerformanceMetrics() {
 }
 
 /**
- * Función optimizada para animación de contadores
+ * FIX: Función optimizada para animación de contadores - Corregida para móvil
  * @param {Element} counter - Elemento contador
  * @param {number} target - Valor objetivo
  * @param {number} duration - Duración de la animación
@@ -551,155 +551,249 @@ function initMobileMenu() {
 }
 
 /**
- * Inicialización del carrusel
+ * FIX: Inicialización del carrusel corregida para evitar problemas de layout
  */
 function initCarousel() {
-    // Carrusel general de momentos
-    const splideElement = document.querySelector('#momentos-ajupam .splide');
-    if (splideElement && typeof Splide !== 'undefined') {
-        const splide = new Splide(splideElement, {
-            type: 'loop',
-            perPage: 3,
-            perMove: 1,
-            autoplay: true,
-            interval: 4000,
-            pauseOnHover: true,
-            pauseOnFocus: true,
-            gap: '20px',
-            pagination: false,
-            arrows: true,
-            keyboard: true,
-            reducedMotion: {
-                autoplay: false,
-                speed: 0
-            },
-            accessibility: {
-                liveRegion: true,
-                label: 'Galería de imágenes de la comunidad AJuPaM'
-            },
-            breakpoints: {
-                768: {
-                    perPage: 1,
-                    arrows: false,
-                    pagination: true
-                },
-                1024: {
-                    perPage: 2
-                }
-            }
-        });
-
-        splide.on('moved', (newIndex) => {
-            trackEvent('carousel_slide_change', {
-                slide_index: newIndex,
-                total_slides: splide.length,
-                carousel_id: 'momentos-ajupam'
-            });
-        });
-
-        splide.mount();
-    }
-
-    // Configuración específica para galería de premiadores
-    const galeriaElement = document.querySelector('#galeria .splide, #galeria-splide');
-    if (galeriaElement && typeof Splide !== 'undefined') {
-        const galeriaSplide = new Splide(galeriaElement, {
-            type: 'loop',
-            perPage: 3,
-            perMove: 1,
-            autoplay: true,
-            interval: 3000,
-            pauseOnHover: true,
-            pauseOnFocus: true,
-            gap: '30px',
-            padding: '20px',
-            pagination: false,
-            arrows: true,
-            lazyLoad: 'nearby',
-            preloadPages: 1,
-            keyboard: true,
-            reducedMotion: {
-                autoplay: false,
-                speed: 0
-            },
-            accessibility: {
-                liveRegion: true,
-                label: 'Galería de premiaciones AJuPaM'
-            },
-            breakpoints: {
-                480: {
-                    perPage: 1,
-                    gap: '15px',
-                    padding: '10px',
-                    arrows: false
-                },
-                768: {
-                    perPage: 2,
+    console.log('🎠 Inicializando carruseles...');
+    
+    // FIX: Delay adicional para asegurar que el DOM esté completamente renderizado
+    setTimeout(() => {
+        // Carrusel general de momentos
+        const splideElement = document.querySelector('#momentos-ajupam .splide');
+        if (splideElement && typeof Splide !== 'undefined') {
+            try {
+                const splide = new Splide(splideElement, {
+                    type: 'loop',
+                    perPage: 3,
+                    perMove: 1,
+                    autoplay: true,
+                    interval: 4000,
+                    pauseOnHover: true,
+                    pauseOnFocus: true,
                     gap: '20px',
-                    arrows: false
-                },
-                1024: {
-                    perPage: 3
+                    pagination: false,
+                    arrows: true,
+                    keyboard: true,
+                    reducedMotion: {
+                        autoplay: false,
+                        speed: 0
+                    },
+                    accessibility: {
+                        liveRegion: true,
+                        label: 'Galería de imágenes de la comunidad AJuPaM'
+                    },
+                    breakpoints: {
+                        768: {
+                            perPage: 1,
+                            arrows: false,
+                            pagination: true
+                        },
+                        1024: {
+                            perPage: 2
+                        }
+                    }
+                });
+
+                splide.on('moved', (newIndex) => {
+                    trackEvent('carousel_slide_change', {
+                        slide_index: newIndex,
+                        total_slides: splide.length,
+                        carousel_id: 'momentos-ajupam'
+                    });
+                });
+
+                splide.mount();
+                console.log('✅ Carrusel momentos inicializado');
+            } catch (error) {
+                console.error('❌ Error al inicializar carrusel momentos:', error);
+            }
+        }
+
+        // FIX: Configuración específica para galería de premiadores
+        const galeriaElement = document.querySelector('#galeria .splide, #galeria-splide');
+        if (galeriaElement && typeof Splide !== 'undefined') {
+            try {
+                const galeriaSplide = new Splide(galeriaElement, {
+                    type: 'loop',
+                    perPage: 3,
+                    perMove: 1,
+                    autoplay: true,
+                    interval: 3000,
+                    pauseOnHover: true,
+                    pauseOnFocus: true,
+                    gap: '30px',
+                    padding: '20px',
+                    pagination: true, // FIX: Asegurar paginación
+                    arrows: true,
+                    lazyLoad: 'nearby',
+                    preloadPages: 1,
+                    keyboard: true,
+                    reducedMotion: {
+                        autoplay: false,
+                        speed: 0
+                    },
+                    accessibility: {
+                        liveRegion: true,
+                        label: 'Galería de premiaciones AJuPaM'
+                    },
+                    breakpoints: {
+                        480: {
+                            perPage: 1,
+                            gap: '15px',
+                            padding: '10px',
+                            arrows: false,
+                            pagination: true
+                        },
+                        768: {
+                            perPage: 2,
+                            gap: '20px',
+                            arrows: false,
+                            pagination: true
+                        },
+                        1024: {
+                            perPage: 3
+                        }
+                    }
+                });
+
+                // Tracking para galería de premiadores
+                galeriaSplide.on('moved', (newIndex) => {
+                    trackEvent('gallery_slide_change', {
+                        slide_index: newIndex,
+                        total_slides: galeriaSplide.length,
+                        carousel_id: 'galeria-premiadores'
+                    });
+                });
+
+                // FIX: Manejo de errores de imágenes en la galería
+                const galleryImages = galeriaElement.querySelectorAll('img');
+                galleryImages.forEach(img => {
+                    img.addEventListener('error', function () {
+                        // Usar placeholder si la imagen falla
+                        this.src = 'https://via.placeholder.com/600x600/cccccc/666666?text=Imagen+No+Disponible';
+                        this.alt = 'Imagen temporalmente no disponible';
+
+                        // Tracking del error
+                        trackEvent('image_load_error', {
+                            original_src: this.getAttribute('src'),
+                            alt_text: this.getAttribute('alt'),
+                            section: 'galeria-premiadores'
+                        });
+                    });
+
+                    // Añadir loaded class cuando carga exitosamente
+                    img.addEventListener('load', function () {
+                        this.classList.add('loaded');
+                    });
+                });
+
+                galeriaSplide.mount();
+                console.log('✅ Galería de premiadores inicializada correctamente');
+                
+                // FIX: Forzar re-layout después de inicializar galería
+                setTimeout(() => {
+                    if (typeof AOS !== 'undefined') {
+                        AOS.refresh();
+                    }
+                    // Verificar que las secciones siguientes estén visibles
+                    checkSectionsVisibility();
+                }, 500);
+                
+            } catch (error) {
+                console.error('❌ Error al inicializar galería:', error);
+                // FIX: Asegurar que las secciones siguientes sigan funcionando
+                setTimeout(() => {
+                    checkSectionsVisibility();
+                }, 1000);
+            }
+        }
+
+        // Configuración específica para otros carruseles si existen
+        const allSplides = document.querySelectorAll('.splide:not(#momentos-ajupam .splide):not(#galeria .splide):not(#galeria-splide)');
+        allSplides.forEach((element, index) => {
+            if (typeof Splide !== 'undefined') {
+                try {
+                    const genericSplide = new Splide(element, {
+                        type: 'loop',
+                        perPage: 1,
+                        autoplay: true,
+                        interval: 4000,
+                        pauseOnHover: true,
+                        pauseOnFocus: true,
+                        pagination: true,
+                        arrows: true,
+                        keyboard: true
+                    });
+
+                    genericSplide.mount();
+                    console.log(`✅ Carrusel genérico ${index + 1} inicializado`);
+                } catch (error) {
+                    console.error(`❌ Error al inicializar carrusel genérico ${index + 1}:`, error);
                 }
             }
         });
+        
+    }, 200); // FIX: Aumentado delay para asegurar renderizado completo
+}
 
-        // Tracking para galería de premiadores
-        galeriaSplide.on('moved', (newIndex) => {
-            trackEvent('gallery_slide_change', {
-                slide_index: newIndex,
-                total_slides: galeriaSplide.length,
-                carousel_id: 'galeria-premiadores'
-            });
-        });
-
-        // Manejo de errores de imágenes en la galería
-        const galleryImages = galeriaElement.querySelectorAll('img');
-        galleryImages.forEach(img => {
-            img.addEventListener('error', function () {
-                // Usar placeholder si la imagen falla
-                this.src = 'https://via.placeholder.com/600x600/cccccc/666666?text=Imagen+No+Disponible';
-                this.alt = 'Imagen temporalmente no disponible';
-
-                // Tracking del error
-                trackEvent('image_load_error', {
-                    original_src: this.getAttribute('src'),
-                    alt_text: this.getAttribute('alt'),
-                    section: 'galeria-premiadores'
-                });
-            });
-
-            // Añadir loaded class cuando carga exitosamente
-            img.addEventListener('load', function () {
-                this.classList.add('loaded');
-            });
-        });
-
-        galeriaSplide.mount();
-
-        console.log('✅ Galería de premiadores inicializada correctamente');
-    }
-
-    // Configuración específica para otros carruseles si existen
-    const allSplides = document.querySelectorAll('.splide:not(#momentos-ajupam .splide):not(#galeria .splide):not(#galeria-splide)');
-    allSplides.forEach((element, index) => {
-        if (typeof Splide !== 'undefined') {
-            const genericSplide = new Splide(element, {
-                type: 'loop',
-                perPage: 1,
-                autoplay: true,
-                interval: 4000,
-                pauseOnHover: true,
-                pauseOnFocus: true,
-                pagination: true,
-                arrows: true,
-                keyboard: true
-            });
-
-            genericSplide.mount();
-            console.log(`✅ Carrusel genérico ${index + 1} inicializado`);
+/**
+ * FIX: Función para verificar visibilidad de secciones después de la galería
+ */
+function checkSectionsVisibility() {
+    const sectionsAfterGallery = document.querySelectorAll('#galeria ~ section, #galeria + section');
+    
+    sectionsAfterGallery.forEach(section => {
+        if (section.offsetHeight === 0 || getComputedStyle(section).display === 'none') {
+            console.warn(`⚠️ Sección ${section.id} no está visible, forzando refresh`);
+            
+            // Forzar refresh de estilos
+            section.style.display = 'block';
+            section.style.visibility = 'visible';
+            
+            // Trigger reflow
+            section.offsetHeight;
+            
+            // Re-inicializar observadores para esta sección
+            initSectionObservers(section);
         }
     });
+}
+
+/**
+ * FIX: Inicializar observadores específicos para una sección
+ */
+function initSectionObservers(section) {
+    // Re-observar contadores en esta sección
+    const counters = section.querySelectorAll('.stat-number');
+    if (counters.length > 0) {
+        counters.forEach(counter => {
+            if (!counter.classList.contains('is-visible')) {
+                // Recrear observador específico para este contador
+                const specificObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const targetAttr = entry.target.getAttribute('data-target');
+                            if (targetAttr !== null) {
+                                const target = parseInt(targetAttr, 10);
+                                animateCounter(entry.target, target);
+                                specificObserver.unobserve(entry.target);
+                            }
+                        }
+                    });
+                }, {
+                    threshold: getDeviceType() === 'mobile' ? 0.1 : 0.3,
+                    rootMargin: getDeviceType() === 'mobile' ? '50px' : '0px 0px -50px 0px'
+                });
+                
+                specificObserver.observe(counter);
+            }
+        });
+    }
+    
+    // Re-aplicar AOS si existe
+    if (typeof AOS !== 'undefined' && section.querySelector('[data-aos]')) {
+        AOS.refresh();
+    }
 }
 
 /**
@@ -831,24 +925,61 @@ function throttle(func, limit) {
 }
 
 /**
- * Inicialización principal
+ * FIX: Setup de fallbacks para imágenes
+ */
+function setupImageFallbacks() {
+    const images = document.querySelectorAll('img');
+
+    images.forEach(img => {
+        // Skip si ya tiene un listener
+        if (img.dataset.fallbackSet) return;
+
+        img.dataset.fallbackSet = 'true';
+
+        img.addEventListener('error', function () {
+            // No aplicar fallback si ya es un placeholder
+            if (this.src.includes('placeholder.com')) return;
+
+            // Determinar el tipo de placeholder basado en el contexto
+            let placeholderUrl = 'https://via.placeholder.com/400x400/f5f5f5/999999?text=Imagen+No+Disponible';
+
+            if (this.closest('.premiador-logo-item')) {
+                placeholderUrl = 'https://via.placeholder.com/140x70/ffffff/035aa6?text=Logo';
+            } else if (this.closest('#galeria')) {
+                placeholderUrl = 'https://via.placeholder.com/600x600/035aa6/ffffff?text=Galería';
+            } else if (this.closest('.sponsor-logo-item')) {
+                placeholderUrl = 'https://via.placeholder.com/170x80/ffffff/035aa6?text=Sponsor';
+            }
+
+            this.src = placeholderUrl;
+            this.alt = 'Imagen temporalmente no disponible';
+
+            console.warn(`⚠️ Imagen no encontrada: ${this.getAttribute('src')}. Usando placeholder.`);
+        });
+    });
+}
+
+/**
+ * FIX: Inicialización principal corregida
  */
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('🚀 Inicializando AJuPaM Web App v2.0...');
+    console.log('🚀 Inicializando AJuPaM Web App v2.1...');
 
     // Guardar tiempo de carga de la página
     window.pageLoadTime = Date.now();
 
     try {
-        // Inicializar AOS con configuración optimizada
+        // FIX: Inicializar AOS con configuración optimizada para móvil
         if (typeof AOS !== 'undefined') {
             AOS.init({
                 duration: 700,
                 once: true,
-                offset: 50,
-                disable: window.innerWidth < 768 ? true : false,
+                offset: getDeviceType() === 'mobile' ? 20 : 50,
+                disable: false, // FIX: No deshabilitar en móvil
                 easing: 'ease-out-cubic'
             });
+            
+            console.log('✅ AOS inicializado');
         }
 
         // Setup lazy loading
@@ -866,8 +997,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // Inicializar menú móvil
         initMobileMenu();
 
-        // Inicializar carrusel
-        setTimeout(initCarousel, 100);
+        // FIX: Inicializar carrusel con delay
+        setTimeout(initCarousel, 300);
 
         // Navegación suave
         document.querySelectorAll('a.nav-link').forEach(link => {
@@ -894,7 +1025,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        // Observador para contadores animados
+        // FIX: Observador mejorado para contadores animados - Optimizado para móvil
         const countersObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (!entry.isIntersecting) return;
@@ -904,21 +1035,27 @@ document.addEventListener('DOMContentLoaded', () => {
                     const targetAttr = counter.getAttribute('data-target');
                     if (targetAttr !== null && !counter.classList.contains('is-visible')) {
                         const target = parseInt(targetAttr, 10);
-                        animateCounter(counter, target);
+                        // FIX: Delay adicional para móvil
+                        setTimeout(() => {
+                            animateCounter(counter, target);
+                        }, getDeviceType() === 'mobile' ? 200 : 0);
                     }
                 });
             });
         }, {
-            threshold: 0.3,
-            rootMargin: '0px 0px -100px 0px'
+            // FIX: Parámetros optimizados para móvil
+            threshold: getDeviceType() === 'mobile' ? 0.1 : 0.3,
+            rootMargin: getDeviceType() === 'mobile' ? '50px 0px' : '0px 0px -100px 0px'
         });
 
-        // Observar todas las secciones con contadores
-        document.querySelectorAll('section').forEach(section => {
-            if (section.querySelector('.stat-number')) {
-                countersObserver.observe(section);
-            }
-        });
+        // FIX: Observar todas las secciones con contadores con un delay
+        setTimeout(() => {
+            document.querySelectorAll('section').forEach(section => {
+                if (section.querySelector('.stat-number')) {
+                    countersObserver.observe(section);
+                }
+            });
+        }, 500);
 
         // Gestión de formularios con validación corregida
         const contactForms = document.querySelectorAll('.contacto-form form, form[action*="formspree"]');
@@ -935,17 +1072,49 @@ document.addEventListener('DOMContentLoaded', () => {
             copyrightYear.textContent = new Date().getFullYear();
         }
 
+        // FIX: Verificación adicional para elementos después de la galería
+        setTimeout(() => {
+            checkSectionsVisibility();
+            
+            // Re-inicializar AOS si es necesario
+            if (typeof AOS !== 'undefined') {
+                AOS.refresh();
+            }
+            
+            // FIX: Verificar específicamente el formulario de contacto
+            const contactSection = document.getElementById('contacto');
+            if (contactSection && (contactSection.offsetHeight === 0 || getComputedStyle(contactSection).display === 'none')) {
+                console.warn('⚠️ Sección de contacto no visible, forzando refresh');
+                contactSection.style.display = 'flex';
+                contactSection.style.visibility = 'visible';
+                contactSection.offsetHeight; // Trigger reflow
+            }
+        }, 1000);
+
+        // FIX: Manejo del resize para reajustar elementos
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                checkSectionsVisibility();
+                if (typeof AOS !== 'undefined') {
+                    AOS.refresh();
+                }
+            }, 250);
+        });
+
         // Tracking de inicialización exitosa
         trackEvent('app_initialized', {
-            page_type: window.location.pathname.includes('proveedores') ? 'proveedores' : 'economicos',
+            page_type: window.location.pathname.includes('proveedores') ? 'proveedores' : 
+                      window.location.pathname.includes('premiadores') ? 'premiadores' : 'economicos',
             device_type: getDeviceType(),
             viewport_size: `${window.innerWidth}x${window.innerHeight}`,
             has_aos: typeof AOS !== 'undefined',
             has_splide: typeof Splide !== 'undefined',
-            version: '2.0'
+            version: '2.1'
         });
 
-        console.log('✅ AJuPaM Web App v2.0 inicializada correctamente');
+        console.log('✅ AJuPaM Web App v2.1 inicializada correctamente');
 
     } catch (error) {
         console.error('❌ Error durante la inicialización:', error);
@@ -955,40 +1124,10 @@ document.addEventListener('DOMContentLoaded', () => {
             error_stack: error.stack
         });
     }
-    function setupImageFallbacks() {
-        const images = document.querySelectorAll('img');
-
-        images.forEach(img => {
-            // Skip si ya tiene un listener
-            if (img.dataset.fallbackSet) return;
-
-            img.dataset.fallbackSet = 'true';
-
-            img.addEventListener('error', function () {
-                // No aplicar fallback si ya es un placeholder
-                if (this.src.includes('placeholder.com')) return;
-
-                // Determinar el tipo de placeholder basado en el contexto
-                let placeholderUrl = 'https://via.placeholder.com/400x400/f5f5f5/999999?text=Imagen+No+Disponible';
-
-                if (this.closest('.premiador-logo-item')) {
-                    placeholderUrl = 'https://via.placeholder.com/140x70/ffffff/035aa6?text=Logo';
-                } else if (this.closest('#galeria')) {
-                    placeholderUrl = 'https://via.placeholder.com/600x600/035aa6/ffffff?text=Galería';
-                } else if (this.closest('.sponsor-logo-item')) {
-                    placeholderUrl = 'https://via.placeholder.com/170x80/ffffff/035aa6?text=Sponsor';
-                }
-
-                this.src = placeholderUrl;
-                this.alt = 'Imagen temporalmente no disponible';
-
-                console.warn(`⚠️ Imagen no encontrada: ${this.getAttribute('src')}. Usando placeholder.`);
-            });
-        });
-    }
 });
 
 // Exponer funciones globales útiles
 window.trackEvent = trackEvent;
 window.getDeviceType = getDeviceType;
 window.announceToScreenReader = announceToScreenReader;
+window.checkSectionsVisibility = checkSectionsVisibility;
