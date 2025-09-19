@@ -368,6 +368,10 @@
     background: linear-gradient(135deg, var(--home-coral), var(--home-lime));
 }
 
+.project-card.featured.aos-init.aos-animate {
+    overflow: visible;
+}
+
 .project-card:hover {
     transform: translateY(-12px);
     box-shadow: 0 20px 50px rgba(0,0,0,0.15);
@@ -839,12 +843,6 @@
     align-items: center;
 }
 
-.footer-logo {
-    height: 50px;
-    width: auto;
-    filter: brightness(0) invert(1);
-}
-
 .footer-description {
     text-align: center;
     padding: 0 1rem;
@@ -1302,4 +1300,129 @@
 
 .nav-link.btn-style::after {
     display: none;
+}
+
+/* ===== BOTONES ADICIONALES PARA LA LIGA ===== */
+.btn-outline-white {
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-white:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: white;
+    transform: translateY(-2px);
+}
+
+.btn-outline-white i {
+    font-size: 1rem;
+}
+
+/* Actualización responsive para timeline */
+@media (max-width: 768px) {
+    .timeline {
+        flex-direction: column;
+        padding: 0;
+        gap: 1.5rem;
+    }
+    
+    .timeline::before {
+        left: 30px;
+        top: 0;
+        bottom: 0;
+        right: auto;
+        width: 2px;
+        height: calc(100% - 60px);
+    }
+    
+    .timeline-item {
+        text-align: left;
+        padding-left: 80px;
+        margin-bottom: 1rem;
+        position: relative;
+    }
+    
+    .timeline-marker {
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+    
+    .timeline-content {
+        min-height: auto;
+        padding: 1.25rem;
+    }
+    
+    .liga-actions {
+        flex-direction: column;
+    }
+    
+    .liga-actions .btn,
+    .liga-actions .liga-dropdown {
+        width: 100%;
+    }
+    
+    .liga-dropdown .btn-liga-toggle {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .liga-submenu {
+        width: 100%;
+        position: static;
+        margin-top: 0.5rem;
+        display: none;
+    }
+    
+    .liga-dropdown:hover .liga-submenu {
+        display: none;
+    }
+    
+    .liga-dropdown.active .liga-submenu {
+        display: block;
+    }
+}
+
+/* Ajuste para la grilla de comunidad en móviles */
+@media (max-width: 768px) {
+    .alcance-flex {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+    
+    .alcance-card {
+        padding: 1.5rem 1rem;
+    }
+    
+    .alcance-card i {
+        font-size: 2rem;
+    }
+    
+    .alcance-card .stat-number {
+        font-size: 2rem;
+    }
+    
+    .alcance-card p {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .alcance-flex {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+    }
+    
+    .alcance-card {
+        padding: 1.25rem 0.75rem;
+    }
 }

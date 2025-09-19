@@ -1,46 +1,38 @@
 <!DOCTYPE html>
-<html lang="es-AR">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AJuPaM - Agrupación de Jugadores de Pádel de Mendoza | La Comunidad del Pádel Amateur</title>
-
-    <!-- SEO Meta Tags Optimizados -->
+    <title>AJuPaM - Agrupación de Jugadores de Pádel de Mendoza | Liga y Comunidad Amateur</title>
     <meta name="description"
-        content="AJuPaM es la agrupación de jugadores de pádel amateur más grande de Mendoza con +2000 jugadores registrados, 53 clubes conectados y ranking unificado único en la provincia. Sumate a nuestra comunidad.">
+        content="La agrupación de jugadores de pádel amateur más grande de Mendoza con más de 2000 jugadores registrados y ranking unificado único en la provincia.">
     <meta name="keywords"
-        content="pádel Mendoza, liga pádel amateur, AJuPaM, ranking pádel unificado, jugadores pádel Argentina, torneos pádel Mendoza, comunidad pádel amateur, agrupación deportiva Mendoza">
+        content="pádel mendoza, ajupam, liga amateur, torneos pádel, ranking pádel mendoza, comunidad pádel">
     <meta name="author" content="AJuPaM - Agrupación de Jugadores de Pádel de Mendoza">
+
+    <!-- Robots and Crawlers -->
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <meta name="googlebot" content="index, follow">
 
-    <!-- Geo Tags -->
-    <meta name="geo.region" content="AR-M">
-    <meta name="geo.placename" content="Mendoza, Argentina">
-    <meta name="geo.position" content="-32.8895;-68.8458">
-    <meta name="ICBM" content="-32.8895, -68.8458">
-
-    <!-- Open Graph Optimizado -->
+    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://ajupam.ar">
-    <meta property="og:site_name" content="AJuPaM - Agrupación de Jugadores de Pádel de Mendoza">
-    <meta property="og:title" content="AJuPaM - La Comunidad de Pádel Más Grande de Mendoza">
+    <meta property="og:title" content="AJuPaM - Agrupación de Jugadores de Pádel de Mendoza">
     <meta property="og:description"
-        content="Más de 2000 jugadores, 53 clubes, ranking unificado único en la provincia. La agrupación que conecta a todos los padeleros de Mendoza.">
+        content="La comunidad de pádel amateur más grande de Mendoza. +2000 jugadores, liga oficial y ranking unificado único en la provincia.">
     <meta property="og:image" content="https://ajupam.ar/images/og-ajupam-home.jpg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="AJuPaM - Agrupación de Jugadores de Pádel de Mendoza">
     <meta property="og:locale" content="es_AR">
+    <meta property="og:site_name" content="AJuPaM">
 
-    <!-- Twitter Cards -->
+    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@ajupam_padel">
-    <meta name="twitter:creator" content="@ajupam_padel">
-    <meta name="twitter:title" content="AJuPaM - La Comunidad de Pádel Más Grande de Mendoza">
+    <meta name="twitter:url" content="https://ajupam.ar">
+    <meta name="twitter:title" content="AJuPaM - Pádel Amateur Mendoza">
     <meta name="twitter:description"
-        content="Más de 2000 jugadores, 53 clubes, ranking unificado único en la provincia.">
+        content="+2000 jugadores unidos por la pasión del pádel. Liga oficial, ranking y comunidad en Mendoza">
     <meta name="twitter:image" content="https://ajupam.ar/images/og-ajupam-home.jpg">
     <meta name="twitter:image:alt" content="Jugadores de pádel de AJuPaM en acción durante un torneo">
 
@@ -64,9 +56,6 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
     <link rel="dns-prefetch" href="//unpkg.com">
-    <link rel="dns-prefetch" href="//instagram.com">
-    <link rel="dns-prefetch" href="//facebook.com">
-    <link rel="dns-prefetch" href="//wa.me">
 
     <!-- Preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -78,7 +67,7 @@
         as="style">
     <link rel="preload" href="/images/logo-ajupam.svg" as="image" type="image/svg+xml">
     <link rel="preload" href="/css/style.css?v=2.3" as="style">
-    <link rel="preload" href="/css/home.css?v=1.0" as="style">
+    <link rel="preload" href="/css/home.css?v=1.1" as="style">
 
     <!-- Fonts -->
     <link
@@ -95,7 +84,9 @@
 
     <!-- CSS - Base + Home específico -->
     <link rel="stylesheet" href="/css/style.css?v=2.3">
-    <link rel="stylesheet" href="/css/home.css?v=1.0">
+    <link rel="stylesheet" href="/css/home.css?v=1.1">
+    <link rel="stylesheet" href="/css/modal.css?v=1.0">
+    <link rel="stylesheet" href="/css/home-additions.css?v=1.0">
 
     <!-- Structured Data JSON-LD -->
     <script type="application/ld+json">
@@ -115,187 +106,79 @@
                     "height": 60
                 },
                 "description": "La agrupación de jugadores de pádel amateur más grande de Mendoza con más de 2000 jugadores registrados y ranking unificado único en la provincia.",
-                "foundingDate": "2022",
+                "sameAs": [
+                    "https://instagram.com/ajupam.padel",
+                    "https://facebook.com/ajupam.padel",
+                    "https://wa.me/5492612534840"
+                ],
                 "address": {
                     "@type": "PostalAddress",
                     "addressLocality": "Mendoza",
                     "addressRegion": "Mendoza",
                     "addressCountry": "AR"
                 },
-                "contactPoint": [
-                    {
-                        "@type": "ContactPoint",
-                        "telephone": "+54-261-253-4840",
-                        "contactType": "customer service",
-                        "areaServed": "AR-M",
-                        "availableLanguage": "es"
-                    },
-                    {
-                        "@type": "ContactPoint",
-                        "email": "hola@ajupam.ar",
-                        "contactType": "customer service",
-                        "areaServed": "AR-M",
-                        "availableLanguage": "es"
-                    }
-                ],
-                "sameAs": [
-                    "https://instagram.com/ajupam.padel",
-                    "https://facebook.com/ajupam.padel",
-                    "https://tiktok.com/@ajupam.padel"
-                ],
-                "memberOf": {
-                    "@type": "Organization",
-                    "name": "Honorable Cámara de Diputados de Mendoza"
-                },
-                "hasOfferCatalog": {
-                    "@type": "OfferCatalog",
-                    "name": "Servicios AJuPaM",
-                    "itemListElement": [
-                        {
-                            "@type": "Offer",
-                            "itemOffered": {
-                                "@type": "Service",
-                                "name": "Registro de Jugadores",
-                                "description": "Registro gratuito en la base de datos más completa de jugadores de pádel de Mendoza"
-                            }
-                        },
-                        {
-                            "@type": "Offer",
-                            "itemOffered": {
-                                "@type": "Service",
-                                "name": "Ranking Unificado",
-                                "description": "El único ranking que conecta a todos los jugadores de pádel amateur de Mendoza"
-                            }
-                        },
-                        {
-                            "@type": "Offer",
-                            "itemOffered": {
-                                "@type": "Service",
-                                "name": "La Liga AJuPaM",
-                                "description": "Competencia semestral de pádel amateur más grande de la provincia"
-                            }
-                        }
-                    ]
-                }
-            },
-            {
-                "@type": "WebSite",
-                "@id": "https://ajupam.ar/#website",
-                "url": "https://ajupam.ar",
-                "name": "AJuPaM - Agrupación de Jugadores de Pádel de Mendoza",
-                "description": "La comunidad de pádel amateur más grande de Mendoza",
-                "publisher": {
-                    "@id": "https://ajupam.ar/#organization"
-                },
-                "inLanguage": "es-AR",
-                "potentialAction": {
-                    "@type": "SearchAction",
-                    "target": "https://ajupam.ar/buscar?q={search_term_string}",
-                    "query-input": "required name=search_term_string"
+                "contactPoint": {
+                    "@type": "ContactPoint",
+                    "telephone": "+54-9-261-253-4840",
+                    "contactType": "General",
+                    "areaServed": "AR",
+                    "availableLanguage": ["es", "es-AR"]
                 }
             },
             {
                 "@type": "SportsOrganization",
-                "@id": "https://ajupam.ar/#sportsorg",
-                "name": "AJuPaM - Agrupación de Jugadores de Pádel de Mendoza",
+                "@id": "https://ajupam.ar/#sports",
+                "name": "Liga AJuPaM",
                 "sport": "Pádel",
-                "address": {
-                    "@type": "PostalAddress",
-                    "addressLocality": "Mendoza",
-                    "addressRegion": "Mendoza", 
-                    "addressCountry": "AR"
-                },
                 "memberOf": {
-                    "@type": "Organization",
-                    "name": "Honorable Cámara de Diputados de Mendoza"
+                    "@id": "https://ajupam.ar/#organization"
                 }
             }
         ]
     }
     </script>
 
-    <!-- Actualización datos dinámicos home -->
+    <!-- Script para actualización de estadísticas desde Google Sheets -->
     <script>
-        console.log('🌟 Iniciando sistema COMPLETO de datos dinámicos para INDEX...');
-
-        // 🗺️ MAPEO COMPLETO DE TODAS LAS ESTADÍSTICAS DEL INDEX
         const INDEX_MAPPING = {
-            // 👥 HERO STATS - Ya funcionando
-            '2000': 'jugadores_registrados',     // Jugadores Registrados
-            '90': 'clubes_conectados',           // Clubes Conectados  
-            '12': 'departamentos_hero',          // Departamentos (hero)
-
-            // 📊 SECCIÓN ALCANCE (Redes Sociales)
-            '23000': 'cuentas_alcanzadas',       // Cuentas Alcanzadas
-            '287000': 'visualizaciones',         // Visualizaciones
-            '2200': 'visitas_perfil',           // Visitas al Perfil
-            '944': 'clics_enlace',              // Clics en Enlace
-            '700': 'interacciones',             // Interacciones
-
-            // 🏆 SECCIÓN COMUNIDAD (Torneos)
-            '180': 'parejas_inscriptas',         // Parejas Inscriptas
-            '1000': 'partidos_jugados',          // Partidos Jugados
-            '53': 'sedes_provincia',             // Sedes en Provincia
-
-            // 📈 OTROS (si existen)
-            '160': 'parejas_2da_edicion',        // Parejas 2ª Edición
-            '9': 'departamentos_comunidad'       // Departamentos (comunidad)
+            '2000': 'jugadores_registrados',
+            '90': 'clubes_conectados',
+            '12': 'departamentos_hero',
+            '23000': 'cuentas_alcanzadas',
+            '287000': 'visualizaciones',
+            '2200': 'visitas_perfil',
+            '700': 'interacciones'
         };
 
-        // 📊 FUNCIÓN PARA ACTUALIZAR TODAS LAS ESTADÍSTICAS
         function actualizarTodasLasEstadisticas(datosSheets) {
-            console.log('🎯 Actualizando TODAS las estadísticas del INDEX...');
+            console.log('🎯 Actualizando estadísticas del INDEX...');
 
             const todosLosElementos = document.querySelectorAll('[data-target]');
-            console.log(`🔍 Encontrados ${todosLosElementos.length} elementos con data-target en total`);
-
             let actualizados = 0;
 
-            todosLosElementos.forEach((elemento, index) => {
+            todosLosElementos.forEach((elemento) => {
                 const valorActual = elemento.getAttribute('data-target');
                 const concepto = INDEX_MAPPING[valorActual];
 
-                console.log(`📋 Elemento ${index}: data-target="${valorActual}" → concepto="${concepto}"`);
-
                 if (concepto && datosSheets[concepto] !== undefined) {
                     const valorNuevo = datosSheets[concepto];
-
-                    console.log(`🔄 ACTUALIZANDO: "${valorActual}" → "${valorNuevo}" (${concepto})`);
-
-                    // Cambiar data-target
                     elemento.setAttribute('data-target', valorNuevo);
-
-                    // Limpiar contenido completamente
                     elemento.textContent = '0';
-                    elemento.innerHTML = '0';
-
-                    // Limpiar clases que impiden reanimación
                     elemento.classList.remove('counted', 'animate', 'is-visible', 'aos-animate');
-
-                    // Marcar como actualizado
                     elemento.setAttribute('data-updated', concepto);
-
                     actualizados++;
-                    console.log(`✅ ACTUALIZADO: ${concepto} = ${valorActual} → ${valorNuevo}`);
-                } else if (INDEX_MAPPING[valorActual]) {
-                    console.log(`⚠️ Concepto ${concepto} no encontrado en Google Sheets`);
-                } else {
-                    console.log(`ℹ️ Valor ${valorActual} no está en el mapeo (puede ser normal)`);
+                    console.log(`✅ Actualizado: ${concepto} = ${valorActual} → ${valorNuevo}`);
                 }
             });
-
-            console.log(`🎉 RESUMEN: ${actualizados} elementos actualizados de ${todosLosElementos.length} encontrados`);
+            console.log(`🎉 ${actualizados} elementos actualizados`);
         }
 
-        // 📡 CARGAR DATOS DE GOOGLE SHEETS  
         async function cargarDatosCompletos() {
             try {
-                console.log('📡 Cargando datos completos desde Google Sheets...');
-
+                console.log('📡 Cargando datos desde Google Sheets...');
                 const response = await fetch('https://docs.google.com/spreadsheets/d/1fCV4Dcw3mKnMaSJAkf2K3mm_y4zam9s6S5vnjLiK3tE/gviz/tq?tqx=out:csv&sheet=Hoja 1');
                 const csvText = await response.text();
 
-                // Procesar CSV
                 const datos = {};
                 const lineas = csvText.split('\n');
                 for (let i = 1; i < lineas.length; i++) {
@@ -310,151 +193,29 @@
                     }
                 }
 
-                console.log('📊 Datos completos cargados:', datos);
-
-                // Actualizar todas las estadísticas
+                console.log('📊 Datos cargados:', datos);
                 actualizarTodasLasEstadisticas(datos);
-
                 return true;
 
             } catch (error) {
-                console.log('❌ Error cargando Sheets, usando datos de ejemplo:', error);
+                console.log('❌ Error cargando Sheets, usando datos por defecto:', error);
 
-                // Datos de ejemplo completos si falla la conexión
                 const datosEjemplo = {
-                    // Hero stats
                     'jugadores_registrados': 2500,
                     'clubes_conectados': 95,
                     'departamentos_hero': 15,
-
-                    // Estadísticas de redes sociales
                     'cuentas_alcanzadas': 25000,
                     'visualizaciones': 300000,
                     'visitas_perfil': 2500,
-                    'clics_enlace': 1200,
-                    'interacciones': 850,
-
-                    // Estadísticas de torneos
-                    'parejas_inscriptas': 214,
-                    'partidos_jugados': 3160,
-                    'sedes_provincia': 93,
-                    'parejas_2da_edicion': 170,
-                    'departamentos_comunidad': 15
+                    'interacciones': 850
                 };
 
-                console.log('📊 Usando datos de ejemplo:', datosEjemplo);
                 actualizarTodasLasEstadisticas(datosEjemplo);
-
                 return false;
             }
         }
 
-        // 🚀 EJECUTAR CON MÚLTIPLES ESTRATEGIAS
-        console.log('🚀 Configurando ejecución múltiple...');
-
-        // Estrategia 1: Inmediato
-        setTimeout(() => {
-            console.log('🚀 Strategy 1: Inmediato');
-            cargarDatosCompletos();
-        }, 0);
-
-        // Estrategia 2: DOMContentLoaded
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', function () {
-                console.log('📋 DOMContentLoaded - cargando datos completos');
-                setTimeout(cargarDatosCompletos, 50);
-            });
-        } else {
-            cargarDatosCompletos();
-        }
-
-        // Estrategia 3: Window load
-        window.addEventListener('load', function () {
-            console.log('📋 Window load - backup completo');
-            setTimeout(cargarDatosCompletos, 100);
-        });
-
-        // Estrategia 4: Delays escalonados
-        setTimeout(cargarDatosCompletos, 10);
-        setTimeout(cargarDatosCompletos, 100);
-        setTimeout(cargarDatosCompletos, 500);
-
-        // 🔧 FUNCIÓN DE DEBUG COMPLETA
-        window.debugCompleto = function () {
-            console.log('🔍 DEBUG COMPLETO - INDEX:');
-            console.log('\n📊 Mapeo usado:', INDEX_MAPPING);
-
-            console.log('\n📋 Elementos por sección:');
-
-            // Hero stats
-            const heroStats = document.querySelector('.hero-stats');
-            if (heroStats) {
-                console.log('\n👥 HERO STATS:');
-                const heroElements = heroStats.querySelectorAll('[data-target]');
-                heroElements.forEach((el, i) => {
-                    console.log(`  ${i}: target="${el.getAttribute('data-target')}", contenido="${el.textContent}", actualizado="${el.getAttribute('data-updated')}"`);
-                });
-            }
-
-            // Sección alcance
-            const alcanceSection = document.querySelector('#alcance');
-            if (alcanceSection) {
-                console.log('\n📊 SECCIÓN ALCANCE:');
-                const alcanceElements = alcanceSection.querySelectorAll('[data-target]');
-                alcanceElements.forEach((el, i) => {
-                    console.log(`  ${i}: target="${el.getAttribute('data-target')}", contenido="${el.textContent}", actualizado="${el.getAttribute('data-updated')}"`);
-                });
-            }
-
-            // Sección comunidad
-            const comunidadSection = document.querySelector('#comunidad');
-            if (comunidadSection) {
-                console.log('\n🏆 SECCIÓN COMUNIDAD:');
-                const comunidadElements = comunidadSection.querySelectorAll('[data-target]');
-                comunidadElements.forEach((el, i) => {
-                    console.log(`  ${i}: target="${el.getAttribute('data-target')}", contenido="${el.textContent}", actualizado="${el.getAttribute('data-updated')}"`);
-                });
-            }
-
-            // Todos los elementos
-            console.log('\n📋 TODOS LOS ELEMENTOS:');
-            const todos = document.querySelectorAll('[data-target]');
-            todos.forEach((el, i) => {
-                const updated = el.getAttribute('data-updated');
-                const status = updated ? '✅' : '⚠️';
-                console.log(`${status} ${i}: target="${el.getAttribute('data-target')}", concepto="${updated || 'no mapeado'}", contenido="${el.textContent}"`);
-            });
-        };
-
-        // 🎯 FUNCIÓN PARA FORZAR ACTUALIZACIÓN MANUAL
-        window.actualizarManual = function () {
-            console.log('🔄 Forzando actualización manual...');
-            cargarDatosCompletos();
-        };
-
-        console.log('✅ Sistema COMPLETO de INDEX configurado');
-        console.log('💡 Comandos disponibles:');
-        console.log('   debugCompleto() - Ver estado completo');
-        console.log('   actualizarManual() - Forzar actualización');
-
-    </script>
-
-    <!-- Google Analytics 4 -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-        gtag('config', 'GA_MEASUREMENT_ID', {
-            'custom_map': { 'custom_parameter_1': 'user_type' },
-            'send_page_view': true,
-            'anonymize_ip': true
-        });
-
-        // Track scroll depth for UX analytics
-        gtag('config', 'GA_MEASUREMENT_ID', {
-            'custom_map': { 'metric1': 'scroll_depth' }
-        });
+        document.addEventListener('DOMContentLoaded', cargarDatosCompletos);
     </script>
 </head>
 
@@ -462,7 +223,7 @@
     <!-- Skip Link para Accesibilidad -->
     <a href="#main" class="skip-link">Saltar al contenido principal</a>
 
-    <!-- Header - USANDO ESTRUCTURA EXISTENTE -->
+    <!-- Header -->
     <header class="main-header" role="banner">
         <nav class="container" role="navigation" aria-label="Navegación principal">
             <a href="/" class="logo-link" aria-label="AJuPaM - Inicio">
@@ -495,7 +256,7 @@
                 <div class="hero-content">
                     <div class="hero-badge" data-aos="fade-up">
                         <i class="fas fa-users"></i>
-                        Agrupación Civil · Trabajo Ad Honorem
+                        Agrupación Civil
                     </div>
 
                     <h1 class="hero-title" data-aos="fade-up" data-aos-delay="200">
@@ -509,29 +270,31 @@
                         y hacer crecer el pádel amateur en toda la provincia.
                     </p>
 
+                    <!-- Stats Grid -->
                     <div class="hero-stats" data-aos="fade-up" data-aos-delay="600">
                         <div class="hero-stat">
-                            <span class="stat-big counter" data-target="2000">0</span>
+                            <span class="stat-big stat-number" data-target="2000">0</span>
                             <span class="stat-label">Jugadores Registrados</span>
                         </div>
                         <div class="hero-stat">
-                            <span class="stat-big counter" data-target="53">0</span>
+                            <span class="stat-big stat-number" data-target="90">0</span>
                             <span class="stat-label">Clubes Conectados</span>
                         </div>
                         <div class="hero-stat">
-                            <span class="stat-big counter" data-target="9">0</span>
+                            <span class="stat-big stat-number" data-target="12">0</span>
                             <span class="stat-label">Departamentos</span>
                         </div>
                     </div>
 
+                    <!-- CTA Buttons -->
                     <div class="hero-buttons" data-aos="fade-up" data-aos-delay="800">
-                        <a href="https://bit.ly/ajupamjugadores" target="_blank" class="btn btn-primary">
-                            <i class="fas fa-user-plus"></i>
-                            Sumate a AJuPaM
+                        <a href="#proyectos" class="btn btn-primary btn-large">
+                            <span>Conocé Nuestros Proyectos</span>
+                            <i class="fas fa-arrow-down"></i>
                         </a>
-                        <a href="#quienes-somos" class="btn btn-secondary nav-link">
-                            <i class="fas fa-info-circle"></i>
-                            Conocé Más
+                        <a href="https://bit.ly/ajupamjugadores" target="_blank" class="btn btn-secondary btn-large">
+                            <span>Unite a la Comunidad</span>
+                            <i class="fas fa-external-link-alt"></i>
                         </a>
                     </div>
                 </div>
@@ -539,80 +302,30 @@
         </section>
 
         <!-- Quiénes Somos -->
-        <section class="content-section" id="quienes-somos">
+        <section class="content-section light-bg" id="quienes-somos">
             <div class="container">
-                <div class="section-header" data-aos="fade-up">
-                    <h2 class="section-title">Quiénes Somos</h2>
-                    <p class="section-subtitle">
-                        Nacimos de la pasión por el pádel y del deseo de crear una comunidad más justa y unida
-                    </p>
-                </div>
-
-                <div class="about-grid">
-                    <div class="about-content" data-aos="fade-right">
-                        <h3>Nuestra Misión</h3>
-                        <p>
-                            Somos una <strong>agrupación civil</strong> que trabaja ad honorem para promover
-                            el crecimiento del pádel amateur en Mendoza, proteger los derechos de los jugadores
-                            frente a abusos de predios u organizadores, y generar competencias disruptivas,
-                            inclusivas y autogestionadas.
+                <div class="quienes-somos-flex" data-aos="fade-up">
+                    <div class="quienes-somos-text">
+                        <h2 class="section-title">Quiénes Somos</h2>
+                        <p class="lead">
+                            Somos <strong>jugadores como vos</strong>, apasionados por el pádel,
+                            que decidimos organizarnos para mejorar la experiencia del deporte amateur en Mendoza.
                         </p>
-
-                        <div class="recognition-badge">
+                        <p>
+                            Nacimos en 2023 con una misión clara: <strong>democratizar el pádel amateur</strong>,
+                            crear competencias accesibles, justas y transparentes, y construir una comunidad donde
+                            cada jugador tenga voz y voto.
+                        </p>
+                        <p>
+                            Hoy somos <strong>la agrupación más grande de la provincia</strong>, con presencia en
+                            todos los departamentos y un modelo de organización que ya es referencia nacional.
+                        </p>
+                        <div class="recognition-box">
                             <i class="fas fa-award"></i>
-                            <div>
-                                <h4>Reconocimiento Oficial</h4>
-                                <p>Honorable Cámara de Diputados de Mendoza</p>
-                            </div>
-                        </div>
-
-                        <h3>En Alianza con Tandem</h3>
-                        <p>
-                            Trabajamos junto a <a href="https://tandempadel.pro" target="_blank" rel="noopener">
-                                <strong>Tandem</strong></a>, empresa organizadora de competencias y eventos
-                            deportivos creativos, para llevar nuestros proyectos al siguiente nivel.
-                        </p>
-                    </div>
-
-                    <div class="about-values" data-aos="fade-left">
-                        <div class="value-item">
-                            <div class="value-icon">
-                                <i class="fas fa-shield-alt"></i>
-                            </div>
-                            <div class="value-content">
-                                <h4>Protegemos Derechos</h4>
-                                <p>Defendemos a los jugadores frente a abusos y malas prácticas</p>
-                            </div>
-                        </div>
-
-                        <div class="value-item">
-                            <div class="value-icon">
-                                <i class="fas fa-users"></i>
-                            </div>
-                            <div class="value-content">
-                                <h4>Conectamos Personas</h4>
-                                <p>Creamos vínculos genuinos entre jugadores de toda la provincia</p>
-                            </div>
-                        </div>
-
-                        <div class="value-item">
-                            <div class="value-icon">
-                                <i class="fas fa-rocket"></i>
-                            </div>
-                            <div class="value-content">
-                                <h4>Innovamos Siempre</h4>
-                                <p>Desarrollamos formatos creativos y revolucionarios de competencias</p>
-                            </div>
-                        </div>
-
-                        <div class="value-item">
-                            <div class="value-icon">
-                                <i class="fas fa-balance-scale"></i>
-                            </div>
-                            <div class="value-content">
-                                <h4>Transparencia Total</h4>
-                                <p>Autogestión y organización transparente en todos nuestros proyectos</p>
-                            </div>
+                            <p>
+                                <strong>Reconocidos por:</strong> Ministerio de Deportes de Mendoza,
+                                Asociación Argentina de Pádel y múltiples medios de comunicación provinciales.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -631,35 +344,23 @@
 
                 <div class="projects-grid">
                     <!-- La Liga AJuPaM -->
-                    <div class="project-card featured" data-aos="fade-up" data-aos-delay="100">
-                        <div class="project-info">
-                            <div class="project-icon">
-                                <i class="fas fa-trophy"></i>
-                            </div>
-                            <h3>La Liga AJuPaM</h3>
-                            <p class="project-description">
-                                Nuestra competencia estrella. Una liga semestral que ha crecido de 90 a +180 parejas.
-                            </p>
-                            <div class="project-actions">
-                                <a href="https://bit.ly/ligaajupam3" target="_blank" class="btn btn-small">
-                                    Ver Liga Actual
-                                </a>
-                            </div>
+                    <div class="project-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="project-icon">
+                            <i class="fas fa-trophy"></i>
                         </div>
-                        <div class="project-stats">
-                            <div class="project-stat">
-                                <span class="stat-num">3ra</span>
-                                <span class="stat-text">Edición en curso</span>
-                            </div>
-                            <div class="project-stat">
-                                <span class="stat-num">180+</span>
-                                <span class="stat-text">Parejas actuales</span>
-                            </div>
+                        <h3>La Liga AJuPaM</h3>
+                        <p class="project-description">
+                            Nuestra competencia estrella. Una liga semestral que revolucionó el pádel amateur.
+                        </p>
+                        <div class="project-actions">
+                            <a href="#la-liga" class="btn btn-small">
+                                Conocer más
+                            </a>
                         </div>
                     </div>
 
                     <!-- Ranking Unificado -->
-                    <div class="project-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="project-card" data-aos="fade-up" data-aos-delay="150">
                         <div class="project-icon">
                             <i class="fas fa-chart-line"></i>
                         </div>
@@ -667,75 +368,108 @@
                         <p class="project-description">
                             El único ranking que conecta a todos los jugadores de pádel amateur de Mendoza.
                         </p>
-                        <div class="project-highlight">
-                            <i class="fas fa-star"></i>
-                            Único en la provincia
-                        </div>
                         <div class="project-actions">
-                            <a href="https://bit.ly/ajupamranking2025" target="_blank" class="btn btn-small">
+                            <a href="https://bit.ly/rankingajupam" target="_blank" class="btn btn-small">
                                 Ver Ranking
                             </a>
                         </div>
                     </div>
 
                     <!-- Base de Datos -->
-                    <div class="project-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="project-card" data-aos="fade-up" data-aos-delay="200">
                         <div class="project-icon">
                             <i class="fas fa-database"></i>
                         </div>
                         <h3>Base de Datos</h3>
                         <p class="project-description">
-                            Sistema completo de jugadores y clubes para mejor organización y comunicación.
+                            Sistema integral de registro de jugadores, clubes y profesores.
                         </p>
-                        <div class="project-features">
-                            <span class="feature-tag">2000+ Jugadores</span>
-                            <span class="feature-tag">53 Clubes</span>
+                        <div class="project-actions">
+                            <a href="https://forms.gle/79xPgCv8yrEWCpXV7" target="_blank" class="btn btn-small">
+                                Sumar club o predio
+                            </a>
+                            <a href="https://forms.gle/PShqPTPdUPoh98X79" target="_blank" class="btn btn-small btn-outline">
+                                Sumarse como jugador/a
+                            </a>
+                            <button class="btn btn-small disabled" disabled>
+                                Sumarse como profe
+                                <span class="tooltip">Base en desarrollo</span>
+                            </button>
                         </div>
                     </div>
 
-                    <!-- Futuro: Becas -->
-                    <div class="project-card coming-soon" data-aos="fade-up" data-aos-delay="400">
+                    <!-- Becas a jóvenes promesas -->
+                    <div class="project-card" data-aos="fade-up" data-aos-delay="250">
+                        <span class="project-badge">Próximamente</span>
                         <div class="project-icon">
                             <i class="fas fa-graduation-cap"></i>
                         </div>
-                        <h3>Becas Deportivas</h3>
+                        <h3>Becas a Jóvenes Promesas</h3>
                         <p class="project-description">
-                            Programa de apoyo para jóvenes talentos del pádel mendocino.
+                            Apoyo integral para talentos emergentes: viajes, inscripciones, entrenamientos y más.
                         </p>
-                        <div class="coming-soon-badge">
-                            <i class="fas fa-clock"></i>
-                            Próximamente
-                        </div>
                     </div>
 
-                    <!-- Futuro: Academia -->
-                    <div class="project-card coming-soon" data-aos="fade-up" data-aos-delay="500">
+                    <!-- Academia pública -->
+                    <div class="project-card" data-aos="fade-up" data-aos-delay="300">
+                        <span class="project-badge">Próximamente</span>
+                        <div class="project-icon">
+                            <i class="fas fa-school"></i>
+                        </div>
+                        <h3>Academia Pública</h3>
+                        <p class="project-description">
+                            Espacios de formación en predios municipales para democratizar el acceso al pádel y detectar futuros talentos.
+                        </p>
+                    </div>
+
+                    <!-- Capacitaciones y talleres -->
+                    <div class="project-card" data-aos="fade-up" data-aos-delay="350">
+                        <span class="project-badge">Próximamente</span>
                         <div class="project-icon">
                             <i class="fas fa-chalkboard-teacher"></i>
                         </div>
-                        <h3>Academia Técnica</h3>
+                        <h3>Capacitaciones y Talleres</h3>
                         <p class="project-description">
-                            Formación técnica gratuita o subsidiada para todos los niveles.
+                            Formación integral en nutrición, preparación física, psicología deportiva y más áreas clave.
                         </p>
-                        <div class="coming-soon-badge">
-                            <i class="fas fa-clock"></i>
-                            En desarrollo
-                        </div>
                     </div>
 
-                    <!-- Compartir Torneos -->
-                    <div class="project-card" data-aos="fade-up" data-aos-delay="600">
+                    <!-- Difusión y promoción -->
+                    <div class="project-card" data-aos="fade-up" data-aos-delay="400">
+                        <span class="project-badge">En desarrollo</span>
                         <div class="project-icon">
-                            <i class="fas fa-share-alt"></i>
+                            <i class="fas fa-bullhorn"></i>
                         </div>
-                        <h3>Difusión de Torneos</h3>
+                        <h3>Difusión y Promoción</h3>
                         <p class="project-description">
-                            Compartimos todos los torneos privados para que no te pierdas ninguna oportunidad.
+                            Promoción del pádel a través de influencers, publicidad tradicional y no tradicional, vía pública, streaming.
+                        </p>
+                    </div>
+
+                    <!-- Torneos Especiales -->
+                    <div class="project-card" data-aos="fade-up" data-aos-delay="450">
+                        <span class="project-badge">En desarrollo</span>
+                        <div class="project-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <h3>Torneos Especiales</h3>
+                        <p class="project-description">
+                            Eventos únicos con formatos innovadores que rompen con lo tradicional.
+                        </p>
+                    </div>
+
+                    <!-- Y muchos más -->
+                    <div class="project-card cta-card" data-aos="fade-up" data-aos-delay="500">
+                        <div class="project-icon">
+                            <i class="fas fa-plus-circle"></i>
+                        </div>
+                        <h3>Y muchos más</h3>
+                        <p class="project-description">
+                            Hay otras iniciativas pensadas y siempre estamos a la espera de que vos sumes la tuya.
                         </p>
                         <div class="project-actions">
-                            <a href="https://instagram.com/ajupam.padel" target="_blank" class="btn btn-small">
-                                <i class="fab fa-instagram"></i>
-                                Ver en Instagram
+                            <a href="#contacto" class="btn btn-small btn-primary">
+                                Sumate con tu idea
                             </a>
                         </div>
                     </div>
@@ -743,215 +477,456 @@
             </div>
         </section>
 
-        <!-- Comunidad en Números -->
-        <section class="content-section" id="comunidad">
+        <!-- Comunidad que Crece -->
+        <section class="content-section light-bg" id="comunidad">
             <div class="container">
                 <div class="section-header" data-aos="fade-up">
-                    <h2 class="section-title">Una Comunidad que Crece</h2>
+                    <h2 class="section-title">Comunidad que Crece</h2>
                     <p class="section-subtitle">
-                        Cada día somos más los que creemos en un pádel amateur más justo y organizado
+                        Nuestro alcance en redes sociales demuestra el impacto real que tenemos
                     </p>
                 </div>
 
-                <div class="community-stats" data-aos="fade-up" data-aos-delay="200">
-                    <div class="community-stat">
-                        <div class="stat-icon">
-                            <i class="fab fa-instagram"></i>
-                        </div>
-                        <div class="stat-content">
-                            <span class="stat-big counter" data-target="287000">0</span>
-                            <span class="stat-desc">Visualizaciones mensuales</span>
-                        </div>
+                <div class="alcance-flex">
+                    <div class="alcance-card" data-aos="fade-up" data-aos-delay="100">
+                        <i class="fas fa-users"></i>
+                        <h3 class="stat-number" data-target="23000">0</h3>
+                        <p>Cuentas Alcanzadas</p>
                     </div>
 
-                    <div class="community-stat">
-                        <div class="stat-icon">
-                            <i class="fas fa-eye"></i>
-                        </div>
-                        <div class="stat-content">
-                            <span class="stat-big counter" data-target="23000">0</span>
-                            <span class="stat-desc">Alcance mensual</span>
-                        </div>
+                    <div class="alcance-card" data-aos="fade-up" data-aos-delay="200">
+                        <i class="fas fa-eye"></i>
+                        <h3 class="stat-number" data-target="287000">0</h3>
+                        <p>Visualizaciones</p>
                     </div>
 
-                    <div class="community-stat">
-                        <div class="stat-icon">
-                            <i class="fas fa-mouse-pointer"></i>
-                        </div>
-                        <div class="stat-content">
-                            <span class="stat-big counter" data-target="944">0</span>
-                            <span class="stat-desc">Clics en enlaces</span>
-                        </div>
+                    <div class="alcance-card" data-aos="fade-up" data-aos-delay="300">
+                        <i class="fas fa-user-circle"></i>
+                        <h3 class="stat-number" data-target="2200">0</h3>
+                        <p>Visitas al Perfil</p>
                     </div>
 
-                    <div class="community-stat">
-                        <div class="stat-icon">
-                            <i class="fas fa-heart"></i>
-                        </div>
-                        <div class="stat-content">
-                            <span class="stat-big counter" data-target="700">0</span>
-                            <span class="stat-desc">Interacciones (+200%)</span>
-                        </div>
+                    <div class="alcance-card" data-aos="fade-up" data-aos-delay="400">
+                        <i class="fas fa-heart"></i>
+                        <h3 class="stat-number" data-target="700">0</h3>
+                        <p>Interacciones</p>
                     </div>
                 </div>
 
-                <!-- Timeline de Crecimiento -->
-                <div class="growth-section" data-aos="fade-up" data-aos-delay="400">
-                    <h3>Nuestro Crecimiento</h3>
-                    <div class="growth-timeline">
-                        <div class="timeline-item">
-                            <div class="timeline-number">90</div>
-                            <div class="timeline-content">
-                                <h4>1ra Edición</h4>
-                                <p>Comenzamos con 90 valientes que confiaron en nuestra visión</p>
-                            </div>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="timeline-number">160</div>
-                            <div class="timeline-content">
-                                <h4>2da Edición</h4>
-                                <p>La palabra se corrió: casi duplicamos la participación</p>
-                            </div>
-                        </div>
-                        <div class="timeline-item active">
-                            <div class="timeline-number">180+</div>
-                            <div class="timeline-content">
-                                <h4>3ra Edición Actual</h4>
-                                <p>Seguimos creciendo y consolidándonos como referencia</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <p class="source-note" data-aos="fade-up" data-aos-delay="500">
+                    * Datos extraídos de la cuenta @ajupam.padel en Instagram durante Julio 2025
+                </p>
             </div>
         </section>
-
-        <!-- Sponsors CTA -->
-        <section class="sponsors-section">
+        <!-- La Liga AJuPaM -->
+        <section class="content-section gradient-bg" id="la-liga">
             <div class="container">
-                <div class="sponsors-content" data-aos="fade-up">
-                    <h2>¿Tu Marca Quiere Crecer con Nosotros?</h2>
-                    <p>Más de 30 marcas ya forman parte de la familia AJuPaM y conectan con nuestra comunidad activa.
+                <div class="section-header" data-aos="fade-up">
+                    <h2 class="section-title text-light">La Liga AJuPaM</h2>
+                    <p class="section-subtitle text-light">
+                        Nuestra competencia estrella que revolucionó el pádel amateur en Mendoza
                     </p>
-                    <div class="sponsors-buttons">
-                        <a href="/sponsors/economicos.html" class="btn btn-primary">
+                </div>
+
+                <div class="timeline">
+                    <div class="timeline-item" data-aos="fade-up" data-aos-delay="100">
+                        <div class="timeline-marker">1</div>
+                        <div class="timeline-content">
+                            <h3>1ra Edición</h3>
+                            <p>90 parejas inscriptas</p>
+                            <span class="timeline-date">Ago - Dic 2024</span>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item" data-aos="fade-up" data-aos-delay="200">
+                        <div class="timeline-marker">2</div>
+                        <div class="timeline-content">
+                            <h3>2da Edición</h3>
+                            <p>+160 parejas inscriptas</p>
+                            <span class="timeline-date">Mar - Jun 2025</span>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item active" data-aos="fade-up" data-aos-delay="300">
+                        <div class="timeline-marker">3</div>
+                        <div class="timeline-content">
+                            <h3>3ra Edición</h3>
+                            <p>+180 parejas inscriptas</p>
+                            <span class="timeline-date">Ago - Nov 2025</span>
+                            <span class="timeline-date" style="color: white; font-size: 0.8rem;">EN CURSO</span>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item upcoming" data-aos="fade-up" data-aos-delay="400">
+                        <div class="timeline-marker">4</div>
+                        <div class="timeline-content">
+                            <h3>4ta Edición</h3>
+                            <p>Inscripciones abiertas pronto</p>
+                            <span class="timeline-date">Mar - Jun 2026</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="liga-actions" data-aos="fade-up" data-aos-delay="500">
+                    <div class="liga-dropdown">
+                        <button class="btn btn-primary btn-liga-toggle">
+                            <span>Ver Liga Actual</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="liga-submenu">
+                            <button class="btn-submenu" data-liga="masculino">Liga Masculina</button>
+                            <button class="btn-submenu" data-liga="femenino">Liga Femenina</button>
+                        </div>
+                    </div>
+
+                    <a href="https://forms.gle/MULax5E14S5Jz3zWA" target="_blank"
+                        class="btn btn-secondary btn-inscripcion">
+                        <span>Inscribite a la próxima liga</span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+
+                    <a href="https://bit.ly/rankingajupam" target="_blank" class="btn btn-outline-white">
+                        <span>Ver Ranking Unificado</span>
+                        <i class="fas fa-chart-line"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección CTA de Sponsors -->
+        <section class="content-section light-bg" id="sponsors-cta">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <h2 class="section-title">Hacé Crecer Tu Marca con Nosotros</h2>
+                    <p class="section-subtitle">
+                        Conectá tu negocio con la comunidad de pádel más grande de Mendoza
+                    </p>
+                </div>
+
+                <div class="sponsors-types">
+                    <a href="/sponsors/economicos.html" class="sponsor-type-card" data-aos="fade-up"
+                        data-aos-delay="100">
+                        <div class="sponsor-type-icon">
+                            <i class="fas fa-hand-holding-usd"></i>
+                        </div>
+                        <h3>Sponsors Económicos</h3>
+                        <p>Apoyo económico directo con máxima visibilidad en todos nuestros canales</p>
+                        <span class="sponsor-type-link">Conocer más <i class="fas fa-arrow-right"></i></span>
+                    </a>
+
+                    <a href="/sponsors/proveedores.html" class="sponsor-type-card" data-aos="fade-up"
+                        data-aos-delay="200">
+                        <div class="sponsor-type-icon">
                             <i class="fas fa-handshake"></i>
-                            Sponsoreo Económico
-                        </a>
-                        <a href="/sponsors/proveedores.html" class="btn btn-secondary">
-                            <i class="fas fa-box"></i>
-                            Sponsor Proveedor
-                        </a>
-                        <a href="/sponsors/premiadores.html" class="btn btn-secondary">
-                            <i class="fas fa-gift"></i>
-                            Sponsor Premiador
-                        </a>
+                        </div>
+                        <h3>Sponsors Proveedores</h3>
+                        <p>Intercambio de productos o servicios por presencia de marca</p>
+                        <span class="sponsor-type-link">Conocer más <i class="fas fa-arrow-right"></i></span>
+                    </a>
+
+                    <a href="/sponsors/premiadores.html" class="sponsor-type-card" data-aos="fade-up"
+                        data-aos-delay="300">
+                        <div class="sponsor-type-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <h3>Sponsors Premiadores</h3>
+                        <p>Premios para los ganadores con activación de marca en eventos</p>
+                        <span class="sponsor-type-link">Conocer más <i class="fas fa-arrow-right"></i></span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contacto -->
+        <section class="content-section contact-section" id="contacto">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <h2 class="section-title">Contactate con Nosotros</h2>
+                    <p class="section-subtitle">
+                        Estamos acá para responder tus consultas y sumarte a la comunidad
+                    </p>
+                </div>
+
+                <div class="contact-wrapper">
+                    <div class="contact-info" data-aos="fade-right">
+                        <h3>¿Cómo podemos ayudarte?</h3>
+                        <p>Ya seas jugador, club, profesor o sponsor, tenemos un lugar para vos en AJuPaM.</p>
+
+                        <div class="contact-methods">
+                            <div class="contact-method">
+                                <i class="fas fa-phone"></i>
+                                <div>
+                                    <h4>Teléfono</h4>
+                                    <p>+54 9 261 253-4840</p>
+                                </div>
+                            </div>
+
+                            <div class="contact-method">
+                                <i class="fab fa-whatsapp"></i>
+                                <div>
+                                    <h4>WhatsApp</h4>
+                                    <a href="https://wa.me/5492612534840" target="_blank">Escribinos</a>
+                                </div>
+                            </div>
+
+                            <div class="contact-method">
+                                <i class="fas fa-envelope"></i>
+                                <div>
+                                    <h4>Email</h4>
+                                    <a href="mailto:info@ajupam.ar">info@ajupam.ar</a>
+                                </div>
+                            </div>
+
+                            <div class="contact-method">
+                                <i class="fab fa-instagram"></i>
+                                <div>
+                                    <h4>Instagram</h4>
+                                    <a href="https://instagram.com/ajupam.padel" target="_blank">@ajupam.padel</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="contact-form-wrapper" data-aos="fade-left">
+                        <form class="contact-form" id="contactForm">
+                            <div class="form-group">
+                                <label for="name">Nombre completo *</label>
+                                <input type="text" id="name" name="name" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">Email *</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone">Teléfono</label>
+                                <input type="tel" id="phone" name="phone">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="subject">Asunto *</label>
+                                <select id="subject" name="subject" required>
+                                    <option value="">Seleccioná una opción</option>
+                                    <option value="jugador">Quiero sumarme como jugador</option>
+                                    <option value="club">Quiero registrar mi club</option>
+                                    <option value="profesor">Soy profesor de pádel</option>
+                                    <option value="sponsor">Información sobre sponsoreo</option>
+                                    <option value="liga">Consulta sobre la Liga</option>
+                                    <option value="otro">Otra consulta</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="message">Mensaje *</label>
+                                <textarea id="message" name="message" rows="5" required></textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-large btn-block">
+                                <span>Enviar mensaje</span>
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+
+                            <div class="form-feedback" role="alert" aria-live="polite"></div>
+                        </form>
                     </div>
                 </div>
             </div>
         </section>
+
     </main>
 
     <!-- Footer -->
-    <footer class="footer dark-bg" id="contacto">
+    <footer class="site-footer" role="contentinfo">
         <div class="container">
-            <!-- Fila principal con logo, frase y redes -->
-            <div class="footer-brand">
-                <div class="footer-logo-section">
-                    <img src="/images/logo-ajupam.svg" alt="AJuPaM" class="footer-logo">
-                </div>
-                <div class="footer-description">
-                    <p>
-                        <strong>Agrupación de Jugadores de Pádel de Mendoza.</strong><br>
-                        Trabajando por y con vos para hacer crecer el pádel amateur en toda la provincia.
-                    </p>
-                </div>
-                <div class="footer-social">
+            <div class="footer-flex">
+                <div class="footer-col">
+                    <img src="/images/logo-ajupam-blanco.png" alt="AJuPaM" class="footer-logo">
+                    <p class="footer-tagline">El corazón del pádel amateur en Mendoza</p>
                     <div class="social-links">
-                        <a href="https://instagram.com/ajupam.padel" target="_blank" rel="noopener noreferrer"
-                            aria-label="Instagram de AJuPaM">
+                        <a href="https://instagram.com/ajupam.padel" target="_blank" aria-label="Instagram">
                             <i class="fab fa-instagram"></i>
                         </a>
-                        <a href="https://facebook.com/ajupam.padel" target="_blank" rel="noopener noreferrer"
-                            aria-label="Facebook de AJuPaM">
+                        <a href="https://facebook.com/ajupam.padel" target="_blank" aria-label="Facebook">
                             <i class="fab fa-facebook"></i>
                         </a>
-                        <a href="https://tiktok.com/@ajupam.padel" target="_blank" rel="noopener noreferrer"
-                            aria-label="TikTok de AJuPaM">
-                            <i class="fab fa-tiktok"></i>
+                        <a href="https://wa.me/5492612534840" target="_blank" aria-label="WhatsApp">
+                            <i class="fab fa-whatsapp"></i>
                         </a>
                     </div>
                 </div>
-            </div>
 
-            <!-- Fila de columnas de contenido -->
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4>Sumate a AJuPaM</h4>
-                    <ul class="footer-links">
-                        <li><a href="https://bit.ly/ajupamjugadores" target="_blank"
-                                rel="noopener noreferrer">Registrate como Jugador</a></li>
-                        <li><a href="https://bit.ly/ligaajupam3" target="_blank" rel="noopener noreferrer">Inscribite a
-                                La Liga</a></li>
-                        <li><a href="https://bit.ly/ajupamranking2025" target="_blank"
-                                rel="noopener noreferrer">Consultá el Ranking</a></li>
-                        <li><a href="https://instagram.com/ajupam.padel" target="_blank"
-                                rel="noopener noreferrer">Seguinos en Instagram</a></li>
+                <div class="footer-col">
+                    <h4>Enlaces Rápidos</h4>
+                    <ul>
+                        <li><a href="#quienes-somos">Quiénes Somos</a></li>
+                        <li><a href="#proyectos">Proyectos</a></li>
+                        <li><a href="#comunidad">Comunidad</a></li>
+                        <li><a href="#contacto">Contacto</a></li>
                     </ul>
                 </div>
 
-                <div class="footer-section">
-                    <h4>Contacto</h4>
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <i class="fas fa-envelope" aria-hidden="true"></i>
-                            <a href="mailto:hola@ajupam.ar">hola@ajupam.ar</a>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fas fa-phone" aria-hidden="true"></i>
-                            <a href="tel:+5492612534840">+54 261 253-4840</a>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
-                            <span class="location-text"><strong>Mendoza</strong>, Argentina</span>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fab fa-whatsapp" aria-hidden="true"></i>
-                            <a href="https://wa.me/5492612534840?text=¡Hola! Me interesa saber más sobre AJuPaM"
-                                target="_blank" rel="noopener noreferrer">WhatsApp</a>
-                        </div>
-                    </div>
+                <div class="footer-col">
+                    <h4>Proyectos</h4>
+                    <ul>
+                        <li><a href="https://bit.ly/ligaajupam3" target="_blank">Liga AJuPaM</a></li>
+                        <li><a href="https://bit.ly/rankingajupam" target="_blank">Ranking Unificado</a></li>
+                        <li><a href="https://forms.gle/79xPgCv8yrEWCpXV7" target="_blank">Registrar Club</a></li>
+                        <li><a href="https://forms.gle/PShqPTPdUPoh98X79" target="_blank">Sumarse como Jugador</a></li>
+                    </ul>
                 </div>
 
-                <div class="footer-section">
-                    <h4>Para Empresas</h4>
-                    <ul class="footer-links">
-                        <li><a href="/sponsors/economicos.html">Sponsoreo Económico</a></li>
-                        <li><a href="/sponsors/proveedores.html">Sponsor Proveedor</a></li>
-                        <li><a href="/sponsors/premiadores.html">Sponsor Premiador</a></li>
-                        <li><a href="/sponsors/dossier/dossier.html" target="_blank" rel="noopener noreferrer">Dossier
-                                Completo</a></li>
+                <div class="footer-col">
+                    <h4>Sponsoreo</h4>
+                    <ul>
+                        <li><a href="/sponsors/economicos.html">Sponsors Económicos</a></li>
+                        <li><a href="/sponsors/proveedores.html">Sponsors Proveedores</a></li>
+                        <li><a href="/sponsors/premiadores.html">Sponsors Premiadores</a></li>
                     </ul>
                 </div>
             </div>
 
             <div class="footer-bottom">
                 <p>&copy; 2025 AJuPaM - Agrupación de Jugadores de Pádel de Mendoza. Todos los derechos reservados.</p>
-                <p class="recognition-text">Reconocidos por la <strong>Honorable Cámara de Diputados de Mendoza</strong>
-                </p>
             </div>
         </div>
     </footer>
 
-    <!-- WhatsApp Float -->
-    <a href="https://wa.me/5492612534840?text=¡Hola! Me interesa saber más sobre AJuPaM" target="_blank"
-        class="whatsapp-float" aria-label="Contactar por WhatsApp">
+    <!-- Botón flotante de WhatsApp -->
+    <a href="https://wa.me/5492612534840?text=Hola,%20me%20gustaría%20saber%20más%20sobre%20AJuPaM" target="_blank"
+        rel="noopener noreferrer" class="whatsapp-float" aria-label="Contactar por WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
 
-    <!-- Scripts - Cargar main.js base + home específico -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
-    <script src="/js/main.js?v=2.3" defer></script>
-    <script src="/js/home.js?v=1.0" defer></script>
+    <!-- Modales para Liga -->
+    <div id="modalLigaMasculino" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Liga Masculina</h2>
+                <button class="modal-close" aria-label="Cerrar">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="liga-categories">
+                    <a href="https://docs.google.com/spreadsheets/d/1b_sNGG23s8P1-bsNCHbleMTtBqd2rYZoqiDKHi3dgcI/edit?usp=sharing"
+                        target="_blank" class="liga-link">
+                        <i class="fas fa-table"></i>
+                        <span>2da/3ra Categoría</span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="https://docs.google.com/spreadsheets/d/1Sp03_K1nFhdt225OfZe3qtZMWF1ys3vercJbCZvE0P8/edit?usp=sharing"
+                        target="_blank" class="liga-link">
+                        <i class="fas fa-table"></i>
+                        <span>4ta/5ta Zona A</span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="https://docs.google.com/spreadsheets/d/1E15oTdvqElVzENmT4S620U8fe2rAalkhvxNDIzZ2OeE/edit?usp=sharing"
+                        target="_blank" class="liga-link">
+                        <i class="fas fa-table"></i>
+                        <span>4ta/5ta Zona B</span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="https://docs.google.com/spreadsheets/d/15OdEGqJslnGjgT19NETROuFHitOsf_e2BfPuWJy9vE8/edit?usp=sharing"
+                        target="_blank" class="liga-link">
+                        <i class="fas fa-table"></i>
+                        <span>6ta o más Zona A</span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="https://docs.google.com/spreadsheets/d/1X_zK3245r1fM887wRkT51eWPCSIp11E4w6BmtdB8Z3I/edit?usp=sharing"
+                        target="_blank" class="liga-link">
+                        <i class="fas fa-table"></i>
+                        <span>6ta o más Zona B</span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalLigaFemenino" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Liga Femenina</h2>
+                <button class="modal-close" aria-label="Cerrar">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="liga-categories">
+                    <a href="https://docs.google.com/spreadsheets/d/1tTUt6vO-3Z1kuEXIP6ujq2P3HseN5uu0g3r8KRnOySs/edit?usp=sharing"
+                        target="_blank" class="liga-link">
+                        <i class="fas fa-table"></i>
+                        <span>5ta/6ta Zona A</span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="https://docs.google.com/spreadsheets/d/1l3cnbgGyNtxmup9U-IM955FkFplbvpO93Gv1VV6MIr4/edit?usp=sharing"
+                        target="_blank" class="liga-link">
+                        <i class="fas fa-table"></i>
+                        <span>5ta/6ta Zona B</span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="https://docs.google.com/spreadsheets/d/1OWm5XGwCS2deUfKB9H1imwC98cBWac6-7Iv-lHpZSnQ/edit?usp=sharing"
+                        target="_blank" class="liga-link">
+                        <i class="fas fa-table"></i>
+                        <span>7ma/8va</span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de inscripción -->
+    <div id="modalInscripcion" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Inscripción a la Liga</h2>
+                <button class="modal-close" aria-label="Cerrar">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle"></i>
+                    <p>La liga actual ya está en marcha. Podés anotarte para recibir novedades sobre la próxima edición.
+                    </p>
+                </div>
+                <a href="https://forms.gle/MULax5E14S5Jz3zWA" target="_blank" class="btn btn-primary btn-block">
+                    Recibir novedades de la próxima liga
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="/js/main.js?v=2.1"></script>
+    <script src="/js/modal.js?v=1.0"></script>
+    <script>
+        // Inicializar AOS
+        AOS.init({
+            duration: 800,
+            offset: 100,
+            once: true
+        });
+
+        // Script adicional para manejar botón de inscripción
+        document.addEventListener('DOMContentLoaded', function () {
+            const inscripcionBtn = document.querySelector('.btn-inscripcion');
+            if (inscripcionBtn) {
+                inscripcionBtn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    if (window.openModal) {
+                        window.openModal('modalInscripcion');
+                    }
+                });
+            }
+        });
+    </script>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'GA_MEASUREMENT_ID');
+    </script>
 </body>
 
 </html>

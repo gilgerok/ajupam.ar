@@ -194,7 +194,7 @@
     flex-shrink: 0;
 }
 
-.proceso-step:not(:last-child)::after {
+.proceso-step::after {
     content: '';
     position: absolute;
     top: 30px;
