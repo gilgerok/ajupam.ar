@@ -280,6 +280,14 @@ abbr[title] {
 background: var(--light-gray);
 }
 
+.blue-bg {
+background: var(--primary-blue);
+}
+
+.lime-bg {
+background: var(--accent-lime);
+}
+
 /* --- HEADER Y NAVEGACIÓN MEJORADOS --- */
 .main-header { 
     position: fixed; 
@@ -496,7 +504,7 @@ background: var(--light-gray);
 /* CAMBIO: alcance ya estaba como flex en el HTML */
 .alcance-flex { 
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: center;
     gap: 30px;
     align-items: stretch;
