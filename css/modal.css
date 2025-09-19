@@ -162,8 +162,8 @@
     align-items: center;
     gap: 0.5rem;
     background: var(--primary-blue);
-    color: var(--white);
-    border-color: var(--white);
+    color: white;
+    border-color: white;
 }
 
 .liga-submenu {

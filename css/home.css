@@ -688,7 +688,7 @@
 .timeline-item {
     text-align: center;
     padding: 2rem 1rem;
-    background: var(--light-color);
+    background: rgba(255,255,255, 0.9);
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
     transition: var(--home-transition);
