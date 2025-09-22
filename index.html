@@ -580,39 +580,27 @@
                         <h3>¿Cómo podemos ayudarte?</h3>
                         <p>Ya seas jugador, club, profesor o sponsor, tenemos un lugar para vos en AJuPaM.</p>
 
-                        <div class="contact-methods">
-                            <div class="contact-method">
-                                <i class="fas fa-phone"></i>
-                                <div>
-                                    <h4>Teléfono</h4>
-                                    <a href="tel:+5492612534840" data-link="link_telefono">+54 9 261 253-4840</a>
-                                </div>
-                            </div>
-
-                            <div class="contact-method">
-                                <i class="fab fa-whatsapp"></i>
-                                <div>
-                                    <h4>WhatsApp</h4>
-                                    <a href="https://wa.me/5492612534840" data-link="link_whatsapp_general"
-                                        target="_blank">Escribinos</a>
-                                </div>
-                            </div>
-
-                            <div class="contact-method">
-                                <i class="fas fa-envelope"></i>
-                                <div>
-                                    <h4>Email</h4>
-                                    <a href="mailto:info@ajupam.ar" data-link="link_email">info@ajupam.ar</a>
-                                </div>
-                            </div>
-
-                            <div class="contact-method">
-                                <i class="fab fa-instagram"></i>
-                                <div>
-                                    <h4>Instagram</h4>
-                                    <a href="https://instagram.com/ajupam.padel" target="_blank">@ajupam.padel</a>
-                                </div>
-                            </div>
+                        <div class="contact-direct">
+                            <a href="tel:+5492612534840" data-link="link_telefono"
+                                aria-label="Llamar al +54 9 261 253-4840">
+                                <i class="fas fa-phone" aria-hidden="true"></i>
+                                <span>Llamar</span>
+                            </a>
+                            <a href="https://wa.me/5492612534840" data-link="link_whatsapp_general" target="_blank"
+                                rel="noopener noreferrer" aria-label="Contactar por WhatsApp al +54 9 261 253-4840">
+                                <i class="fab fa-whatsapp" aria-hidden="true"></i>
+                                <span>WhatsApp</span>
+                            </a>
+                            <a href="mailto:info@ajupam.ar" data-link="link_email"
+                                aria-label="Enviar email a info@ajupam.ar">
+                                <i class="fas fa-envelope" aria-hidden="true"></i>
+                                <span>Email</span>
+                            </a>
+                            <a href="https://instagram.com/ajupam.padel" data-link="link_instagram" target="_blank" rel="noopener noreferrer"
+                                aria-label="Seguir AJuPaM en Instagram">
+                                <i class="fab fa-instagram" aria-hidden="true"></i>
+                                <span>Instagram</span>
+                            </a>
                         </div>
                     </div>
 
@@ -640,24 +628,23 @@
                                     <option value="jugador">Quiero sumarme como jugador</option>
                                     <option value="club">Quiero registrar mi club</option>
                                     <option value="profesor">Soy profesor de pádel</option>
-                                    <option value="sponsor">Información sobre sponsoreo</option>
-                                    <option value="liga">Consulta sobre la Liga</option>
+                                    <option value="sponsor">Quiero ser sponsor</option>
                                     <option value="otro">Otra consulta</option>
                                 </select>
                             </div>
 
                             <div class="form-group">
                                 <label for="message">Mensaje *</label>
-                                <textarea id="message" name="message" rows="5" required></textarea>
+                                <textarea id="message" name="message" required
+                                    placeholder="Contanos más sobre tu consulta..."></textarea>
                             </div>
 
-                            <button type="submit" class="btn btn-primary btn-large btn-block">
-                                <span>Enviar mensaje</span>
-                                <i class="fas fa-paper-plane"></i>
+                            <button type="submit" class="btn btn-primary btn-block">
+                                Enviar mensaje
                             </button>
-
-                            <div class="form-feedback" role="alert" aria-live="polite"></div>
                         </form>
+
+                        <div class="form-feedback" id="formFeedback"></div>
                     </div>
                 </div>
             </div>
@@ -717,7 +704,8 @@
                                 target="_blank">Registrar Club</a></li>
                         <li><a href="https://forms.gle/PShqPTPdUPoh98X79" data-link="link_sumarse_jugador"
                                 target="_blank">Sumarse como Jugador/a</a></li>
-                        <li><a href="#" data-link="link_sumarse_profesor" target="_blank">Sumarse como Profesor/a</a></li>
+                        <li><a href="#" data-link="link_sumarse_profesor" target="_blank">Sumarse como Profesor/a</a>
+                        </li>
                     </ul>
                 </div>
 
