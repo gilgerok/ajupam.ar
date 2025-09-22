@@ -27,8 +27,8 @@
         SHEET_NAME: 'Hoja 1',
         
         // Configuración de funcionamiento
-        DEBUG_MODE: true,
-        AUTO_RETRY: true,
+        DEBUG_MODE: false,
+        AUTO_RETRY: false,
         RETRY_ATTEMPTS: 3,
         RETRY_DELAY: 2000,
         
