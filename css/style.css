@@ -1074,10 +1074,12 @@ background: var(--accent-lime);
 }
 
 .footer-col { 
-    /* FIX: Removida altura fija del flex */
+    display: flex;
     flex: 1 1 auto;
     min-width: 200px;
     padding: 15px 0; /* Agregado padding para aire */
+    flex-direction: column;
+    align-items: center;
 }
 
 #footer-brand {

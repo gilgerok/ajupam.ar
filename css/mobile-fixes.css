@@ -656,7 +656,7 @@ html, body {
     }
     
     .footer-logo {
-        height: 40px;
+        height: auto;
     }
     
     .footer-description {
