@@ -16,7 +16,7 @@
 
 /* ===== HERO HOME ESPECÍFICO ===== */
 #hero {
-    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('../images/juego-en-marcha.webp') no-repeat center center/cover
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('../images/hero-home.jpg') no-repeat center center/cover
 }
 
 .hero-home {
