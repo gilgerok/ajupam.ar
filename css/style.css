@@ -1078,8 +1078,6 @@ background: var(--accent-lime);
     flex: 1 1 auto;
     min-width: 200px;
     padding: 15px 0; /* Agregado padding para aire */
-    flex-direction: column;
-    align-items: center;
 }
 
 #footer-brand {
@@ -1528,7 +1526,7 @@ background: var(--accent-lime);
     .contacto-flex, 
     .feature-flex, 
     .sponsors-flex,
-    .footer-flex { 
+    .footer-flex, .footer-col { 
         flex-direction: column;
         align-items: center;
     }
