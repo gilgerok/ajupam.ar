@@ -553,3 +553,95 @@ span.project-badge {
         width: 100%;
     }
 }
+
+/* ===== ESTILOS ESPECÍFICOS PARA BOTONES CONTACTO EN HOME ===== */
+
+/* Sobrescribir estilos de contact-direct para el home */
+.contact-section .contact-direct {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 30px;
+    justify-content: flex-start;
+}
+
+.contact-section .contact-direct a {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 600;
+    padding: 12px 20px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    backdrop-filter: blur(10px);
+    min-width: 140px;
+    justify-content: center;
+}
+
+.contact-section .contact-direct a:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.6);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.contact-section .contact-direct a i {
+    font-size: 1.2rem;
+    width: 20px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.contact-section .contact-direct a span {
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+/* Colores específicos por icono para mejor identificación */
+.contact-section .contact-direct a[href^="tel:"]:hover {
+    background: rgba(34, 139, 34, 0.2);
+    border-color: rgba(34, 139, 34, 0.6);
+}
+
+.contact-section .contact-direct a[href^="https://wa.me"]:hover {
+    background: rgba(37, 211, 102, 0.2);
+    border-color: rgba(37, 211, 102, 0.6);
+}
+
+.contact-section .contact-direct a[href^="mailto:"]:hover {
+    background: rgba(220, 53, 69, 0.2);
+    border-color: rgba(220, 53, 69, 0.6);
+}
+
+.contact-section .contact-direct a[href*="instagram"]:hover {
+    background: rgba(225, 48, 108, 0.2);
+    border-color: rgba(225, 48, 108, 0.6);
+}
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+    .contact-section .contact-direct {
+        justify-content: center;
+        gap: 12px;
+    }
+    
+    .contact-section .contact-direct a {
+        flex: 1 1 calc(50% - 6px);
+        min-width: 120px;
+        max-width: 150px;
+        padding: 10px 16px;
+        font-size: 0.9rem;
+    }
+    
+    .contact-section .contact-direct a i {
+        font-size: 1.1rem;
+    }
+    
+    .contact-section .contact-direct a span {
+        font-size: 0.9rem;
+    }
+}
