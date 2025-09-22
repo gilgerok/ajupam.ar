@@ -400,7 +400,8 @@ button:disabled:hover .tooltip {
 }
 
 .project-card.cta-card:hover {
-    box-shadow: none;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    border-color: rgba(195, 216, 44, 0.9);
 }
 
 .project-icon {

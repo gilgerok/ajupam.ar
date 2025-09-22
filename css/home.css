@@ -9,14 +9,14 @@
     /* Extender variables existentes para el home */
     --home-hero-gradient: linear-gradient(135deg, var(--primary-blue) 0%, #2E86AB 100%);
     --home-coral: #FF6B6B;
-    --home-lime: #C3D82C;
+    --home-lime: #c3d82c;
     --home-pattern-opacity: 0.1;
     --home-transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ===== HERO HOME ESPECÍFICO ===== */
 #hero {
-    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('../images/hero-home.jpg') no-repeat center center/cover
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../images/hero-home.jpg') no-repeat center center/cover
 }
 
 .hero-home {
@@ -400,7 +400,7 @@
 .project-card:hover {
     transform: translateY(-12px);
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
-    border-color: rgba(3, 90, 166, 0.3);
+    border-color: rgba(195, 216, 44, 0.9);
 }
 
 .project-card.featured {
