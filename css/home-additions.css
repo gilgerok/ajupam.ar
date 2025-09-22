@@ -374,7 +374,7 @@ button:disabled:hover .tooltip {
 }
 
 .project-card {
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--light-gray);
     border-radius: 12px;
     padding: 2rem;
     transition: all 0.3s ease;
@@ -396,6 +396,11 @@ button:disabled:hover .tooltip {
 .project-card.cta-card {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
     border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.project-card.cta-card:hover {
+    box-shadow: none;
 }
 
 .project-icon {
