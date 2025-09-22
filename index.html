@@ -139,16 +139,15 @@
     }
     </script>
 
-    <!-- Script para actualización de estadísticas desde Google Sheets -->
     <script>
         /**
- * ========================================
- * 🚀 SISTEMA DINÁMICO COMPLETO AJUPAM v3.0
- * ========================================
- * 
- * Maneja ESTADÍSTICAS + ENLACES desde Google Sheets
- * Funciona con la planilla: 1fCV4Dcw3mKnMaSJAkf2K3mm_y4zam9s6S5vnjLiK3tE
- */
+         * ========================================
+         * 🚀 SISTEMA DINÁMICO COMPLETO AJUPAM v3.0
+         * ========================================
+         * 
+         * Maneja ESTADÍSTICAS + ENLACES desde Google Sheets
+         * Funciona con la planilla: 1fCV4Dcw3mKnMaSJAkf2K3mm_y4zam9s6S5vnjLiK3tE
+         */
 
         (function () {
             'use strict';
@@ -299,67 +298,104 @@
             function actualizarEnlaces(enlaces) {
                 let actualizados = 0;
 
-                // Mapeado de enlaces a selectores específicos
+                // Función auxiliar para buscar elementos por contenido de texto
+                function buscarPorTexto(selector, textos) {
+                    const elementos = document.querySelectorAll(selector);
+                    const encontrados = [];
+
+                    elementos.forEach(elemento => {
+                        const texto = elemento.textContent.toLowerCase();
+                        if (textos.some(t => texto.includes(t.toLowerCase()))) {
+                            encontrados.push(elemento);
+                        }
+                    });
+
+                    return encontrados;
+                }
+
+                // Mapeado de enlaces con funciones de selección
                 const mapeosEspeciales = {
                     // Redes sociales en footer
-                    'link_instagram': 'a[href*="instagram.com/ajupam"]',
-                    'link_facebook': 'a[href*="facebook.com/ajupam"]',
-                    'link_tiktok': 'a[aria-label*="TikTok"], .footer-social a:has(i.fa-tiktok)',
-                    'link_youtube': 'a[aria-label*="YouTube"], .footer-social a:has(i.fa-youtube)',
+                    'link_instagram': () => document.querySelectorAll('a[href*="instagram.com/ajupam"]'),
+                    'link_facebook': () => document.querySelectorAll('a[href*="facebook.com/ajupam"]'),
+                    'link_tiktok': () => document.querySelectorAll('a[aria-label*="TikTok"]'),
+                    'link_youtube': () => document.querySelectorAll('a[aria-label*="YouTube"]'),
 
                     // WhatsApp
-                    'link_whatsapp_general': 'a[href*="wa.me"]:not([href*="text="])',
-                    'link_whatsapp_info': 'a[href*="wa.me"][href*="text="], .whatsapp-float',
+                    'link_whatsapp_general': () => {
+                        const todos = document.querySelectorAll('a[href*="wa.me"]');
+                        return Array.from(todos).filter(a => !a.href.includes('text='));
+                    },
+                    'link_whatsapp_info': () => document.querySelectorAll('a[href*="wa.me"][href*="text="], .whatsapp-float'),
 
                     // Proyectos principales
-                    'link_liga_ajupam': 'a[href*="bit.ly/ligaajupam"], a[href*="Liga AJuPaM"]',
-                    'link_liga_suscribirse': 'a[href*="MULax5E14S5Jz3zWA"], .btn:contains("novedades")',
+                    'link_liga_ajupam': () => document.querySelectorAll('a[href*="bit.ly/ligaajupam"]'),
+                    'link_liga_suscribirse': () => {
+                        // Buscar por href específico O por texto "novedades"
+                        const porHref = document.querySelectorAll('a[href*="MULax5E14S5Jz3zWA"]');
+                        const porTexto = buscarPorTexto('a', ['novedades', 'próxima liga']);
+                        return [...porHref, ...porTexto];
+                    },
 
                     // Rankings dinámicos
-                    'link_ranking_2025': `${CONFIG.RANKING_SELECTOR}[data-year="2025"]`,
-                    'link_ranking_2024': `${CONFIG.RANKING_SELECTOR}[data-year="2024"]`,
+                    'link_ranking_2025': () => document.querySelectorAll('a[href*="rankingajupam"][data-year="2025"]'),
+                    'link_ranking_2024': () => document.querySelectorAll('a[href*="rankingajupam"][data-year="2024"]'),
 
                     // Formularios
-                    'link_registrar_club': 'a[href*="forms.gle"]:contains("Registrar"), a[href*="79xPgCv8yrEWCpXV7"]',
-                    'link_sumarse_jugador': 'a[href*="forms.gle"]:contains("Jugador"), a[href*="PShqPTPdUPoh98X79"]',
-                    'link_sumarse_profesor': 'a:contains("profesor"), a:contains("Sumarse como")',
+                    'link_registrar_club': () => {
+                        const porHref = document.querySelectorAll('a[href*="79xPgCv8yrEWCpXV7"], a[href*="dpXgfWAbFQpiNPUc8"]');
+                        const porTexto = buscarPorTexto('a', ['Registrar Club']);
+                        return [...porHref, ...porTexto];
+                    },
+                    'link_sumarse_jugador': () => {
+                        const porHref = document.querySelectorAll('a[href*="PShqPTPdUPoh98X79"], a[href*="GJRPQPMfJWaFy2GJ8"]');
+                        const porTexto = buscarPorTexto('a', ['Sumarse como Jugador']);
+                        return [...porHref, ...porTexto];
+                    },
+                    'link_sumarse_profesor': () => buscarPorTexto('a', ['profesor', 'Sumarse como']),
 
                     // Ligas específicas masculinas
-                    'link_masc_2da_3ra': 'a[href*="1b_sNGG23s8P1-bsNCHbleMTtBqd2rYZoqiDKHi3dgcI"]',
-                    'link_masc_4ta_5ta_a': 'a[href*="1Sp03_K1nFhdt225OfZe3qtZMWF1ys3vercJbCZvE0P8"]',
-                    'link_masc_4ta_5ta_b': 'a[href*="1E15oTdvqElVzENmT4S620U8fe2rAalkhvxNDIzZ2OeE"]',
-                    'link_masc_6ta_o_mas_a': 'a[href*="15OdEGqJslnGjgT19NETROuFHitOsf_e2BfPuWJy9vE8"]',
-                    'link_masc_6ta_o_mas_b': 'a[href*="1X_zK3245r1fM887wRkT51eWPCSIp11E4w6BmtdB8Z3I"]',
+                    'link_masc_2da_3ra': () => document.querySelectorAll('a[href*="1b_sNGG23s8P1-bsNCHbleMTtBqd2rYZoqiDKHi3dgcI"]'),
+                    'link_masc_4ta_5ta_a': () => document.querySelectorAll('a[href*="1Sp03_K1nFhdt225OfZe3qtZMWF1ys3vercJbCZvE0P8"]'),
+                    'link_masc_4ta_5ta_b': () => document.querySelectorAll('a[href*="1E15oTdvqElVzENmT4S620U8fe2rAalkhvxNDIzZ2OeE"]'),
+                    'link_masc_6ta_o_mas_a': () => document.querySelectorAll('a[href*="15OdEGqJslnGjgT19NETROuFHitOsf_e2BfPuWJy9vE8"]'),
+                    'link_masc_6ta_o_mas_b': () => document.querySelectorAll('a[href*="1X_zK3245r1fM887wRkT51eWPCSIp11E4w6BmtdB8Z3I"]'),
 
                     // Ligas específicas femeninas
-                    'link_fem_5ta_6ta_a': 'a[href*="1tTUt6vO-3Z1kuEXIP6ujq2P3HseN5uu0g3r8KRnOySs"]',
-                    'link_fem_5ta_6ta_b': 'a[href*="1l3cnbgGyNtxmup9U-IM955FkFplbvpO93Gv1VV6MIr4"]',
-                    'link_fem_7ma_8va': 'a[href*="1OWm5XGwCS2deUfKB9H1imwC98cBWac6-7Iv-lHpZSnQ"]',
+                    'link_fem_5ta_6ta_a': () => document.querySelectorAll('a[href*="1tTUt6vO-3Z1kuEXIP6ujq2P3HseN5uu0g3r8KRnOySs"]'),
+                    'link_fem_5ta_6ta_b': () => document.querySelectorAll('a[href*="1l3cnbgGyNtxmup9U-IM955FkFplbvpO93Gv1VV6MIr4"]'),
+                    'link_fem_7ma_8va': () => document.querySelectorAll('a[href*="1OWm5XGwCS2deUfKB9H1imwC98cBWac6-7Iv-lHpZSnQ"]'),
 
                     // Contacto
-                    'link_email': 'a[href^="mailto:"]',
-                    'link_telefono': 'a[href^="tel:"]'
+                    'link_email': () => document.querySelectorAll('a[href^="mailto:"]'),
+                    'link_telefono': () => document.querySelectorAll('a[href^="tel:"]')
                 };
 
-                // Actualizar enlaces usando los mapeos
+                // Actualizar enlaces usando las funciones de mapeo
                 Object.entries(enlaces).forEach(([concepto, valorNuevo]) => {
-                    const selector = mapeosEspeciales[concepto];
+                    const funcionSelector = mapeosEspeciales[concepto];
 
-                    if (selector) {
-                        const elementos = document.querySelectorAll(selector);
+                    if (funcionSelector) {
+                        try {
+                            const elementos = funcionSelector();
 
-                        elementos.forEach(elemento => {
-                            if (elemento.tagName.toLowerCase() === 'a') {
-                                const valorAnterior = elemento.href;
-                                elemento.href = valorNuevo;
+                            elementos.forEach(elemento => {
+                                if (elemento && elemento.tagName && elemento.tagName.toLowerCase() === 'a') {
+                                    const valorAnterior = elemento.href;
+                                    elemento.href = valorNuevo;
 
-                                if (CONFIG.DEBUG_MODE && valorAnterior !== valorNuevo) {
-                                    console.log(`🔗 ENLACE: ${concepto} → "${valorNuevo}"`);
+                                    if (CONFIG.DEBUG_MODE && valorAnterior !== valorNuevo) {
+                                        console.log(`🔗 ENLACE: ${concepto} → "${valorNuevo}"`);
+                                    }
+
+                                    actualizados++;
                                 }
-
-                                actualizados++;
+                            });
+                        } catch (error) {
+                            if (CONFIG.DEBUG_MODE) {
+                                console.warn(`⚠️ Error actualizando ${concepto}:`, error.message);
                             }
-                        });
+                        }
                     }
                 });
 
@@ -376,8 +412,12 @@
                     const linkActivo = anoActual >= 2025 ? enlaces['link_ranking_2025'] : enlaces['link_ranking_2024'];
 
                     // Actualizar enlaces de ranking sin año específico
-                    const rankingGeneral = document.querySelectorAll('a[href*="rankingajupam"]:not([data-year])');
-                    rankingGeneral.forEach(link => {
+                    const rankingGeneral = document.querySelectorAll('a[href*="rankingajupam"], a[href*="ranking"]');
+                    const rankingFiltrado = Array.from(rankingGeneral).filter(link =>
+                        !link.hasAttribute('data-year')
+                    );
+
+                    rankingFiltrado.forEach(link => {
                         link.href = linkActivo;
                         if (CONFIG.DEBUG_MODE) {
                             console.log(`🎯 RANKING DINÁMICO: Usando ${anoActual >= 2025 ? '2025' : '2024'}`);
@@ -476,31 +516,52 @@
             }
 
             // Re-ejecutar si se cargan nuevos elementos dinámicamente
-            const observer = new MutationObserver((mutations) => {
-                let needsUpdate = false;
+            function inicializarObservador() {
+                // Esperar a que document.body esté disponible
+                if (!document.body) {
+                    setTimeout(inicializarObservador, 100);
+                    return;
+                }
 
-                mutations.forEach(mutation => {
-                    if (mutation.addedNodes.length > 0) {
-                        mutation.addedNodes.forEach(node => {
-                            if (node.nodeType === 1) { // Element node
-                                if (node.matches('[data-target]') || node.querySelector('[data-target]') ||
-                                    node.matches('a[href]') || node.querySelector('a[href]')) {
-                                    needsUpdate = true;
+                const observer = new MutationObserver((mutations) => {
+                    let needsUpdate = false;
+
+                    mutations.forEach(mutation => {
+                        if (mutation.addedNodes.length > 0) {
+                            mutation.addedNodes.forEach(node => {
+                                if (node.nodeType === 1) { // Element node
+                                    if (node.matches && (
+                                        node.matches('[data-target]') ||
+                                        node.querySelector('[data-target]') ||
+                                        node.matches('a[href]') ||
+                                        node.querySelector('a[href]')
+                                    )) {
+                                        needsUpdate = true;
+                                    }
                                 }
-                            }
-                        });
+                            });
+                        }
+                    });
+
+                    if (needsUpdate) {
+                        setTimeout(inicializarSistemaDinamico, 500);
                     }
                 });
 
-                if (needsUpdate) {
-                    setTimeout(inicializarSistemaDinamico, 500);
+                try {
+                    observer.observe(document.body, {
+                        childList: true,
+                        subtree: true
+                    });
+                } catch (error) {
+                    if (CONFIG.DEBUG_MODE) {
+                        console.warn('⚠️ No se pudo inicializar el observador DOM:', error.message);
+                    }
                 }
-            });
+            }
 
-            observer.observe(document.body, {
-                childList: true,
-                subtree: true
-            });
+            // Inicializar el observador después de un breve delay
+            setTimeout(inicializarObservador, 1000);
 
         })();
     </script>
