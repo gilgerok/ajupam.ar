@@ -257,7 +257,7 @@
     left: 10%;
     right: 10%;
     height: 2px;
-    background: #2e86ab;
+    background: linear-gradient(180deg, var(--primary-blue) 0%, var(--accent-lime) 100%);
     z-index: 9;
 }
 
@@ -489,12 +489,12 @@ button:disabled:hover .tooltip {
     }
 
     .timeline::before {
-        left: 30px;
+        left: 45px;
         top: 0;
         bottom: 0;
         right: auto;
         width: 2px;
-        height: auto;
+        height: calc(100% - 40px);
     }
 
     .timeline-item {
@@ -505,8 +505,8 @@ button:disabled:hover .tooltip {
 
     .timeline-marker {
         position: absolute;
-        left: 0;
-        top: 0;
+        left: 16px;
+        top: 16px;
     }
 
     .project-card.featured {
