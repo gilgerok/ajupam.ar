@@ -1,0 +1,978 @@
+* ========================================
+   MOBILE FIXES CSS - AJuPaM
+   Version: 2.0
+   Archivo: css/mobile-fixes.css
+   ======================================== */
+
+/* Variables globales para mobile */
+:root {
+    --mobile-padding: 1rem;
+    --mobile-margin: 1rem;
+    --mobile-gap: 1rem;
+    --mobile-radius: 12px;
+    --mobile-font-base: 14px;
+    --mobile-transition: all 0.3s ease;
+}
+
+/* ========================================
+   CORRECCIONES GLOBALES MOBILE
+   ======================================== */
+
+/* Prevenir overflow horizontal */
+html, body {
+    overflow-x: hidden;
+    max-width: 100%;
+}
+
+/* Reset box-sizing para todos los elementos */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+/* Container principal con padding lateral consistente */
+@media (max-width: 768px) {
+    .container {
+        padding-left: var(--mobile-padding);
+        padding-right: var(--mobile-padding);
+        max-width: 100%;
+        margin: 0 auto;
+    }
+    
+    /* Secciones principales con padding correcto */
+    .content-section,
+    section[id] {
+        padding: 60px var(--mobile-padding);
+        overflow: hidden;
+    }
+    
+    /* Hero sections específicas */
+    #hero,
+    .hero-home,
+    #hero-premiadores,
+    #hero-proveedores {
+        padding: 100px var(--mobile-padding) 60px var(--mobile-padding);
+        min-height: auto;
+    }
+}
+
+/* ========================================
+   HEADER & NAVEGACIÓN MOBILE
+   ======================================== */
+
+@media (max-width: 768px) {
+    .main-header {
+        padding: 0 var(--mobile-padding);
+        height: 70px;
+    }
+    
+    .main-header nav {
+        height: 70px;
+        padding: 0;
+    }
+    
+    /* Logo más pequeño en mobile */
+    .logo-img {
+        height: 35px;
+    }
+    
+    /* Menú hamburguesa mejorado */
+    .hamburger-btn {
+        width: 44px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        font-size: 1.5rem;
+    }
+    
+    /* Menú mobile fullscreen mejorado */
+    .nav-menu {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 100%;
+        height: 100vh;
+        background: white;
+        padding: 80px var(--mobile-padding) 40px;
+        transition: right 0.3s ease;
+        overflow-y: auto;
+    }
+    
+    .nav-menu.active {
+        right: 0;
+    }
+    
+    .nav-menu li {
+        margin: 15px 0;
+    }
+    
+    .nav-menu a {
+        font-size: 1.25rem;
+        padding: 12px 0;
+        display: block;
+        text-align: center;
+    }
+}
+
+/* ========================================
+   HERO HOME MOBILE
+   ======================================== */
+
+@media (max-width: 768px) {
+    .hero-home {
+        padding-top: 90px;
+        padding-bottom: 40px;
+        min-height: calc(100vh - 70px);
+    }
+    
+    .hero-home .hero-content {
+        padding: 0;
+        margin: 0 auto;
+    }
+    
+    /* Badge hero */
+    .hero-home .hero-badge {
+        font-size: 0.85rem;
+        padding: 0.5rem 1.5rem;
+        margin-bottom: 2rem;
+    }
+    
+    /* Título hero responsive */
+    .hero-home .hero-title {
+        font-size: clamp(2.5rem, 10vw, 4rem);
+        line-height: 1.1;
+        margin-bottom: 2rem;
+        letter-spacing: 1px;
+    }
+    
+    .hero-home .title-highlight {
+        margin-top: 0.25rem;
+    }
+    
+    /* Descripción hero */
+    .hero-home .hero-description {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        margin-bottom: 2.5rem;
+        padding: 0;
+        max-width: 100%;
+    }
+    
+    /* Stats hero en grid 1 columna */
+    .hero-stats {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        max-width: 320px;
+        margin: 2rem auto;
+    }
+    
+    .hero-stat {
+        padding: 1.5rem 1rem;
+        min-width: unset;
+        width: 100%;
+    }
+    
+    .hero-stat .stat-big {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .hero-stat .stat-label {
+        font-size: 0.9rem;
+    }
+    
+    /* Botones hero */
+    .hero-buttons {
+        flex-direction: column;
+        gap: 1rem;
+        margin-top: 2rem;
+        width: 100%;
+    }
+    
+    .hero-home .btn {
+        width: 100%;
+        max-width: 280px;
+        margin: 0 auto;
+        padding: 1rem 2rem;
+        font-size: 1rem;
+        min-width: unset;
+    }
+}
+
+/* ========================================
+   SECCIONES DE CONTENIDO MOBILE
+   ======================================== */
+
+@media (max-width: 768px) {
+    /* Títulos de sección */
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        text-align: center;
+    }
+    
+    .section-subtitle {
+        font-size: 1rem;
+        text-align: center;
+        padding: 0;
+    }
+    
+    /* Quiénes Somos */
+    .about-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .about-content {
+        padding: 0;
+        text-align: center;
+    }
+    
+    .about-content h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .about-description {
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+    
+    /* Recognition badge */
+    .recognition-badge {
+        flex-direction: column;
+        padding: 1.5rem;
+        gap: 1rem;
+        text-align: center;
+    }
+    
+    .recognition-icon {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .recognition-icon i {
+        font-size: 1.5rem;
+    }
+    
+    .recognition-text {
+        font-size: 0.9rem;
+    }
+}
+
+/* ========================================
+   PROYECTOS & CARDS MOBILE
+   ======================================== */
+
+@media (max-width: 768px) {
+    /* Grid de proyectos */
+    .projects-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 0;
+    }
+    
+    .project-card {
+        padding: 1.5rem;
+        min-height: auto;
+        height: auto;
+    }
+    
+    .project-card.featured {
+        grid-column: span 1;
+        padding: 2rem;
+    }
+    
+    .project-card h3 {
+        font-size: 1.5rem;
+    }
+    
+    .project-stats {
+        flex-direction: row;
+        justify-content: space-around;
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+    
+    .stat-num {
+        font-size: 1.5rem;
+    }
+    
+    .stat-text {
+        font-size: 0.75rem;
+    }
+}
+
+/* ========================================
+   COMUNIDAD & TIMELINE MOBILE
+   ======================================== */
+
+@media (max-width: 768px) {
+    /* Alcance cards en grid 2x2 */
+    .alcance-flex {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+    }
+    
+    .alcance-card {
+        padding: 1.25rem 0.5rem;
+        text-align: center;
+        height: auto;
+        min-height: auto;
+    }
+    
+    .alcance-card i {
+        font-size: 2rem;
+        margin-bottom: 0.75rem;
+    }
+    
+    .alcance-card .stat-number {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .alcance-card p {
+        font-size: 0.75rem;
+        line-height: 1.3;
+        margin: 0;
+    }
+    
+    /* Timeline vertical */
+    .timeline {
+        flex-direction: column;
+        padding: 0;
+        gap: 1.5rem;
+        position: relative;
+        margin-left: 20px;
+    }
+    
+    .timeline::before {
+        content: '';
+        position: absolute;
+        left: 20px;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        height: calc(100% - 40px);
+        background: linear-gradient(180deg, var(--primary-blue) 0%, var(--accent-lime) 100%);
+    }
+    
+    .timeline-item {
+        text-align: left;
+        padding-left: 60px;
+        position: relative;
+        margin-bottom: 1rem;
+    }
+    
+    .timeline-marker {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+    
+    .timeline-content {
+        padding: 1rem;
+        min-height: auto;
+        height: auto;
+    }
+    
+    .timeline-content h3 {
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .timeline-content p {
+        font-size: 0.9rem;
+    }
+}
+
+/* ========================================
+   SPONSORS & PROVEEDORES MOBILE
+   ======================================== */
+
+@media (max-width: 768px) {
+    /* Sponsors grid */
+    .sponsors-flex {
+        flex-direction: column;
+        gap: 1.5rem;
+        max-width: 100%;
+    }
+    
+    .sponsor-card {
+        max-width: 100%;
+        width: 100%;
+        padding: 1.5rem;
+        height: auto;
+    }
+    
+    .sponsor-card h3 {
+        font-size: 1.25rem;
+        margin-bottom: 0.75rem;
+    }
+    
+    /* Logos sponsors */
+    .sponsor-logos,
+    .providers-logo-flex,
+    .logos-premiadores-flex {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+    }
+    
+    .sponsor-logo-item,
+    .provider-logo-item,
+    .premiador-logo-item {
+        flex: 0 0 calc(50% - 0.5rem);
+        max-width: calc(50% - 0.5rem);
+        padding: 1rem;
+        height: auto;
+        min-height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .sponsor-logo-item img,
+    .provider-logo-item img,
+    .premiador-logo-item img {
+        max-width: 100px;
+        max-height: 50px;
+        width: auto;
+        height: auto;
+    }
+    
+    /* Botones sponsors */
+    .sponsors-buttons {
+        flex-direction: column;
+        gap: 1rem;
+        width: 100%;
+    }
+    
+    .sponsors-buttons .btn {
+        width: 100%;
+        max-width: 280px;
+        margin: 0 auto;
+    }
+}
+
+/* ========================================
+   GALERÍA MOBILE (SPLIDE)
+   ======================================== */
+
+@media (max-width: 768px) {
+    #galeria {
+        padding: 40px 0;
+        overflow: hidden;
+    }
+    
+    #galeria .container {
+        padding: 0 var(--mobile-padding);
+    }
+    
+    /* Splide container */
+    .splide {
+        padding: 0;
+        margin: 0;
+    }
+    
+    .splide__track {
+        padding: 0;
+    }
+    
+    .splide__slide {
+        margin: 0 5px;
+        padding: 0;
+    }
+    
+    .splide__slide img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+    }
+    
+    /* Ocultar flechas, mostrar dots */
+    .splide__arrows {
+        display: none;
+    }
+    
+    .splide__pagination {
+        display: flex;
+        justify-content: center;
+        gap: 0.5rem;
+        margin-top: 1.5rem;
+        padding: 0 var(--mobile-padding);
+    }
+    
+    .splide__pagination__page {
+        width: 8px;
+        height: 8px;
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 50%;
+        margin: 0;
+        padding: 0;
+        border: none;
+        transition: all 0.3s ease;
+    }
+    
+    .splide__pagination__page.is-active {
+        background: var(--primary-blue);
+        transform: scale(1.3);
+    }
+}
+
+/* ========================================
+   FORMULARIOS & CONTACTO MOBILE
+   ======================================== */
+
+@media (max-width: 768px) {
+    /* Sección contacto */
+    #contacto {
+        padding: 40px var(--mobile-padding);
+    }
+    
+    .contacto-flex,
+    .contact-wrapper {
+        flex-direction: column;
+        gap: 2rem;
+        padding: 0;
+    }
+    
+    .contacto-info,
+    .contacto-form,
+    .contact-info,
+    .contact-form-wrapper {
+        width: 100%;
+        max-width: 100%;
+        padding: 0;
+    }
+    
+    /* Formulario */
+    .contact-form {
+        padding: 1.5rem;
+        border-radius: var(--mobile-radius);
+    }
+    
+    .form-group {
+        margin-bottom: 1rem;
+    }
+    
+    .form-group label {
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+        display: block;
+    }
+    
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px; /* Previene zoom en iOS */
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background: white;
+        transition: var(--mobile-transition);
+    }
+    
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+        outline: none;
+        border-color: var(--primary-blue);
+        box-shadow: 0 0 0 3px rgba(45, 123, 207, 0.1);
+    }
+    
+    /* Botón submit */
+    .btn-submit {
+        width: 100%;
+        padding: 14px 24px;
+        font-size: 1rem;
+        border-radius: 8px;
+        margin-top: 1rem;
+    }
+    
+    /* Contact checklist */
+    .contact-checklist {
+        margin: 1.5rem 0;
+        padding: 0;
+    }
+    
+    .checklist-item {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 0.75rem;
+        font-size: 0.9rem;
+    }
+    
+    .checklist-item i {
+        margin-right: 0.5rem;
+        margin-top: 2px;
+        flex-shrink: 0;
+    }
+    
+    /* Contact direct */
+    .contact-direct {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        justify-content: center;
+        margin-top: 1.5rem;
+    }
+    
+    .contact-direct a {
+        flex: 1 1 calc(50% - 0.5rem);
+        min-width: 120px;
+        padding: 0.75rem 1rem;
+        font-size: 0.9rem;
+        text-align: center;
+        border-radius: 8px;
+    }
+}
+
+/* ========================================
+   FOOTER MOBILE
+   ======================================== */
+
+@media (max-width: 768px) {
+    #footer {
+        padding: 40px var(--mobile-padding) 20px;
+    }
+    
+    .footer-brand,
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: center;
+    }
+    
+    .footer-logo-section {
+        justify-content: center;
+    }
+    
+    .footer-logo {
+        height: 40px;
+    }
+    
+    .footer-description {
+        font-size: 0.9rem;
+        padding: 0;
+        margin: 1rem 0;
+    }
+    
+    .footer-social {
+        justify-content: center;
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+    
+    .social-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1rem;
+    }
+    
+    /* Footer links */
+    .footer-links h4 {
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+    }
+    
+    .footer-links ul {
+        padding: 0;
+    }
+    
+    .footer-links a {
+        font-size: 0.9rem;
+        padding: 0.5rem 0;
+        display: block;
+    }
+    
+    /* Contact info */
+    .contact-info {
+        align-items: center;
+    }
+    
+    .contact-item {
+        font-size: 0.9rem;
+        justify-content: center;
+    }
+    
+    .contact-item i {
+        margin-right: 0.5rem;
+    }
+    
+    /* Footer bottom */
+    .footer-bottom {
+        padding: 1.5rem var(--mobile-padding);
+        text-align: center;
+    }
+    
+    .footer-bottom p {
+        font-size: 0.85rem;
+        margin: 0;
+    }
+}
+
+/* ========================================
+   MODALES MOBILE
+   ======================================== */
+
+@media (max-width: 768px) {
+    .modal-content {
+        width: calc(100% - 2rem);
+        max-width: 100%;
+        max-height: 90vh;
+        margin: 1rem;
+        border-radius: var(--mobile-radius);
+    }
+    
+    .modal-header {
+        padding: 1rem;
+    }
+    
+    .modal-title {
+        font-size: 1.25rem;
+    }
+    
+    .modal-body {
+        padding: 1rem;
+        max-height: calc(90vh - 120px);
+        overflow-y: auto;
+    }
+    
+    .modal-close {
+        width: 32px;
+        height: 32px;
+        font-size: 1.5rem;
+        top: 0.5rem;
+        right: 0.5rem;
+    }
+    
+    /* Liga links en modal */
+    .liga-link {
+        padding: 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .liga-info {
+        flex-direction: column;
+        gap: 0.5rem;
+        font-size: 0.8rem;
+    }
+}
+
+/* ========================================
+   WHATSAPP FLOAT MOBILE
+   ======================================== */
+
+@media (max-width: 768px) {
+    .whatsapp-float {
+        width: 50px;
+        height: 50px;
+        bottom: 1rem;
+        right: 1rem;
+        font-size: 1.3rem;
+        box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+    }
+    
+    .whatsapp-float:hover {
+        transform: scale(1.05);
+    }
+}
+
+/* ========================================
+   UTILIDADES MOBILE
+   ======================================== */
+
+@media (max-width: 768px) {
+    /* Ocultar elementos en mobile */
+    .hide-mobile {
+        display: none !important;
+    }
+    
+    /* Mostrar solo en mobile */
+    .show-mobile {
+        display: block !important;
+    }
+    
+    /* Centrar texto en mobile */
+    .text-center-mobile {
+        text-align: center !important;
+    }
+    
+    /* Padding utilities */
+    .p-mobile-0 { padding: 0 !important; }
+    .p-mobile-1 { padding: 0.5rem !important; }
+    .p-mobile-2 { padding: 1rem !important; }
+    .p-mobile-3 { padding: 1.5rem !important; }
+    
+    .px-mobile-0 { padding-left: 0 !important; padding-right: 0 !important; }
+    .px-mobile-1 { padding-left: 0.5rem !important; padding-right: 0.5rem !important; }
+    .px-mobile-2 { padding-left: 1rem !important; padding-right: 1rem !important; }
+    
+    .py-mobile-0 { padding-top: 0 !important; padding-bottom: 0 !important; }
+    .py-mobile-1 { padding-top: 0.5rem !important; padding-bottom: 0.5rem !important; }
+    .py-mobile-2 { padding-top: 1rem !important; padding-bottom: 1rem !important; }
+    
+    /* Margin utilities */
+    .m-mobile-0 { margin: 0 !important; }
+    .m-mobile-1 { margin: 0.5rem !important; }
+    .m-mobile-2 { margin: 1rem !important; }
+    
+    .mx-mobile-auto { margin-left: auto !important; margin-right: auto !important; }
+    .my-mobile-1 { margin-top: 0.5rem !important; margin-bottom: 0.5rem !important; }
+    .my-mobile-2 { margin-top: 1rem !important; margin-bottom: 1rem !important; }
+}
+
+/* ========================================
+   FIX ESPECÍFICOS PARA PROBLEMAS CONOCIDOS
+   ======================================== */
+
+@media (max-width: 768px) {
+    /* Fix para contadores animados */
+    .stat-number {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        font-family: var(--font-title) !important;
+    }
+    
+    .stat-number.is-visible {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+    
+    /* Fix para secciones después de la galería */
+    #galeria ~ section,
+    #galeria + section {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    
+    /* Fix para AOS animations */
+    [data-aos] {
+        opacity: 1 !important;
+        transform: none !important;
+        transition-property: none !important;
+    }
+    
+    /* Fix para imágenes responsive */
+    img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+    }
+    
+    /* Fix para videos responsive */
+    video, iframe {
+        max-width: 100%;
+        height: auto;
+    }
+    
+    /* Fix para tablas responsive */
+    table {
+        width: 100%;
+        overflow-x: auto;
+        display: block;
+    }
+}
+
+/* ========================================
+   MEDIA QUERY PARA PANTALLAS MUY PEQUEÑAS
+   ======================================== */
+
+@media (max-width: 480px) {
+    /* Variables ajustadas */
+    :root {
+        --mobile-padding: 0.75rem;
+        --mobile-font-base: 13px;
+    }
+    
+    /* Hero ajustes */
+    .hero-home .hero-title {
+        font-size: 2rem;
+        letter-spacing: 0;
+    }
+    
+    .hero-home .hero-badge {
+        font-size: 0.75rem;
+        padding: 0.4rem 1rem;
+    }
+    
+    /* Alcance cards 2x2 más compacto */
+    .alcance-card {
+        padding: 1rem 0.5rem;
+    }
+    
+    .alcance-card i {
+        font-size: 1.5rem;
+    }
+    
+    .alcance-card .stat-number {
+        font-size: 1.5rem;
+    }
+    
+    .alcance-card p {
+        font-size: 0.7rem;
+    }
+    
+    /* Timeline más compacto */
+    .timeline-item {
+        padding-left: 50px;
+    }
+    
+    .timeline-marker {
+        width: 35px;
+        height: 35px;
+        font-size: 0.9rem;
+    }
+    
+    /* Logos en una columna */
+    .sponsor-logo-item,
+    .provider-logo-item,
+    .premiador-logo-item {
+        flex: 0 0 100%;
+        max-width: 100%;
+        padding: 0.75rem;
+    }
+    
+    /* Botones más pequeños */
+    .btn {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* ========================================
+   PRINT STYLES
+   ======================================== */
+
+@media print {
+    /* Ocultar elementos no necesarios para impresión */
+    .main-header,
+    .hamburger-btn,
+    .whatsapp-float,
+    .modal,
+    .btn,
+    #footer {
+        display: none !important;
+    }
+    
+    /* Ajustar padding */
+    .content-section {
+        padding: 20px 10px;
+    }
+    
+    /* Colores de impresión */
+    * {
+        color: black !important;
+        background: white !important;
+    }
+}
