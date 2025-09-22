@@ -66,8 +66,9 @@
         href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;500;600;700;800&display=swap"
         as="style">
     <link rel="preload" href="/images/logo-ajupam.svg" as="image" type="image/svg+xml">
-    <link rel="preload" href="/css/style.css?v=2.3" as="style">
-    <link rel="preload" href="/css/home.css?v=1.1" as="style">
+    <link rel="preload" href="/css/style.css" as="style">
+    <link rel="preload" href="/css/home.css" as="style">
+    <link rel="preload" href="/js/dinamicdata.js" as="script">
 
     <!-- Fonts -->
     <link
@@ -138,433 +139,7 @@
         ]
     }
     </script>
-
-    <script>
-        /**
-         * ========================================
-         * 🚀 SISTEMA DINÁMICO COMPLETO AJUPAM v3.0
-         * ========================================
-         * 
-         * Maneja ESTADÍSTICAS + ENLACES desde Google Sheets
-         * Funciona con la planilla: 1fCV4Dcw3mKnMaSJAkf2K3mm_y4zam9s6S5vnjLiK3tE
-         */
-
-        (function () {
-            'use strict';
-
-            // ===============================
-            // 📊 CONFIGURACIÓN DEL SISTEMA
-            // ===============================
-
-            const CONFIG = {
-                // ID de la planilla de Google Sheets
-                SHEET_ID: '1fCV4Dcw3mKnMaSJAkf2K3mm_y4zam9s6S5vnjLiK3tE',
-                SHEET_NAME: 'Hoja 1',
-
-                // Configuración de actualización
-                DEBUG_MODE: true,
-                RETRY_ATTEMPTS: 3,
-                RETRY_DELAY: 2000,
-
-                // Selectores especiales
-                RANKING_SELECTOR: '[href*="rankingajupam"], [href*="ranking"]',
-            };
-
-            // ===============================
-            // 🔄 CARGA Y PROCESAMIENTO DE DATOS
-            // ===============================
-
-            async function cargarDatosDinamicos() {
-                const url = `https://docs.google.com/spreadsheets/d/${CONFIG.SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(CONFIG.SHEET_NAME)}`;
-
-                if (CONFIG.DEBUG_MODE) {
-                    console.log('🌟 SISTEMA DINÁMICO COMPLETO v3.0 - Iniciando...');
-                    console.log('📡 URL:', url);
-                }
-
-                try {
-                    const response = await fetch(url);
-                    if (!response.ok) {
-                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                    }
-
-                    const csvData = await response.text();
-                    return procesarDatosCSV(csvData);
-
-                } catch (error) {
-                    console.error('❌ Error cargando datos:', error);
-                    return { estadisticas: {}, enlaces: {} };
-                }
-            }
-
-            function procesarDatosCSV(csvData) {
-                const filas = csvData.split('\n').filter(fila => fila.trim());
-                const datos = { estadisticas: {}, enlaces: {} };
-                let procesados = 0;
-
-                // Procesar cada fila (saltear encabezado)
-                for (let i = 1; i < filas.length; i++) {
-                    const fila = filas[i];
-                    const columnas = parsearFilaCSV(fila);
-
-                    if (columnas.length >= 2) {
-                        const concepto = columnas[0]?.replace(/"/g, '').trim();
-                        const valor = columnas[1]?.replace(/"/g, '').trim();
-
-                        if (concepto && valor) {
-                            // Clasificar entre estadísticas y enlaces
-                            if (concepto.startsWith('link_')) {
-                                datos.enlaces[concepto] = valor;
-                            } else {
-                                datos.estadisticas[concepto] = valor;
-                            }
-                            procesados++;
-                        }
-                    }
-                }
-
-                if (CONFIG.DEBUG_MODE) {
-                    console.log(`✅ Datos procesados: ${procesados} elementos`);
-                    console.log(`📊 Estadísticas: ${Object.keys(datos.estadisticas).length}`);
-                    console.log(`🔗 Enlaces: ${Object.keys(datos.enlaces).length}`);
-                }
-
-                return datos;
-            }
-
-            function parsearFilaCSV(fila) {
-                const resultado = [];
-                let dentroComillas = false;
-                let valorActual = '';
-
-                for (let i = 0; i < fila.length; i++) {
-                    const char = fila[i];
-
-                    if (char === '"') {
-                        dentroComillas = !dentroComillas;
-                    } else if (char === ',' && !dentroComillas) {
-                        resultado.push(valorActual);
-                        valorActual = '';
-                    } else {
-                        valorActual += char;
-                    }
-                }
-
-                resultado.push(valorActual);
-                return resultado;
-            }
-
-            // ===============================
-            // 📊 ACTUALIZACIÓN DE ESTADÍSTICAS
-            // ===============================
-
-            function actualizarEstadisticas(estadisticas) {
-                let actualizados = 0;
-
-                // Buscar todos los elementos con data-target
-                const elementos = document.querySelectorAll('[data-target]');
-
-                elementos.forEach(elemento => {
-                    const target = elemento.getAttribute('data-target');
-
-                    if (estadisticas.hasOwnProperty(target)) {
-                        const valorAnterior = elemento.textContent;
-                        const valorNuevo = estadisticas[target];
-
-                        // Actualizar data-target y contenido
-                        elemento.setAttribute('data-target', valorNuevo);
-                        elemento.textContent = valorNuevo;
-
-                        // Trigger contador animado si existe
-                        if (window.startCountAnimation) {
-                            window.startCountAnimation(elemento);
-                        }
-
-                        if (CONFIG.DEBUG_MODE) {
-                            console.log(`🔄 ESTADÍSTICA: "${valorAnterior}" → "${valorNuevo}" (${target})`);
-                        }
-
-                        actualizados++;
-                    }
-                });
-
-                return actualizados;
-            }
-
-            // ===============================
-            // 🔗 ACTUALIZACIÓN DE ENLACES
-            // ===============================
-
-            function actualizarEnlaces(enlaces) {
-                let actualizados = 0;
-
-                // Función auxiliar para buscar elementos por contenido de texto
-                function buscarPorTexto(selector, textos) {
-                    const elementos = document.querySelectorAll(selector);
-                    const encontrados = [];
-
-                    elementos.forEach(elemento => {
-                        const texto = elemento.textContent.toLowerCase();
-                        if (textos.some(t => texto.includes(t.toLowerCase()))) {
-                            encontrados.push(elemento);
-                        }
-                    });
-
-                    return encontrados;
-                }
-
-                // Mapeado de enlaces con funciones de selección
-                const mapeosEspeciales = {
-                    // Redes sociales en footer
-                    'link_instagram': () => document.querySelectorAll('a[href*="instagram.com/ajupam"]'),
-                    'link_facebook': () => document.querySelectorAll('a[href*="facebook.com/ajupam"]'),
-                    'link_tiktok': () => document.querySelectorAll('a[aria-label*="TikTok"]'),
-                    'link_youtube': () => document.querySelectorAll('a[aria-label*="YouTube"]'),
-
-                    // WhatsApp
-                    'link_whatsapp_general': () => {
-                        const todos = document.querySelectorAll('a[href*="wa.me"]');
-                        return Array.from(todos).filter(a => !a.href.includes('text='));
-                    },
-                    'link_whatsapp_info': () => document.querySelectorAll('a[href*="wa.me"][href*="text="], .whatsapp-float'),
-
-                    // Proyectos principales
-                    'link_liga_ajupam': () => document.querySelectorAll('a[href*="bit.ly/ligaajupam"]'),
-                    'link_liga_suscribirse': () => {
-                        // Buscar por href específico O por texto "novedades"
-                        const porHref = document.querySelectorAll('a[href*="MULax5E14S5Jz3zWA"]');
-                        const porTexto = buscarPorTexto('a', ['novedades', 'próxima liga']);
-                        return [...porHref, ...porTexto];
-                    },
-
-                    // Rankings dinámicos
-                    'link_ranking_2025': () => document.querySelectorAll('a[href*="rankingajupam"][data-year="2025"]'),
-                    'link_ranking_2024': () => document.querySelectorAll('a[href*="rankingajupam"][data-year="2024"]'),
-
-                    // Formularios
-                    'link_registrar_club': () => {
-                        const porHref = document.querySelectorAll('a[href*="79xPgCv8yrEWCpXV7"], a[href*="dpXgfWAbFQpiNPUc8"]');
-                        const porTexto = buscarPorTexto('a', ['Registrar Club']);
-                        return [...porHref, ...porTexto];
-                    },
-                    'link_sumarse_jugador': () => {
-                        const porHref = document.querySelectorAll('a[href*="PShqPTPdUPoh98X79"], a[href*="GJRPQPMfJWaFy2GJ8"]');
-                        const porTexto = buscarPorTexto('a', ['Sumarse como Jugador']);
-                        return [...porHref, ...porTexto];
-                    },
-                    'link_sumarse_profesor': () => buscarPorTexto('a', ['profesor', 'Sumarse como']),
-
-                    // Ligas específicas masculinas
-                    'link_masc_2da_3ra': () => document.querySelectorAll('a[href*="1b_sNGG23s8P1-bsNCHbleMTtBqd2rYZoqiDKHi3dgcI"]'),
-                    'link_masc_4ta_5ta_a': () => document.querySelectorAll('a[href*="1Sp03_K1nFhdt225OfZe3qtZMWF1ys3vercJbCZvE0P8"]'),
-                    'link_masc_4ta_5ta_b': () => document.querySelectorAll('a[href*="1E15oTdvqElVzENmT4S620U8fe2rAalkhvxNDIzZ2OeE"]'),
-                    'link_masc_6ta_o_mas_a': () => document.querySelectorAll('a[href*="15OdEGqJslnGjgT19NETROuFHitOsf_e2BfPuWJy9vE8"]'),
-                    'link_masc_6ta_o_mas_b': () => document.querySelectorAll('a[href*="1X_zK3245r1fM887wRkT51eWPCSIp11E4w6BmtdB8Z3I"]'),
-
-                    // Ligas específicas femeninas
-                    'link_fem_5ta_6ta_a': () => document.querySelectorAll('a[href*="1tTUt6vO-3Z1kuEXIP6ujq2P3HseN5uu0g3r8KRnOySs"]'),
-                    'link_fem_5ta_6ta_b': () => document.querySelectorAll('a[href*="1l3cnbgGyNtxmup9U-IM955FkFplbvpO93Gv1VV6MIr4"]'),
-                    'link_fem_7ma_8va': () => document.querySelectorAll('a[href*="1OWm5XGwCS2deUfKB9H1imwC98cBWac6-7Iv-lHpZSnQ"]'),
-
-                    // Contacto
-                    'link_email': () => document.querySelectorAll('a[href^="mailto:"]'),
-                    'link_telefono': () => document.querySelectorAll('a[href^="tel:"]')
-                };
-
-                // Actualizar enlaces usando las funciones de mapeo
-                Object.entries(enlaces).forEach(([concepto, valorNuevo]) => {
-                    const funcionSelector = mapeosEspeciales[concepto];
-
-                    if (funcionSelector) {
-                        try {
-                            const elementos = funcionSelector();
-
-                            elementos.forEach(elemento => {
-                                if (elemento && elemento.tagName && elemento.tagName.toLowerCase() === 'a') {
-                                    const valorAnterior = elemento.href;
-                                    elemento.href = valorNuevo;
-
-                                    if (CONFIG.DEBUG_MODE && valorAnterior !== valorNuevo) {
-                                        console.log(`🔗 ENLACE: ${concepto} → "${valorNuevo}"`);
-                                    }
-
-                                    actualizados++;
-                                }
-                            });
-                        } catch (error) {
-                            if (CONFIG.DEBUG_MODE) {
-                                console.warn(`⚠️ Error actualizando ${concepto}:`, error.message);
-                            }
-                        }
-                    }
-                });
-
-                // Casos especiales adicionales
-                actualizarEnlacesEspeciales(enlaces);
-
-                return actualizados;
-            }
-
-            function actualizarEnlacesEspeciales(enlaces) {
-                // Manejo especial del ranking dinámico por año
-                if (enlaces['link_ranking_2025'] && enlaces['link_ranking_2024']) {
-                    const anoActual = new Date().getFullYear();
-                    const linkActivo = anoActual >= 2025 ? enlaces['link_ranking_2025'] : enlaces['link_ranking_2024'];
-
-                    // Actualizar enlaces de ranking sin año específico
-                    const rankingGeneral = document.querySelectorAll('a[href*="rankingajupam"], a[href*="ranking"]');
-                    const rankingFiltrado = Array.from(rankingGeneral).filter(link =>
-                        !link.hasAttribute('data-year')
-                    );
-
-                    rankingFiltrado.forEach(link => {
-                        link.href = linkActivo;
-                        if (CONFIG.DEBUG_MODE) {
-                            console.log(`🎯 RANKING DINÁMICO: Usando ${anoActual >= 2025 ? '2025' : '2024'}`);
-                        }
-                    });
-                }
-
-                // Agregar TikTok y YouTube al footer si no existen
-                if (enlaces['link_tiktok'] && !document.querySelector('a[href*="tiktok.com"]')) {
-                    agregarRedSocial('tiktok', enlaces['link_tiktok'], 'fa-tiktok', 'TikTok');
-                }
-
-                if (enlaces['link_youtube'] && !document.querySelector('a[href*="youtube.com"]')) {
-                    agregarRedSocial('youtube', enlaces['link_youtube'], 'fa-youtube', 'YouTube');
-                }
-            }
-
-            function agregarRedSocial(tipo, url, iconClass, label) {
-                const footerSocial = document.querySelector('.footer-social, .social-links');
-
-                if (footerSocial) {
-                    const nuevoEnlace = document.createElement('a');
-                    nuevoEnlace.href = url;
-                    nuevoEnlace.target = '_blank';
-                    nuevoEnlace.setAttribute('aria-label', label);
-                    nuevoEnlace.innerHTML = `<i class="fab ${iconClass}"></i>`;
-
-                    footerSocial.appendChild(nuevoEnlace);
-
-                    if (CONFIG.DEBUG_MODE) {
-                        console.log(`➕ RED SOCIAL AGREGADA: ${label} (${url})`);
-                    }
-                }
-            }
-
-            // ===============================
-            // 🎯 FUNCIÓN PRINCIPAL
-            // ===============================
-
-            async function inicializarSistemaDinamico() {
-                try {
-                    const { estadisticas, enlaces } = await cargarDatosDinamicos();
-
-                    // Actualizar estadísticas
-                    const statsActualizados = actualizarEstadisticas(estadisticas);
-
-                    // Actualizar enlaces
-                    const linksActualizados = actualizarEnlaces(enlaces);
-
-                    const total = statsActualizados + linksActualizados;
-
-                    if (CONFIG.DEBUG_MODE) {
-                        console.log('📈 RESUMEN ACTUALIZACIÓN:');
-                        console.log(`   📊 Estadísticas: ${statsActualizados}`);
-                        console.log(`   🔗 Enlaces: ${linksActualizados}`);
-                        console.log(`   🎉 TOTAL: ${total} elementos actualizados`);
-                    }
-
-                    // Trigger evento personalizado
-                    window.dispatchEvent(new CustomEvent('ajupamDataLoaded', {
-                        detail: { estadisticas, enlaces, total }
-                    }));
-
-                } catch (error) {
-                    console.error('❌ Error en sistema dinámico:', error);
-                }
-            }
-
-            // ===============================
-            // 🛠️ FUNCIONES DE DEBUGGING
-            // ===============================
-
-            window.debugSistemaDinamico = function () {
-                console.log('🔍 DEBUGGING SISTEMA DINÁMICO:');
-                console.log('📊 Elementos con data-target:', document.querySelectorAll('[data-target]').length);
-                console.log('🔗 Enlaces externos encontrados:', document.querySelectorAll('a[href^="http"]').length);
-                console.log('📱 Enlaces de WhatsApp:', document.querySelectorAll('a[href*="wa.me"]').length);
-                console.log('📧 Enlaces de email:', document.querySelectorAll('a[href^="mailto:"]').length);
-            };
-
-            window.forzarActualizacion = function () {
-                console.log('🔄 Forzando actualización manual...');
-                inicializarSistemaDinamico();
-            };
-
-            // ===============================
-            // 🚀 INICIALIZACIÓN
-            // ===============================
-
-            // Ejecutar cuando el DOM esté listo
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', inicializarSistemaDinamico);
-            } else {
-                // El DOM ya está cargado
-                inicializarSistemaDinamico();
-            }
-
-            // Re-ejecutar si se cargan nuevos elementos dinámicamente
-            function inicializarObservador() {
-                // Esperar a que document.body esté disponible
-                if (!document.body) {
-                    setTimeout(inicializarObservador, 100);
-                    return;
-                }
-
-                const observer = new MutationObserver((mutations) => {
-                    let needsUpdate = false;
-
-                    mutations.forEach(mutation => {
-                        if (mutation.addedNodes.length > 0) {
-                            mutation.addedNodes.forEach(node => {
-                                if (node.nodeType === 1) { // Element node
-                                    if (node.matches && (
-                                        node.matches('[data-target]') ||
-                                        node.querySelector('[data-target]') ||
-                                        node.matches('a[href]') ||
-                                        node.querySelector('a[href]')
-                                    )) {
-                                        needsUpdate = true;
-                                    }
-                                }
-                            });
-                        }
-                    });
-
-                    if (needsUpdate) {
-                        setTimeout(inicializarSistemaDinamico, 500);
-                    }
-                });
-
-                try {
-                    observer.observe(document.body, {
-                        childList: true,
-                        subtree: true
-                    });
-                } catch (error) {
-                    if (CONFIG.DEBUG_MODE) {
-                        console.warn('⚠️ No se pudo inicializar el observador DOM:', error.message);
-                    }
-                }
-            }
-
-            // Inicializar el observador después de un breve delay
-            setTimeout(inicializarObservador, 1000);
-
-        })();
-    </script>
+    <script src="dinamicdata.js"></script>
 </head>
 
 <body>
@@ -584,7 +159,8 @@
                 <li><a href="#proyectos" class="nav-link">Proyectos</a></li>
                 <li><a href="#comunidad" class="nav-link">Comunidad</a></li>
                 <li><a href="#contacto" class="nav-link">Contacto</a></li>
-                <li><a href="https://bit.ly/ajupamjugadores" target="_blank" class="nav-link btn-style">¡Sumate!</a>
+                <li><a href="https://bit.ly/ajupamjugadores" data-link="link_sumarse_jugador" target="_blank"
+                        class="nav-link btn-style">¡Sumate!</a>
                 </li>
             </ul>
 
@@ -621,15 +197,16 @@
                     <!-- Stats Grid -->
                     <div class="hero-stats" data-aos="fade-up" data-aos-delay="600">
                         <div class="hero-stat">
-                            <span class="stat-big stat-number" data-target="2000">0</span>
+                            <span class="stat-big stat-number" data-target="2000"
+                                data-stat="jugadores_registrados">0</span>
                             <span class="stat-label">Jugadores Registrados</span>
                         </div>
                         <div class="hero-stat">
-                            <span class="stat-big stat-number" data-target="90">0</span>
+                            <span class="stat-big stat-number" data-target="90" data-stat="clubes_conectados">0</span>
                             <span class="stat-label">Clubes Conectados</span>
                         </div>
                         <div class="hero-stat">
-                            <span class="stat-big stat-number" data-target="12">0</span>
+                            <span class="stat-big stat-number" data-target="12" data-stat="departamentos_hero">0</span>
                             <span class="stat-label">Departamentos</span>
                         </div>
                     </div>
@@ -640,7 +217,8 @@
                             <span>Conocé Nuestros Proyectos</span>
                             <i class="fas fa-arrow-down"></i>
                         </a>
-                        <a href="https://bit.ly/ajupamjugadores" target="_blank" class="btn btn-secondary btn-large">
+                        <a href="https://bit.ly/ajupamjugadores" data-link="link_sumarse_jugador" target="_blank"
+                            class="btn btn-secondary btn-large">
                             <span>Unite a la Comunidad</span>
                             <i class="fas fa-external-link-alt"></i>
                         </a>
@@ -716,7 +294,8 @@
                             El único ranking que conecta a todos los jugadores de pádel amateur de Mendoza.
                         </p>
                         <div class="project-actions">
-                            <a href="https://bit.ly/rankingajupam" target="_blank" class="btn btn-small">
+                            <a href="https://bit.ly/rankingajupam" data-link="link_ranking" target="_blank"
+                                class="btn btn-small">
                                 Ver Ranking
                             </a>
                         </div>
@@ -732,16 +311,18 @@
                             Sistema integral de registro de jugadores, clubes y profesores.
                         </p>
                         <div class="project-actions">
-                            <a href="https://forms.gle/79xPgCv8yrEWCpXV7" target="_blank" class="btn btn-small">
+                            <a href="https://forms.gle/79xPgCv8yrEWCpXV7" data-link="link_registrar_club"
+                                target="_blank" class="btn btn-small">
                                 Sumar club o predio
                             </a>
-                            <a href="https://forms.gle/PShqPTPdUPoh98X79" target="_blank" class="btn btn-small">
+                            <a href="https://forms.gle/PShqPTPdUPoh98X79" data-link="link_sumarse_jugador"
+                                target="_blank" class="btn btn-small">
                                 Sumarse como jugador/a
                             </a>
-                            <button class="btn btn-small disabled" disabled>
+                            <a class="btn btn-small disabled" data-link="link_sumarse_jugador" disabled>
                                 Sumarse como profe
                                 <span class="tooltip">Base en desarrollo</span>
-                            </button>
+                            </a>
                         </div>
                     </div>
 
@@ -839,25 +420,25 @@
                 <div class="alcance-flex">
                     <div class="alcance-card" data-aos="fade-up" data-aos-delay="100">
                         <i class="fas fa-users"></i>
-                        <h3 class="stat-number" data-target="23000">0</h3>
+                        <h3 class="stat-number" data-target="23000" data-stat="cuentas_alcanzadas">0</h3>
                         <p>Cuentas Alcanzadas</p>
                     </div>
 
                     <div class="alcance-card" data-aos="fade-up" data-aos-delay="200">
                         <i class="fas fa-eye"></i>
-                        <h3 class="stat-number" data-target="287000">0</h3>
+                        <h3 class="stat-number" data-target="287000" data-stat="visualizaciones">0</h3>
                         <p>Visualizaciones</p>
                     </div>
 
                     <div class="alcance-card" data-aos="fade-up" data-aos-delay="300">
                         <i class="fas fa-user-circle"></i>
-                        <h3 class="stat-number" data-target="2200">0</h3>
+                        <h3 class="stat-number" data-target="2200" data-stat="visitas_perfil">0</h3>
                         <p>Visitas al Perfil</p>
                     </div>
 
                     <div class="alcance-card" data-aos="fade-up" data-aos-delay="400">
                         <i class="fas fa-heart"></i>
-                        <h3 class="stat-number" data-target="700">0</h3>
+                        <h3 class="stat-number" data-target="700" data-stat="interacciones">0</h3>
                         <p>Interacciones</p>
                     </div>
                 </div>
@@ -1004,7 +585,7 @@
                                 <i class="fas fa-phone"></i>
                                 <div>
                                     <h4>Teléfono</h4>
-                                    <a href="tel:+5492612534840">+54 9 261 253-4840</a>
+                                    <a href="tel:+5492612534840" data-link="link_telefono">+54 9 261 253-4840</a>
                                 </div>
                             </div>
 
@@ -1012,7 +593,8 @@
                                 <i class="fab fa-whatsapp"></i>
                                 <div>
                                     <h4>WhatsApp</h4>
-                                    <a href="https://wa.me/5492612534840" target="_blank">Escribinos</a>
+                                    <a href="https://wa.me/5492612534840" data-link="link_whatsapp_general"
+                                        target="_blank">Escribinos</a>
                                 </div>
                             </div>
 
@@ -1091,14 +673,25 @@
                     <img src="/images/logo-ajupam-blanco.png" alt="AJuPaM" class="footer-logo">
                     <p class="footer-tagline">El corazón del pádel amateur en Mendoza</p>
                     <div class="social-links">
-                        <a href="https://instagram.com/ajupam.padel" target="_blank" aria-label="Instagram">
+                        <a href="https://instagram.com/ajupam.padel" data-link="link_instagram" target="_blank"
+                            aria-label="Instagram">
                             <i class="fab fa-instagram"></i>
                         </a>
-                        <a href="https://facebook.com/ajupam.padel" target="_blank" aria-label="Facebook">
+                        <a href="https://facebook.com/ajupam.padel" data-link="link_facebook" target="_blank"
+                            aria-label="Facebook">
                             <i class="fab fa-facebook"></i>
                         </a>
-                        <a href="https://wa.me/5492612534840" target="_blank" aria-label="WhatsApp">
+                        <a href="https://wa.me/5492612534840" data-link="link_whatsapp_general" target="_blank"
+                            aria-label="WhatsApp">
                             <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="https://tiktok.com/@ajupam.padel" data-link="link_tiktok" target="_blank"
+                            aria-label="TikTok">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                        <a href="https://youtube.com/@ajupampadel" data-link="link_youtube" target="_blank"
+                            aria-label="Youtube">
+                            <i class="fab fa-youtube"></i>
                         </a>
                     </div>
                 </div>
@@ -1116,10 +709,15 @@
                 <div class="footer-col">
                     <h4>Proyectos</h4>
                     <ul>
-                        <li><a href="https://bit.ly/ligaajupam3" target="_blank">Liga AJuPaM</a></li>
-                        <li><a href="https://bit.ly/rankingajupam" target="_blank">Ranking Unificado</a></li>
-                        <li><a href="https://forms.gle/79xPgCv8yrEWCpXV7" target="_blank">Registrar Club</a></li>
-                        <li><a href="https://forms.gle/PShqPTPdUPoh98X79" target="_blank">Sumarse como Jugador</a></li>
+                        <li><a href="https://bit.ly/ligaajupam3" data-link="link_liga_ajupam" target="_blank">Liga
+                                AJuPaM</a></li>
+                        <li><a href="https://bit.ly/rankingajupam" data-link="link_ranking" target="_blank">Ranking
+                                Unificado</a></li>
+                        <li><a href="https://forms.gle/79xPgCv8yrEWCpXV7" data-link="link_registrar_club"
+                                target="_blank">Registrar Club</a></li>
+                        <li><a href="https://forms.gle/PShqPTPdUPoh98X79" data-link="link_sumarse_jugador"
+                                target="_blank">Sumarse como Jugador</a></li>
+                        <li><a href="#" data-link="link_sumarse_profesor" target="_blank">Sumarse como Jugador</a></li>
                     </ul>
                 </div>
 
@@ -1140,8 +738,9 @@
     </footer>
 
     <!-- Botón flotante de WhatsApp -->
-    <a href="https://wa.me/5492612534840?text=Hola,%20me%20gustaría%20saber%20más%20sobre%20AJuPaM" target="_blank"
-        rel="noopener noreferrer" class="whatsapp-float" aria-label="Contactar por WhatsApp">
+    <a href="https://wa.me/5492612534840?text=Hola,%20me%20gustaría%20saber%20más%20sobre%20AJuPaM"
+        data-link="link_whatsapp_info" target="_blank" rel="noopener noreferrer" class="whatsapp-float"
+        aria-label="Contactar por WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
 
@@ -1155,31 +754,31 @@
             <div class="modal-body">
                 <div class="liga-categories">
                     <a href="https://docs.google.com/spreadsheets/d/1b_sNGG23s8P1-bsNCHbleMTtBqd2rYZoqiDKHi3dgcI/edit?usp=sharing"
-                        target="_blank" class="liga-link">
+                        data-link="link_masc_2da_3ra" target="_blank" class="liga-link">
                         <i class="fas fa-table"></i>
                         <span>2da/3ra Categoría</span>
                         <i class="fas fa-external-link-alt"></i>
                     </a>
                     <a href="https://docs.google.com/spreadsheets/d/1Sp03_K1nFhdt225OfZe3qtZMWF1ys3vercJbCZvE0P8/edit?usp=sharing"
-                        target="_blank" class="liga-link">
+                        data-link="link_masc_4ta_5ta_a" target="_blank" class="liga-link">
                         <i class="fas fa-table"></i>
                         <span>4ta/5ta Zona A</span>
                         <i class="fas fa-external-link-alt"></i>
                     </a>
                     <a href="https://docs.google.com/spreadsheets/d/1E15oTdvqElVzENmT4S620U8fe2rAalkhvxNDIzZ2OeE/edit?usp=sharing"
-                        target="_blank" class="liga-link">
+                        data-link="link_masc_4ta_5ta_b" target="_blank" class="liga-link">
                         <i class="fas fa-table"></i>
                         <span>4ta/5ta Zona B</span>
                         <i class="fas fa-external-link-alt"></i>
                     </a>
                     <a href="https://docs.google.com/spreadsheets/d/15OdEGqJslnGjgT19NETROuFHitOsf_e2BfPuWJy9vE8/edit?usp=sharing"
-                        target="_blank" class="liga-link">
+                        data-link="link_masc_6ta_o_mas_a" target="_blank" class="liga-link">
                         <i class="fas fa-table"></i>
                         <span>6ta o más Zona A</span>
                         <i class="fas fa-external-link-alt"></i>
                     </a>
                     <a href="https://docs.google.com/spreadsheets/d/1X_zK3245r1fM887wRkT51eWPCSIp11E4w6BmtdB8Z3I/edit?usp=sharing"
-                        target="_blank" class="liga-link">
+                        data-link="link_masc_6ta_o_mas_b" target="_blank" class="liga-link">
                         <i class="fas fa-table"></i>
                         <span>6ta o más Zona B</span>
                         <i class="fas fa-external-link-alt"></i>
@@ -1198,19 +797,19 @@
             <div class="modal-body">
                 <div class="liga-categories">
                     <a href="https://docs.google.com/spreadsheets/d/1tTUt6vO-3Z1kuEXIP6ujq2P3HseN5uu0g3r8KRnOySs/edit?usp=sharing"
-                        target="_blank" class="liga-link">
+                        data-link="link_fem_5ta_6ta_a" target="_blank" class="liga-link">
                         <i class="fas fa-table"></i>
                         <span>5ta/6ta Zona A</span>
                         <i class="fas fa-external-link-alt"></i>
                     </a>
                     <a href="https://docs.google.com/spreadsheets/d/1l3cnbgGyNtxmup9U-IM955FkFplbvpO93Gv1VV6MIr4/edit?usp=sharing"
-                        target="_blank" class="liga-link">
+                        data-link="link_fem_5ta_6ta_b" target="_blank" class="liga-link">
                         <i class="fas fa-table"></i>
                         <span>5ta/6ta Zona B</span>
                         <i class="fas fa-external-link-alt"></i>
                     </a>
                     <a href="https://docs.google.com/spreadsheets/d/1OWm5XGwCS2deUfKB9H1imwC98cBWac6-7Iv-lHpZSnQ/edit?usp=sharing"
-                        target="_blank" class="liga-link">
+                        data-link="link_fem_7ma_8va" target="_blank" class="liga-link">
                         <i class="fas fa-table"></i>
                         <span>7ma/8va</span>
                         <i class="fas fa-external-link-alt"></i>
@@ -1233,7 +832,8 @@
                     <p>La liga actual ya está en marcha. Podés anotarte para recibir novedades sobre la próxima edición.
                     </p>
                 </div>
-                <a href="https://forms.gle/MULax5E14S5Jz3zWA" target="_blank" class="btn btn-primary btn-block">
+                <a href="https://forms.gle/MULax5E14S5Jz3zWA" data-link="link_liga_suscribirse" target="_blank"
+                    class="btn btn-primary btn-block">
                     Recibir novedades de la próxima liga
                 </a>
             </div>

@@ -936,7 +936,7 @@ background: var(--accent-lime);
 /* CAMBIO: De grid a flex para features */
 .feature-flex { 
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     gap: 30px; 
     width: 100%;
     justify-content: center;

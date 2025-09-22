@@ -27,7 +27,7 @@
 /* CAMBIO: De grid a flex para alliance */
 .alliance-flex { 
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     gap: 30px; 
     width: 100%; 
     justify-content: center;
@@ -43,7 +43,7 @@
 /* CAMBIO: De grid a flex para categorías */
 .categories-flex { 
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     gap: 30px; 
     width: 100%; 
     justify-content: center;
