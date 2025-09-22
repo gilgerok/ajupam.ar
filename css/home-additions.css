@@ -106,6 +106,8 @@
     gap: 4rem;
     margin-top: 3rem;
     align-items: flex-start;
+    flex-direction: row;
+    justify-content: space-evenly;
 }
 
 .contact-info {
@@ -314,7 +316,7 @@
 }
 
 .timeline-item.upcoming .timeline-date {
-    color: rgba(0,0,0, 0.3)
+    color: rgba(0, 0, 0, 0.3)
 }
 
 /* ===== BOTÓN DESHABILITADO ===== */
