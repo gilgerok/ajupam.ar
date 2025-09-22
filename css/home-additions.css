@@ -477,6 +477,18 @@ button:disabled:hover .tooltip {
     font-size: 0.9rem;
 }
 
+span.project-badge {
+    font-size: .75rem;
+    font-weight: 600;
+    text-align: center;
+    width: fit-content;
+    padding: 4px 16px;
+    border-radius: 16px;
+    background-color: var(--accent-lime);
+    position: absolute;
+    right: 1rem;
+}
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 968px) {
     .contact-wrapper {
