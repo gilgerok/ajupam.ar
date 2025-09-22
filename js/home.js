@@ -90,7 +90,7 @@ function initHomeCounters() {
 }
 
 function animateHomeCounter(element, config) {
-    const target = parseInt(element.getAttribute('data-target'));
+    const target = parseInt(element.getAttribute('data-stat'));
     const duration = config.duration;
     const startDelay = config.delay;
     
