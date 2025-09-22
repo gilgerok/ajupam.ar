@@ -145,12 +145,21 @@
             
             elementos.forEach(elemento => {
                 const valorAnterior = elemento.textContent.trim();
+                const dataTargetAnterior = elemento.getAttribute('data-target');
                 
                 // Solo actualizar si el valor cambió
-                if (valorAnterior !== valorNuevo) {
+                if (valorAnterior !== valorNuevo || dataTargetAnterior !== valorNuevo) {
+                    
+                    // 1. Actualizar data-target (para animaciones)
+                    elemento.setAttribute('data-target', valorNuevo);
+                    
+                    // 2. Actualizar contenido visible
                     elemento.textContent = valorNuevo;
                     
-                    // Trigger evento personalizado para animaciones externas
+                    // 3. Intentar reiniciar animaciones existentes
+                    reiniciarAnimacionContador(elemento);
+                    
+                    // 4. Trigger evento personalizado
                     elemento.dispatchEvent(new CustomEvent('dataUpdated', {
                         detail: { 
                             concepto, 
@@ -161,7 +170,7 @@
                     }));
                     
                     if (CONFIG.DEBUG_MODE) {
-                        console.log(`📊 ${concepto}: "${valorAnterior}" → "${valorNuevo}"`);
+                        console.log(`📊 ${concepto}: "${valorAnterior}" → "${valorNuevo}" (data-target actualizado)`);
                     }
                     
                     actualizados++;
@@ -170,6 +179,74 @@
         });
 
         return actualizados;
+    }
+
+    // ===============================
+    // 🎬 MANEJO DE ANIMACIONES
+    // ===============================
+    
+    function reiniciarAnimacionContador(elemento) {
+        try {
+            // Método 1: Si existe startCountAnimation global
+            if (typeof window.startCountAnimation === 'function') {
+                window.startCountAnimation(elemento);
+                return;
+            }
+            
+            // Método 2: Si existe animateCounters global
+            if (typeof window.animateCounters === 'function') {
+                window.animateCounters();
+                return;
+            }
+            
+            // Método 3: Buscar función de animación en el contexto
+            if (typeof window.initCounters === 'function') {
+                window.initCounters();
+                return;
+            }
+            
+            // Método 4: Trigger evento scroll (muchas animaciones se activan así)
+            if (elemento.classList.contains('counter')) {
+                // Simular entrada en viewport
+                const event = new Event('scroll');
+                window.dispatchEvent(event);
+                return;
+            }
+            
+            // Método 5: Animación básica manual si no hay otra
+            animacionBasicaContador(elemento);
+            
+        } catch (error) {
+            if (CONFIG.DEBUG_MODE) {
+                console.warn('⚠️ No se pudo reiniciar animación para:', elemento, error);
+            }
+        }
+    }
+    
+    function animacionBasicaContador(elemento) {
+        const target = parseInt(elemento.getAttribute('data-target')) || 0;
+        const duration = 2000; // 2 segundos
+        const startTime = performance.now();
+        const startValue = 0;
+        
+        function animate(currentTime) {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            
+            // Easing function
+            const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+            const current = Math.floor(startValue + (target - startValue) * easeOutQuart);
+            
+            elemento.textContent = current.toLocaleString();
+            
+            if (progress < 1) {
+                requestAnimationFrame(animate);
+            } else {
+                elemento.textContent = target.toLocaleString();
+            }
+        }
+        
+        requestAnimationFrame(animate);
     }
 
     // ===============================
