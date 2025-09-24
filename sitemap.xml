@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" 
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- Página Principal -->
+  <url>
+    <loc>https://ajupam.ar/</loc>
+    <lastmod>2025-09-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://ajupam.ar/images/hero-home.jpg</image:loc>
+      <image:title>AJuPaM - Agrupación de Jugadores de Pádel de Mendoza</image:title>
+      <image:caption>Liga oficial, ranking y comunidad de pádel en Mendoza</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://ajupam.ar/images/logo-ajupam.svg</image:loc>
+      <image:title>Logo AJuPaM</image:title>
+      <image:caption>Logotipo oficial de la Agrupación de Jugadores de Pádel de Mendoza</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Página de Sponsors Económicos -->
+  <url>
+    <loc>https://ajupam.ar/sponsors/economicos.html</loc>
+    <lastmod>2025-09-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://ajupam.ar/images/sponsors/logo-mepix.png</image:loc>
+      <image:title>Mepix - Sponsor AJuPaM</image:title>
+      <image:caption>Mepix, sponsor oficial de AJuPaM Pádel Mendoza</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://ajupam.ar/images/sponsors/logo-nuevo-enfoque.png</image:loc>
+      <image:title>Nuevo Enfoque - Sponsor AJuPaM</image:title>
+      <image:caption>Nuevo Enfoque, sponsor oficial de AJuPaM Pádel Mendoza</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://ajupam.ar/images/sponsors/logo-lopez-prinzi.png</image:loc>
+      <image:title>Lopez Prinzi - Sponsor AJuPaM</image:title>
+      <image:caption>Lopez Prinzi Ferretería Industrial, sponsor oficial de AJuPaM</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://ajupam.ar/images/sponsors/logo-pennesi.png</image:loc>
+      <image:title>Pennesi - Sponsor AJuPaM</image:title>
+      <image:caption>Pennesi, sponsor oficial de AJuPaM Pádel Mendoza</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://ajupam.ar/images/sponsors/gudslip.png</image:loc>
+      <image:title>Gudslip - Sponsor AJuPaM</image:title>
+      <image:caption>Gudslip, sponsor oficial de AJuPaM Pádel Mendoza</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Página de Proveedores -->
+  <url>
+    <loc>https://ajupam.ar/sponsors/proveedores.html</loc>
+    <lastmod>2025-09-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://ajupam.ar/images/sponsors/la-alianza.png</image:loc>
+      <image:title>La Alianza - Proveedor AJuPaM</image:title>
+      <image:caption>La Alianza Agua y Soda, proveedor oficial de AJuPaM</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://ajupam.ar/images/sponsors/yactun.png</image:loc>
+      <image:title>Yactun - Proveedor AJuPaM</image:title>
+      <image:caption>Yactun Frutos Secos, proveedor oficial de AJuPaM</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://ajupam.ar/images/sponsors/vidaeco.png</image:loc>
+      <image:title>Vidaeco - Proveedor AJuPaM</image:title>
+      <image:caption>Vidaeco Bolsas Reutilizables, proveedor oficial de AJuPaM</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://ajupam.ar/images/sponsors/speed.png</image:loc>
+      <image:title>Speed Unlimited - Proveedor AJuPaM</image:title>
+      <image:caption>Speed Unlimited Energy Drink, proveedor oficial de AJuPaM</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://ajupam.ar/images/sponsors/winar.png</image:loc>
+      <image:title>WINar - Proveedor AJuPaM</image:title>
+      <image:caption>WINar, proveedor de pelotas y grips para AJuPaM</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://ajupam.ar/images/sponsors/bruno-brown.png</image:loc>
+      <image:title>Bruno Brown - Proveedor AJuPaM</image:title>
+      <image:caption>Bruno Brown Café de Origen, proveedor oficial de AJuPaM</image:caption>
+    </image:image>
+  </url>
+
+  <!-- URLs de redirección para sponsors (sin extensión) -->
+  <url>
+    <loc>https://ajupam.ar/sponsors/</loc>
+    <lastmod>2025-09-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://ajupam.ar/sponsors/economicos</loc>
+    <lastmod>2025-09-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://ajupam.ar/sponsors/proveedores</loc>
+    <lastmod>2025-09-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Páginas de Error (con menor prioridad) -->
+  <url>
+    <loc>https://ajupam.ar/error/404.html</loc>
+    <lastmod>2025-09-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.1</priority>
+  </url>
+
+  <url>
+    <loc>https://ajupam.ar/error/403.html</loc>
+    <lastmod>2025-09-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.1</priority>
+  </url>
+
+  <url>
+    <loc>https://ajupam.ar/error/500.html</loc>
+    <lastmod>2025-09-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.1</priority>
+  </url>
+
+  <!-- Manifest.json y robots.txt para completitud -->
+  <url>
+    <loc>https://ajupam.ar/manifest.json</loc>
+    <lastmod>2025-09-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <url>
+    <loc>https://ajupam.ar/robots.txt</loc>
+    <lastmod>2025-09-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+</urlset>
