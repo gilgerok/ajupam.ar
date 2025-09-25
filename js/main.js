@@ -14,26 +14,13 @@ function trackEvent(eventName, eventProps = {}) {
         console.log(`📊 EVENTO: ${eventName}`, eventProps);
     }
 
-    // Enviar a Google Analytics 4
+    // Enviar SOLO a Google Analytics 4
     if (typeof gtag === 'function') {
         gtag('event', eventName, {
             ...eventProps,
             event_timestamp: Date.now(),
             page_url: window.location.href,
             page_title: document.title
-        });
-    }
-
-    // Enviar a Facebook Pixel si está disponible
-    if (typeof fbq === 'function') {
-        fbq('trackCustom', eventName, eventProps);
-    }
-
-    // Enviar a dataLayer para GTM
-    if (typeof dataLayer !== 'undefined') {
-        dataLayer.push({
-            event: eventName,
-            ...eventProps
         });
     }
 }
@@ -292,7 +279,7 @@ function handleFormSubmission(form) {
                     <div class="form-feedback-success" role="alert">
                         <h3>¡Gracias por tu interés!</h3>
                         <p>Tu solicitud ha sido enviada exitosamente. Nuestro equipo se pondrá en contacto contigo dentro de las próximas 24-48 horas hábiles.</p>
-                        <div class="success-animation">✓</div>
+                        <div class="success-animation">✔</div>
                     </div>
                 `;
 
@@ -406,71 +393,10 @@ function enhanceAccessibility() {
 
 /**
  * Monitorear el rendimiento de la página
+ * NOTA: Función simplificada - GA4 mide Web Vitals automáticamente
  */
 function monitorPerformance() {
-    // Web Vitals
-    if ('PerformanceObserver' in window) {
-        // Largest Contentful Paint
-        try {
-            const lcpObserver = new PerformanceObserver((list) => {
-                const entries = list.getEntries();
-                const lastEntry = entries[entries.length - 1];
-
-                trackEvent('web_vital_lcp', {
-                    value: Math.round(lastEntry.startTime),
-                    rating: lastEntry.startTime < 2500 ? 'good' :
-                        lastEntry.startTime < 4000 ? 'needs_improvement' : 'poor'
-                });
-            });
-            lcpObserver.observe({ entryTypes: ['largest-contentful-paint'] });
-        } catch (e) {
-            console.warn('LCP observer not supported');
-        }
-
-        // First Input Delay
-        try {
-            const fidObserver = new PerformanceObserver((list) => {
-                const firstInput = list.getEntries()[0];
-                const delay = firstInput.processingStart - firstInput.startTime;
-
-                trackEvent('web_vital_fid', {
-                    value: Math.round(delay),
-                    rating: delay < 100 ? 'good' : delay < 300 ? 'needs_improvement' : 'poor'
-                });
-            });
-            fidObserver.observe({ entryTypes: ['first-input'] });
-        } catch (e) {
-            console.warn('FID observer not supported');
-        }
-
-        // Cumulative Layout Shift
-        let clsValue = 0;
-        let clsEntries = [];
-
-        try {
-            const clsObserver = new PerformanceObserver((list) => {
-                for (const entry of list.getEntries()) {
-                    if (!entry.hadRecentInput) {
-                        clsValue += entry.value;
-                        clsEntries.push(entry);
-                    }
-                }
-            });
-            clsObserver.observe({ entryTypes: ['layout-shift'] });
-
-            // Reportar CLS cuando la página se va a cerrar
-            window.addEventListener('beforeunload', () => {
-                trackEvent('web_vital_cls', {
-                    value: clsValue,
-                    rating: clsValue < 0.1 ? 'good' : clsValue < 0.25 ? 'needs_improvement' : 'poor'
-                });
-            });
-        } catch (e) {
-            console.warn('CLS observer not supported');
-        }
-    }
-
-    // Tiempo de carga total
+    // Solo registrar tiempo de carga total, sin Web Vitals manuales
     window.addEventListener('load', () => {
         setTimeout(() => {
             const perfData = getPerformanceMetrics();
