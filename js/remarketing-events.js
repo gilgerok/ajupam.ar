@@ -1,347 +1,340 @@
 /**
- * remarketing-events.js - Eventos adicionales para remarketing en GA4
- * Agregar este código al final del archivo main.js o en un archivo separado
+ * remarketing-events.js - Tracking centralizado (GA4 + Meta Pixel)
+ * AJuPaM 2025
  */
 
 /**
- * Eventos de tracking para remarketing y audiencias personalizadas
+ * Función central de tracking
+ * Envía a Google Analytics 4 y Meta Pixel
+ */
+function trackEvent(eventName, eventProps = {}) {
+    // Log para debugging en localhost
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+        console.log(`📊 EVENTO: ${eventName}`, eventProps);
+    }
+
+    // Enviar a Google Analytics 4
+    if (typeof gtag === 'function') {
+        gtag('event', eventName, {
+            ...eventProps,
+            event_timestamp: Date.now(),
+            page_url: window.location.href,
+            page_title: document.title
+        });
+    }
+
+    // Enviar a Meta Pixel
+    if (typeof fbq === 'function') {
+        fbq('trackCustom', eventName, eventProps);
+    }
+}
+
+/* ============================================================
+   EVENTOS ESPECÍFICOS DE LA WEB
+   ============================================================ */
+
+/**
+ * Eventos de remarketing (liga, ranking, sponsors, contacto)
  */
 function setupRemarketingEvents() {
-    
-    // ========================================
-    // SECCIÓN PROYECTOS - Tracking de intereses
-    // ========================================
-    
-    // La Liga AJuPaM - Alto interés
+    // --- La Liga AJuPaM ---
     const ligaBtn = document.querySelector('a[href="#la-liga"]');
     if (ligaBtn) {
         ligaBtn.addEventListener('click', () => {
             trackEvent('project_interest', {
                 project_name: 'liga_ajupam',
                 action_type: 'view_more',
-                interest_level: 'high',
-                remarketing_category: 'potential_player'
+                interest_level: 'high'
             });
+            fbq?.('track', 'ViewContent', { content_name: 'Liga AJuPaM' });
         });
     }
 
-    // Ranking Unificado
+    // --- Ranking Unificado ---
     const rankingBtn = document.querySelector('a[href*="rankingajupam"]');
     if (rankingBtn) {
         rankingBtn.addEventListener('click', () => {
             trackEvent('project_interest', {
                 project_name: 'ranking_unificado',
                 action_type: 'external_visit',
-                interest_level: 'medium',
-                remarketing_category: 'engaged_visitor'
+                interest_level: 'medium'
             });
+            fbq?.('track', 'ViewContent', { content_name: 'Ranking Unificado' });
         });
     }
 
-    // Registrar Club - Potencial sponsor/partner
+    // --- Registrar Club ---
     const clubBtn = document.querySelector('a[data-link="link_registrar_club"]');
     if (clubBtn) {
         clubBtn.addEventListener('click', () => {
             trackEvent('conversion_intent', {
                 intent_type: 'register_club',
                 user_role: 'club_owner',
-                conversion_value: 'high',
-                remarketing_category: 'potential_partner'
+                conversion_value: 'high'
             });
+            fbq?.('track', 'Lead', { intent: 'register_club' });
         });
     }
 
-    // Sumarse como Jugador - Conversión directa
+    // --- Sumarse como jugador ---
     document.querySelectorAll('a[data-link="link_sumarse_jugador"]').forEach(btn => {
         btn.addEventListener('click', () => {
             trackEvent('conversion_intent', {
                 intent_type: 'join_as_player',
                 user_role: 'player',
-                conversion_value: 'very_high',
-                remarketing_category: 'hot_lead_player'
+                conversion_value: 'very_high'
             });
+            fbq?.('track', 'CompleteRegistration', { role: 'player' });
         });
     });
 
-    // Proyectos próximamente - Early adopters
-    document.querySelectorAll('.project-badge').forEach(badge => {
-        const card = badge.closest('.project-card');
-        if (card) {
-            card.addEventListener('click', () => {
-                const projectTitle = card.querySelector('h3')?.textContent || 'unknown';
-                trackEvent('future_project_interest', {
-                    project_name: projectTitle.toLowerCase().replace(/\s+/g, '_'),
-                    status: badge.textContent,
-                    remarketing_category: 'early_adopter'
-                });
-            });
-        }
-    });
-
-    // ========================================
-    // SECCIÓN LA LIGA - Engagement profundo
-    // ========================================
-    
-    // Toggle del dropdown de Liga
+    // --- Toggle categorías de Liga ---
     const ligaToggle = document.querySelector('.btn-liga-toggle');
     if (ligaToggle) {
-        ligaToggle.addEventListener('click', (e) => {
-            e.preventDefault();
-            const submenu = document.querySelector('.liga-submenu');
-            const isOpening = !submenu?.classList.contains('active');
-            
-            if (isOpening) {
-                trackEvent('liga_interaction', {
-                    action: 'open_categories',
-                    engagement_level: 'high',
-                    remarketing_category: 'liga_interested'
-                });
-            }
-            
-            // Lógica del toggle
-            submenu?.classList.toggle('active');
+        ligaToggle.addEventListener('click', () => {
+            trackEvent('liga_interaction', { action: 'open_categories' });
+            fbq?.('trackCustom', 'OpenLigaCategories');
         });
     }
 
-    // Clicks en categorías específicas de Liga
+    // --- Click en categorías ---
     document.querySelectorAll('.btn-submenu[data-liga]').forEach(btn => {
-        btn.addEventListener('click', (e) => {
+        btn.addEventListener('click', () => {
             const categoria = btn.dataset.liga;
-            
-            trackEvent('liga_category_view', {
-                category: categoria,
-                action: 'open_modal',
-                interest_level: 'very_high',
-                remarketing_category: `liga_${categoria}_interested`
-            });
+            trackEvent('liga_category_view', { category: categoria, action: 'open_modal' });
+            fbq?.('track', 'ViewContent', { content_name: `Liga ${categoria}` });
         });
     });
 
-    // Inscripción a la próxima liga - ALTA CONVERSIÓN
+    // --- Inscripción Liga ---
     const inscripcionBtn = document.querySelector('.btn-inscripcion');
     if (inscripcionBtn) {
-        inscripcionBtn.addEventListener('click', (e) => {
-            trackEvent('liga_signup_intent', {
-                action: 'inscription_click',
-                conversion_probability: 'very_high',
-                remarketing_category: 'ready_to_signup'
-            });
+        inscripcionBtn.addEventListener('click', () => {
+            trackEvent('liga_signup_intent', { action: 'inscription_click' });
+            fbq?.('track', 'Lead', { form: 'liga_signup' });
         });
-        fbq('track', 'Lead');
     }
 
-    // Links dentro de modales de Liga
+    // --- Links en modal de Liga ---
     document.querySelectorAll('.liga-link').forEach(link => {
         link.addEventListener('click', () => {
             const category = link.querySelector('span')?.textContent || 'unknown';
-            
-            trackEvent('liga_spreadsheet_view', {
-                category: category,
-                engagement: 'deep',
-                user_intent: 'checking_standings',
-                remarketing_category: 'active_follower'
-            });
+            trackEvent('liga_spreadsheet_view', { category, user_intent: 'checking_standings' });
+            fbq?.('trackCustom', 'CheckStandings', { category });
         });
     });
 
-    // ========================================
-    // SECCIÓN SPONSORS - Potenciales partners
-    // ========================================
-    
-    // Tipos de sponsors
+    // --- Sponsors ---
     document.querySelectorAll('.sponsor-type-card').forEach(card => {
         card.addEventListener('click', (e) => {
             e.preventDefault();
             const sponsorType = card.querySelector('h3')?.textContent || 'unknown';
             const href = card.getAttribute('href');
-            
+
             trackEvent('sponsor_interest', {
-                sponsor_type: sponsorType.toLowerCase().replace(/\s+/g, '_'),
-                action: 'explore_type',
-                business_intent: 'high',
-                remarketing_category: 'potential_sponsor'
+                sponsor_type: sponsorType.toLowerCase().replace(/\s+/g, '_')
             });
+            fbq?.('track', 'Lead', { sponsor_type: sponsorType });
 
-            fbq('track', 'ViewContent');
-            
-            // Navegar después del tracking
-            setTimeout(() => {
-                window.location.href = href;
-            }, 100);
+            setTimeout(() => { window.location.href = href; }, 100);
         });
     });
 
-    // ========================================
-    // TRACKING DE TIEMPO EN SECCIONES CLAVE
-    // ========================================
-    
-    let sectionTimers = {};
-    
-    const trackSectionTime = (sectionId, sectionName) => {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    // Iniciar timer
-                    sectionTimers[sectionId] = Date.now();
-                } else if (sectionTimers[sectionId]) {
-                    // Calcular tiempo y enviar evento
-                    const timeSpent = Math.round((Date.now() - sectionTimers[sectionId]) / 1000);
-                    
-                    if (timeSpent > 3) { // Solo si estuvo más de 3 segundos
-                        trackEvent('section_engagement', {
-                            section_name: sectionName,
-                            time_spent_seconds: timeSpent,
-                            engagement_level: timeSpent > 30 ? 'high' : timeSpent > 10 ? 'medium' : 'low',
-                            remarketing_category: `engaged_${sectionName}`
-                        });
-                    }
-                    
-                    delete sectionTimers[sectionId];
-                }
-            });
-        }, { threshold: 0.5 });
-        
-        const section = document.getElementById(sectionId);
-        if (section) observer.observe(section);
-    };
-    
-    // Trackear secciones clave
-    trackSectionTime('proyectos', 'projects');
-    trackSectionTime('la-liga', 'liga');
-    trackSectionTime('sponsors-cta', 'sponsors');
-    trackSectionTime('contacto', 'contact');
-
-    // ========================================
-    // MICRO-CONVERSIONES PARA REMARKETING
-    // ========================================
-    
-    // Video/contenido engagement
-    document.querySelectorAll('.splide__slide').forEach((slide, index) => {
-        slide.addEventListener('click', () => {
-            trackEvent('content_interaction', {
-                content_type: 'gallery_image',
-                slide_index: index,
-                remarketing_category: 'content_engaged'
-            });
+    // --- Contacto ---
+    const contactoSection = document.getElementById('contacto');
+    if (contactoSection) {
+        contactoSection.addEventListener('click', () => {
+            trackEvent('contact_section_click', { section: 'contacto' });
+            fbq?.('track', 'Contact');
         });
-    });
-
-    // Interacción con estadísticas (muestra alto interés)
-    document.querySelectorAll('.stat-number').forEach(stat => {
-        stat.addEventListener('mouseenter', () => {
-            const statLabel = stat.nextElementSibling?.textContent || 'unknown';
-            
-            trackEvent('stats_hover', {
-                stat_viewed: statLabel,
-                interest_signal: 'investigating',
-                remarketing_category: 'detail_oriented'
-            });
-        }, { once: true }); // Solo la primera vez
-    });
-
-    // ========================================
-    // EVENTOS DE ABANDONO (para recuperación)
-    // ========================================
-    
-    // Detectar intención de salida
-    let exitIntentShown = false;
-    
-    document.addEventListener('mouseleave', (e) => {
-        if (e.clientY <= 0 && !exitIntentShown) {
-            exitIntentShown = true;
-            
-            // Determinar en qué sección estaba
-            const visibleSection = Array.from(document.querySelectorAll('section'))
-                .find(section => {
-                    const rect = section.getBoundingClientRect();
-                    return rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2;
-                });
-            
-            const sectionId = visibleSection?.id || 'unknown';
-            
-            trackEvent('exit_intent', {
-                last_section_viewed: sectionId,
-                time_on_site: Math.round((Date.now() - window.pageLoadTime) / 1000),
-                remarketing_category: 'abandonment_risk'
-            });
-        }
-    });
-
-    // ========================================
-    // EVENTOS PARA SEGMENTACIÓN AVANZADA
-    // ========================================
-    
-    // Detectar si es jugador, club o sponsor potencial
-    let userProfile = {
-        playerSignals: 0,
-        clubSignals: 0,
-        sponsorSignals: 0
-    };
-    
-    // Actualizar perfil basado en acciones
-    document.addEventListener('click', (e) => {
-        const target = e.target.closest('a, button');
-        if (!target) return;
-        
-        const href = target.getAttribute('href') || '';
-        const text = target.textContent.toLowerCase();
-        
-        if (text.includes('jugador') || text.includes('sumate') || href.includes('ranking')) {
-            userProfile.playerSignals++;
-        } else if (text.includes('club') || text.includes('predio')) {
-            userProfile.clubSignals++;
-        } else if (text.includes('sponsor') || text.includes('marca')) {
-            userProfile.sponsorSignals++;
-        }
-        
-        // Enviar perfil después de 5 interacciones
-        const totalSignals = userProfile.playerSignals + userProfile.clubSignals + userProfile.sponsorSignals;
-        if (totalSignals === 5) {
-            const dominantProfile = Object.entries(userProfile)
-                .sort(([,a], [,b]) => b - a)[0][0]
-                .replace('Signals', '');
-            
-            trackEvent('user_profile_identified', {
-                profile_type: dominantProfile,
-                player_score: userProfile.playerSignals,
-                club_score: userProfile.clubSignals,
-                sponsor_score: userProfile.sponsorSignals,
-                remarketing_category: `qualified_${dominantProfile}`
-            });
-        }
-    });
-}
-
-// Inicializar eventos de remarketing cuando el DOM esté listo
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', setupRemarketingEvents);
-} else {
-    setupRemarketingEvents();
+    }
 }
 
 /**
- * AUDIENCIAS SUGERIDAS PARA GOOGLE ADS:
- * 
- * 1. HOT LEADS - JUGADORES
- *    - Evento: conversion_intent con intent_type = 'join_as_player'
- *    - Evento: liga_signup_intent
- *    
- * 2. INTERESADOS EN LA LIGA
- *    - Evento: liga_interaction
- *    - Evento: liga_category_view
- *    - Evento: section_engagement con section_name = 'liga' y time > 30
- *    
- * 3. POTENCIALES SPONSORS
- *    - Evento: sponsor_interest
- *    - Evento: conversion_intent con user_role = 'club_owner'
- *    - Evento: user_profile_identified con profile_type = 'sponsor'
- *    
- * 4. USUARIOS COMPROMETIDOS
- *    - Evento: section_engagement con engagement_level = 'high'
- *    - Evento: liga_spreadsheet_view
- *    - Evento: time_on_page > 120 segundos
- *    
- * 5. RECUPERACIÓN DE ABANDONOS
- *    - Evento: exit_intent
- *    - Evento: form_submit_attempt sin form_submit_success
+ * Tracking de performance
  */
+function setupPerformanceTracking() {
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            const perfData = window.getPerformanceMetrics?.() || {};
+            trackEvent('page_performance', {
+                ...perfData,
+                device_type: window.getDeviceType?.(),
+                connection_type: navigator.connection?.effectiveType || 'unknown',
+                viewport_size: `${window.innerWidth}x${window.innerHeight}`
+            });
+        }, 0);
+    });
+}
+
+/**
+ * Tracking de formularios
+ */
+function setupFormTracking() {
+    document.addEventListener('form_validation_error', e => {
+        trackEvent('form_validation_error', e.detail || {});
+    });
+
+    document.addEventListener('form_submit_attempt', e => {
+        trackEvent('form_submit_attempt', e.detail || {});
+    });
+
+    document.addEventListener('form_submit_success', e => {
+        trackEvent('form_submit_success', e.detail || {});
+    });
+
+    document.addEventListener('form_submit_error', e => {
+        trackEvent('form_submit_error', e.detail || {});
+    });
+}
+
+/**
+ * Tracking de navegación y menú
+ */
+function setupNavigationTracking() {
+    document.addEventListener('internal_navigation', e => {
+        trackEvent('internal_navigation', e.detail || {});
+    });
+
+    document.addEventListener('mobile_menu_open', e => {
+        trackEvent('mobile_menu_open', e.detail || {});
+    });
+
+    document.addEventListener('mobile_menu_close', e => {
+        trackEvent('mobile_menu_close', e.detail || {});
+    });
+}
+
+/**
+ * Tracking de carruseles y galerías
+ */
+function setupCarouselTracking() {
+    document.addEventListener('carousel_slide_change', e => {
+        trackEvent('carousel_slide_change', e.detail || {});
+    });
+
+    document.addEventListener('gallery_slide_change', e => {
+        trackEvent('gallery_slide_change', e.detail || {});
+    });
+
+    document.addEventListener('image_load_error', e => {
+        trackEvent('image_load_error', e.detail || {});
+    });
+}
+
+/**
+ * Tracking de scroll depth y tiempo en página
+ */
+function setupEngagementTracking() {
+    let maxScrollDepth = 0;
+    const scrollMilestones = [25, 50, 75, 90, 100];
+    const reachedMilestones = new Set();
+
+    const throttledScroll = throttle(() => {
+        const scrollDepth = Math.round(
+            (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100
+        );
+
+        if (scrollDepth > maxScrollDepth) {
+            maxScrollDepth = scrollDepth;
+
+            scrollMilestones.forEach(milestone => {
+                if (scrollDepth >= milestone && !reachedMilestones.has(milestone)) {
+                    reachedMilestones.add(milestone);
+                    trackEvent('scroll_depth', {
+                        depth_percentage: milestone,
+                        time_on_page: Math.round((Date.now() - window.pageLoadTime) / 1000)
+                    });
+                }
+            });
+        }
+    }, 250);
+
+    window.addEventListener('scroll', throttledScroll, { passive: true });
+
+    // Tiempo en página
+    let timeSpentIntervals = [30, 60, 120, 300]; // segundos
+    let currentInterval = 0;
+
+    const timeTracker = setInterval(() => {
+        const timeSpent = Math.floor((Date.now() - window.pageLoadTime) / 1000);
+
+        if (currentInterval < timeSpentIntervals.length &&
+            timeSpent >= timeSpentIntervals[currentInterval]) {
+
+            trackEvent('time_on_page', {
+                seconds: timeSpentIntervals[currentInterval],
+                engagement_level: currentInterval < 2 ? 'low' : currentInterval < 3 ? 'medium' : 'high'
+            });
+
+            currentInterval++;
+        }
+
+        if (currentInterval >= timeSpentIntervals.length) {
+            clearInterval(timeTracker);
+        }
+    }, 10000);
+
+    window.addEventListener('beforeunload', () => {
+        clearInterval(timeTracker);
+    });
+}
+
+/**
+ * Tracking de inicialización
+ */
+function setupAppTracking() {
+    try {
+        trackEvent('app_initialized', {
+            page_type: window.location.pathname.includes('proveedores') ? 'proveedores' :
+                window.location.pathname.includes('premiadores') ? 'premiadores' : 'economicos',
+            device_type: window.getDeviceType?.(),
+            viewport_size: `${window.innerWidth}x${window.innerHeight}`,
+            has_aos: typeof AOS !== 'undefined',
+            has_splide: typeof Splide !== 'undefined',
+            version: '2.1'
+        });
+    } catch (error) {
+        trackEvent('app_initialization_error', {
+            error_message: error.message,
+            error_stack: error.stack
+        });
+    }
+}
+
+/* ============================================================
+   UTILIDADES
+   ============================================================ */
+
+/**
+ * Throttle para limitar ejecución de funciones
+ */
+function throttle(func, limit) {
+    let inThrottle;
+    return function () {
+        const args = arguments;
+        const context = this;
+        if (!inThrottle) {
+            func.apply(context, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+        }
+    };
+}
+
+/* ============================================================
+   INICIALIZACIÓN
+   ============================================================ */
+
+window.addEventListener('DOMContentLoaded', () => {
+    setupRemarketingEvents();
+    setupPerformanceTracking();
+    setupFormTracking();
+    setupNavigationTracking();
+    setupCarouselTracking();
+    setupEngagementTracking();
+    setupAppTracking();
+});
+
+// Exponer globalmente
+window.trackEvent = trackEvent;

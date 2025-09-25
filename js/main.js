@@ -4,33 +4,6 @@
  */
 
 /**
- * Sistema mejorado de tracking de eventos para Google Analytics 4
- * @param {string} eventName - El nombre del evento
- * @param {object} eventProps - Propiedades adicionales del evento
- */
-function trackEvent(eventName, eventProps = {}) {
-    // Log para debugging en desarrollo
-    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-        console.log(`📊 EVENTO: ${eventName}`, eventProps);
-    }
-
-    // Enviar a Google Analytics 4
-    if (typeof gtag === 'function') {
-        gtag('event', eventName, {
-            ...eventProps,
-            event_timestamp: Date.now(),
-            page_url: window.location.href,
-            page_title: document.title
-        });
-    }
-
-        // Envío a Meta Pixel
-    if (typeof fbq === "function") {
-        fbq('trackCustom', eventName, eventProps);
-    }
-}
-
-/**
  * Función para detectar el tipo de dispositivo
  * @returns {string} Tipo de dispositivo: 'mobile', 'tablet', o 'desktop'
  */
@@ -249,11 +222,6 @@ function handleFormSubmission(form) {
             // Anunciar error a lectores de pantalla
             announceToScreenReader('Por favor, corregí los errores en el formulario antes de enviarlo');
 
-            trackEvent('form_validation_error', {
-                form_type: formType,
-                device_type: getDeviceType()
-            });
-
             return;
         }
 
@@ -263,13 +231,6 @@ function handleFormSubmission(form) {
         this.classList.add('loading');
 
         try {
-            // Tracking del intento de envío
-            trackEvent('form_submit_attempt', {
-                form_type: formType,
-                form_fields: Array.from(formData.keys()),
-                device_type: getDeviceType()
-            });
-
             const response = await fetch(this.action, {
                 method: 'POST',
                 body: formData,
@@ -290,12 +251,6 @@ function handleFormSubmission(form) {
 
                 // Anunciar éxito a lectores de pantalla
                 announceToScreenReader('Formulario enviado exitosamente');
-
-                trackEvent('form_submit_success', {
-                    form_type: formType,
-                    response_time: performance.now(),
-                    device_type: getDeviceType()
-                });
 
             } else {
                 throw new Error(`HTTP ${response.status}`);
@@ -324,12 +279,6 @@ function handleFormSubmission(form) {
 
             // Anunciar error a lectores de pantalla
             announceToScreenReader('Error al enviar el formulario. Por favor, intenta nuevamente');
-
-            trackEvent('form_submit_error', {
-                form_type: formType,
-                error_message: error.message,
-                device_type: getDeviceType()
-            });
         }
     });
 }
@@ -397,25 +346,6 @@ function enhanceAccessibility() {
 }
 
 /**
- * Monitorear el rendimiento de la página
- * NOTA: Función simplificada - GA4 mide Web Vitals automáticamente
- */
-function monitorPerformance() {
-    // Solo registrar tiempo de carga total, sin Web Vitals manuales
-    window.addEventListener('load', () => {
-        setTimeout(() => {
-            const perfData = getPerformanceMetrics();
-            trackEvent('page_performance', {
-                ...perfData,
-                device_type: getDeviceType(),
-                connection_type: navigator.connection?.effectiveType || 'unknown',
-                viewport_size: `${window.innerWidth}x${window.innerHeight}`
-            });
-        }, 0);
-    });
-}
-
-/**
  * Inicialización del menú hamburguesa mejorado
  */
 function initMobileMenu() {
@@ -451,10 +381,8 @@ function initMobileMenu() {
 
         if (isActive) {
             closeMenu();
-            trackEvent('mobile_menu_close', { method: 'hamburger_click' });
         } else {
             openMenu();
-            trackEvent('mobile_menu_open', { method: 'hamburger_click' });
         }
     });
 
@@ -464,7 +392,6 @@ function initMobileMenu() {
             !navMenu.contains(e.target) &&
             !hamburger.contains(e.target)) {
             closeMenu();
-            trackEvent('mobile_menu_close', { method: 'outside_click' });
         }
     });
 
@@ -473,7 +400,6 @@ function initMobileMenu() {
         if (e.key === 'Escape' && navMenu.classList.contains('active')) {
             closeMenu();
             hamburger.focus();
-            trackEvent('mobile_menu_close', { method: 'escape_key' });
         }
     });
 
@@ -525,14 +451,6 @@ function initCarousel() {
                     }
                 });
 
-                splide.on('moved', (newIndex) => {
-                    trackEvent('carousel_slide_change', {
-                        slide_index: newIndex,
-                        total_slides: splide.length,
-                        carousel_id: 'momentos-ajupam'
-                    });
-                });
-
                 splide.mount();
                 console.log('✅ Carrusel momentos inicializado');
             } catch (error) {
@@ -554,7 +472,7 @@ function initCarousel() {
                     pauseOnFocus: true,
                     gap: '30px',
                     padding: '20px',
-                    pagination: true, // FIX: Asegurar paginación
+                    pagination: true,
                     arrows: true,
                     lazyLoad: 'nearby',
                     preloadPages: 1,
@@ -587,15 +505,6 @@ function initCarousel() {
                     }
                 });
 
-                // Tracking para galería de premiadores
-                galeriaSplide.on('moved', (newIndex) => {
-                    trackEvent('gallery_slide_change', {
-                        slide_index: newIndex,
-                        total_slides: galeriaSplide.length,
-                        carousel_id: 'galeria-premiadores'
-                    });
-                });
-
                 // FIX: Manejo de errores de imágenes en la galería
                 const galleryImages = galeriaElement.querySelectorAll('img');
                 galleryImages.forEach(img => {
@@ -603,13 +512,6 @@ function initCarousel() {
                         // Usar placeholder si la imagen falla
                         this.src = 'https://via.placeholder.com/600x600/cccccc/666666?text=Imagen+No+Disponible';
                         this.alt = 'Imagen temporalmente no disponible';
-
-                        // Tracking del error
-                        trackEvent('image_load_error', {
-                            original_src: this.getAttribute('src'),
-                            alt_text: this.getAttribute('alt'),
-                            section: 'galeria-premiadores'
-                        });
                     });
 
                     // Añadir loaded class cuando carga exitosamente
@@ -728,118 +630,6 @@ function initSectionObservers(section) {
 }
 
 /**
- * Tracking de interacciones específicas
- */
-function setupEventTracking() {
-    // Tracking de descargas de PDF
-    document.querySelectorAll('.btn-pdf').forEach(button => {
-        button.addEventListener('click', (e) => {
-            const fileName = e.currentTarget.getAttribute('download') || 'dossier.pdf';
-            const section = e.currentTarget.closest('section')?.id || 'unknown';
-
-            trackEvent('dossier_download', {
-                file_name: fileName,
-                download_location: section,
-                page_type: window.location.pathname.includes('proveedores') ? 'proveedores' : 'economicos'
-            });
-        });
-    });
-
-    // Tracking de clicks en WhatsApp
-    document.querySelectorAll('a[href*="wa.me"]').forEach(link => {
-        link.addEventListener('click', (e) => {
-            let location = 'unknown';
-
-            if (link.classList.contains('whatsapp-float')) {
-                location = 'float_button';
-            } else if (link.closest('.hero-buttons')) {
-                location = 'hero_cta';
-            } else if (link.closest('.contact-direct')) {
-                location = 'contact_section';
-            } else {
-                location = 'inline_link';
-            }
-
-            trackEvent('whatsapp_click', {
-                location: location,
-                section: link.closest('section')?.id || 'unknown',
-                device_type: getDeviceType()
-            });
-        });
-    });
-
-    // Tracking de clicks en cards de sponsors
-    document.querySelectorAll('.sponsor-card').forEach(card => {
-        const cardTitle = card.querySelector('h3')?.textContent || 'unknown';
-
-        card.addEventListener('click', (e) => {
-            if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON') {
-                trackEvent('sponsor_card_cta_click', {
-                    card_title: cardTitle,
-                    is_recommended: card.classList.contains('recommended')
-                });
-            }
-        });
-    });
-
-    // Tracking de scroll depth
-    let maxScrollDepth = 0;
-    const scrollMilestones = [25, 50, 75, 90, 100];
-    const reachedMilestones = new Set();
-
-    const throttledScroll = throttle(() => {
-        const scrollDepth = Math.round(
-            (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100
-        );
-
-        if (scrollDepth > maxScrollDepth) {
-            maxScrollDepth = scrollDepth;
-
-            scrollMilestones.forEach(milestone => {
-                if (scrollDepth >= milestone && !reachedMilestones.has(milestone)) {
-                    reachedMilestones.add(milestone);
-
-                    trackEvent('scroll_depth', {
-                        depth_percentage: milestone,
-                        time_on_page: Math.round((Date.now() - window.pageLoadTime) / 1000)
-                    });
-                }
-            });
-        }
-    }, 250);
-
-    window.addEventListener('scroll', throttledScroll, { passive: true });
-
-    // Tracking de tiempo en página
-    let timeSpentIntervals = [30, 60, 120, 300]; // segundos
-    let currentInterval = 0;
-
-    const timeTracker = setInterval(() => {
-        const timeSpent = Math.floor((Date.now() - window.pageLoadTime) / 1000);
-
-        if (currentInterval < timeSpentIntervals.length &&
-            timeSpent >= timeSpentIntervals[currentInterval]) {
-
-            trackEvent('time_on_page', {
-                seconds: timeSpentIntervals[currentInterval],
-                engagement_level: currentInterval < 2 ? 'low' : currentInterval < 3 ? 'medium' : 'high'
-            });
-
-            currentInterval++;
-        }
-
-        if (currentInterval >= timeSpentIntervals.length) {
-            clearInterval(timeTracker);
-        }
-    }, 10000);
-
-    // Cleanup al salir
-    window.addEventListener('beforeunload', () => {
-        clearInterval(timeTracker);
-    });
-}
-
-/**
  * Función throttle para optimizar eventos frecuentes
  */
 function throttle(func, limit) {
@@ -947,11 +737,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         const navMenu = document.querySelector('.nav-menu.active');
                         if (navMenu) window.closeMenu();
                     }
-
-                    trackEvent('internal_navigation', {
-                        from_section: window.location.hash || 'top',
-                        to_section: targetId
-                    });
                 }
             });
         });
@@ -1034,31 +819,14 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 250);
         });
 
-        // Tracking de inicialización exitosa
-        trackEvent('app_initialized', {
-            page_type: window.location.pathname.includes('proveedores') ? 'proveedores' : 
-                      window.location.pathname.includes('premiadores') ? 'premiadores' : 'economicos',
-            device_type: getDeviceType(),
-            viewport_size: `${window.innerWidth}x${window.innerHeight}`,
-            has_aos: typeof AOS !== 'undefined',
-            has_splide: typeof Splide !== 'undefined',
-            version: '2.1'
-        });
-
         console.log('✅ AJuPaM Web App v2.1 inicializada correctamente');
 
     } catch (error) {
         console.error('❌ Error durante la inicialización:', error);
-
-        trackEvent('app_initialization_error', {
-            error_message: error.message,
-            error_stack: error.stack
-        });
     }
 });
 
 // Exponer funciones globales útiles
-window.trackEvent = trackEvent;
 window.getDeviceType = getDeviceType;
 window.announceToScreenReader = announceToScreenReader;
 window.checkSectionsVisibility = checkSectionsVisibility;
