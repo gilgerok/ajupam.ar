@@ -14,7 +14,7 @@ function trackEvent(eventName, eventProps = {}) {
         console.log(`📊 EVENTO: ${eventName}`, eventProps);
     }
 
-    // Enviar SOLO a Google Analytics 4
+    // Enviar a Google Analytics 4
     if (typeof gtag === 'function') {
         gtag('event', eventName, {
             ...eventProps,
@@ -22,6 +22,11 @@ function trackEvent(eventName, eventProps = {}) {
             page_url: window.location.href,
             page_title: document.title
         });
+    }
+
+        // Envío a Meta Pixel
+    if (typeof fbq === "function") {
+        fbq('trackCustom', eventName, eventProps);
     }
 }
 

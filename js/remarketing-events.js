@@ -127,6 +127,7 @@ function setupRemarketingEvents() {
                 remarketing_category: 'ready_to_signup'
             });
         });
+        fbq('track', 'Lead');
     }
 
     // Links dentro de modales de Liga
@@ -160,6 +161,8 @@ function setupRemarketingEvents() {
                 business_intent: 'high',
                 remarketing_category: 'potential_sponsor'
             });
+
+            fbq('track', 'ViewContent');
             
             // Navegar después del tracking
             setTimeout(() => {
