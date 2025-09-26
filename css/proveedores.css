@@ -3,7 +3,7 @@
 #hero-proveedores { 
     background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('/images/publi-adlanto.jpg') no-repeat center center/cover; 
     color: var(--light-color); 
-    min-height: 90vh; 
+    min-height: 100vh; 
 }
 
 #hero-proveedores .hero-content { 
