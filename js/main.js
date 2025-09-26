@@ -1,11 +1,10 @@
 /**
  * main.js - AJuPaM Web App
- * Version 2.1 - Corregido problemas de carga de elementos y contadores móvil
+ * Version 2.2 - Separación de tracking y corrección de contadores/galerías
  */
 
 /**
  * Función para detectar el tipo de dispositivo
- * @returns {string} Tipo de dispositivo: 'mobile', 'tablet', o 'desktop'
  */
 function getDeviceType() {
     const width = window.innerWidth;
@@ -15,28 +14,7 @@ function getDeviceType() {
 }
 
 /**
- * Función para obtener información de performance
- * @returns {object} Métricas de performance
- */
-function getPerformanceMetrics() {
-    if (!window.performance || !window.performance.timing) return {};
-
-    const timing = window.performance.timing;
-    const navigationStart = timing.navigationStart;
-
-    return {
-        page_load_time: timing.loadEventEnd - navigationStart,
-        dom_ready_time: timing.domContentLoadedEventEnd - navigationStart,
-        first_paint: timing.responseStart - navigationStart,
-        time_to_interactive: timing.domInteractive - navigationStart
-    };
-}
-
-/**
- * FIX: Función optimizada para animación de contadores - Corregida para móvil
- * @param {Element} counter - Elemento contador
- * @param {number} target - Valor objetivo
- * @param {number} duration - Duración de la animación
+ * Función optimizada para animación de contadores
  */
 function animateCounter(counter, target, duration = 1500) {
     if (counter.classList.contains('is-visible')) return;
@@ -79,7 +57,6 @@ function setupLazyLoading() {
                 if (entry.isIntersecting) {
                     const img = entry.target;
 
-                    // Si tiene data-src, usarlo
                     if (img.dataset.src) {
                         img.src = img.dataset.src;
                         img.removeAttribute('data-src');
@@ -99,8 +76,7 @@ function setupLazyLoading() {
 }
 
 /**
- * CORRECCIÓN CRÍTICA: Manejo mejorado de formularios sin validación visual inicial
- * @param {HTMLFormElement} form - Elemento de formulario
+ * Manejo mejorado de formularios sin validación visual inicial
  */
 function handleFormSubmission(form) {
     // Limpiar cualquier estado previo de validación
@@ -118,21 +94,18 @@ function handleFormSubmission(form) {
     inputs.forEach(input => {
         let hasInteracted = false;
 
-        // Marcar como "touched" cuando el usuario sale del campo
         input.addEventListener('blur', function () {
             hasInteracted = true;
             this.classList.add('touched');
             validateField(this);
         });
 
-        // Validar mientras escribe solo si ya interactuó
         input.addEventListener('input', function () {
             if (hasInteracted) {
                 validateField(this);
             }
         });
 
-        // Remover cualquier clase de validación al hacer focus
         input.addEventListener('focus', function () {
             if (!hasInteracted) {
                 this.classList.remove('error', 'valid');
@@ -212,16 +185,13 @@ function handleFormSubmission(form) {
         });
 
         if (!isValid) {
-            // Hacer scroll al primer campo con error
             const firstError = this.querySelector('.error');
             if (firstError) {
                 firstError.focus();
                 firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
 
-            // Anunciar error a lectores de pantalla
             announceToScreenReader('Por favor, corregí los errores en el formulario antes de enviarlo');
-
             return;
         }
 
@@ -240,7 +210,6 @@ function handleFormSubmission(form) {
             });
 
             if (response.ok) {
-                // Éxito
                 this.parentElement.innerHTML = `
                     <div class="form-feedback-success" role="alert">
                         <h3>¡Gracias por tu interés!</h3>
@@ -249,7 +218,6 @@ function handleFormSubmission(form) {
                     </div>
                 `;
 
-                // Anunciar éxito a lectores de pantalla
                 announceToScreenReader('Formulario enviado exitosamente');
 
             } else {
@@ -259,7 +227,6 @@ function handleFormSubmission(form) {
         } catch (error) {
             console.error('Error en envío de formulario:', error);
 
-            // Mostrar error al usuario
             const errorMsg = `
                 <div class="error-state" role="alert">
                     <strong>Hubo un problema al enviar tu solicitud.</strong><br>
@@ -272,12 +239,10 @@ function handleFormSubmission(form) {
 
             this.insertAdjacentHTML('beforeend', errorMsg);
 
-            // Restaurar estado del botón
             formButton.innerHTML = originalButtonHTML;
             formButton.disabled = false;
             this.classList.remove('loading');
 
-            // Anunciar error a lectores de pantalla
             announceToScreenReader('Error al enviar el formulario. Por favor, intenta nuevamente');
         }
     });
@@ -285,7 +250,6 @@ function handleFormSubmission(form) {
 
 /**
  * Función para anunciar mensajes a lectores de pantalla
- * @param {string} message - Mensaje a anunciar
  */
 function announceToScreenReader(message) {
     const announcement = document.createElement('div');
@@ -315,7 +279,6 @@ function enhanceAccessibility() {
 
     // Mejorar navegación por teclado
     document.addEventListener('keydown', (e) => {
-        // Esc cierra el menú móvil si está abierto
         if (e.key === 'Escape') {
             const navMenu = document.querySelector('.nav-menu.active');
             if (navMenu) {
@@ -323,7 +286,6 @@ function enhanceAccessibility() {
             }
         }
 
-        // Tab trap para el menú móvil cuando está abierto
         if (e.key === 'Tab') {
             const navMenu = document.querySelector('.nav-menu.active');
             if (navMenu) {
@@ -369,7 +331,6 @@ function initMobileMenu() {
         hamburger.setAttribute('aria-label', 'Cerrar menú de navegación');
         document.body.style.overflow = 'hidden';
 
-        // Focus en el primer elemento del menú
         setTimeout(() => {
             const firstLink = navMenu.querySelector('a');
             if (firstLink) firstLink.focus();
@@ -378,7 +339,6 @@ function initMobileMenu() {
 
     hamburger.addEventListener('click', () => {
         const isActive = navMenu.classList.contains('active');
-
         if (isActive) {
             closeMenu();
         } else {
@@ -386,7 +346,6 @@ function initMobileMenu() {
         }
     });
 
-    // Cerrar menú al hacer clic fuera
     document.addEventListener('click', (e) => {
         if (navMenu.classList.contains('active') &&
             !navMenu.contains(e.target) &&
@@ -395,7 +354,6 @@ function initMobileMenu() {
         }
     });
 
-    // Cerrar menú con Escape
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && navMenu.classList.contains('active')) {
             closeMenu();
@@ -403,174 +361,168 @@ function initMobileMenu() {
         }
     });
 
-    // Exponer función globalmente
     window.closeMenu = closeMenu;
 }
 
 /**
- * FIX: Inicialización del carrusel corregida para evitar problemas de layout
+ * Inicialización del carrusel
  */
 function initCarousel() {
     console.log('🎠 Inicializando carruseles...');
     
-    // FIX: Delay adicional para asegurar que el DOM esté completamente renderizado
-    setTimeout(() => {
-        // Carrusel general de momentos
-        const splideElement = document.querySelector('#momentos-ajupam .splide');
-        if (splideElement && typeof Splide !== 'undefined') {
-            try {
-                const splide = new Splide(splideElement, {
-                    type: 'loop',
-                    perPage: 3,
-                    perMove: 1,
-                    autoplay: true,
-                    interval: 4000,
-                    pauseOnHover: true,
-                    pauseOnFocus: true,
-                    gap: '20px',
-                    pagination: false,
-                    arrows: true,
-                    keyboard: true,
-                    reducedMotion: {
-                        autoplay: false,
-                        speed: 0
-                    },
-                    accessibility: {
-                        liveRegion: true,
-                        label: 'Galería de imágenes de la comunidad AJuPaM'
-                    },
-                    breakpoints: {
-                        768: {
-                            perPage: 1,
-                            arrows: false,
-                            pagination: true
-                        },
-                        1024: {
-                            perPage: 2
-                        }
-                    }
-                });
-
-                splide.mount();
-                console.log('✅ Carrusel momentos inicializado');
-            } catch (error) {
-                console.error('❌ Error al inicializar carrusel momentos:', error);
-            }
-        }
-
-        // FIX: Configuración específica para galería de premiadores
-        const galeriaElement = document.querySelector('#galeria .splide, #galeria-splide');
-        if (galeriaElement && typeof Splide !== 'undefined') {
-            try {
-                const galeriaSplide = new Splide(galeriaElement, {
-                    type: 'loop',
-                    perPage: 3,
-                    perMove: 1,
-                    autoplay: true,
-                    interval: 3000,
-                    pauseOnHover: true,
-                    pauseOnFocus: true,
-                    gap: '30px',
-                    padding: '20px',
-                    pagination: true,
-                    arrows: true,
-                    lazyLoad: 'nearby',
-                    preloadPages: 1,
-                    keyboard: true,
-                    reducedMotion: {
-                        autoplay: false,
-                        speed: 0
-                    },
-                    accessibility: {
-                        liveRegion: true,
-                        label: 'Galería de premiaciones AJuPaM'
-                    },
-                    breakpoints: {
-                        480: {
-                            perPage: 1,
-                            gap: '15px',
-                            padding: '10px',
-                            arrows: false,
-                            pagination: true
-                        },
-                        768: {
-                            perPage: 2,
-                            gap: '20px',
-                            arrows: false,
-                            pagination: true
-                        },
-                        1024: {
-                            perPage: 3
-                        }
-                    }
-                });
-
-                // FIX: Manejo de errores de imágenes en la galería
-                const galleryImages = galeriaElement.querySelectorAll('img');
-                galleryImages.forEach(img => {
-                    img.addEventListener('error', function () {
-                        // Usar placeholder si la imagen falla
-                        this.src = 'https://via.placeholder.com/600x600/cccccc/666666?text=Imagen+No+Disponible';
-                        this.alt = 'Imagen temporalmente no disponible';
-                    });
-
-                    // Añadir loaded class cuando carga exitosamente
-                    img.addEventListener('load', function () {
-                        this.classList.add('loaded');
-                    });
-                });
-
-                galeriaSplide.mount();
-                console.log('✅ Galería de premiadores inicializada correctamente');
-                
-                // FIX: Forzar re-layout después de inicializar galería
-                setTimeout(() => {
-                    if (typeof AOS !== 'undefined') {
-                        AOS.refresh();
-                    }
-                    // Verificar que las secciones siguientes estén visibles
-                    checkSectionsVisibility();
-                }, 500);
-                
-            } catch (error) {
-                console.error('❌ Error al inicializar galería:', error);
-                // FIX: Asegurar que las secciones siguientes sigan funcionando
-                setTimeout(() => {
-                    checkSectionsVisibility();
-                }, 1000);
-            }
-        }
-
-        // Configuración específica para otros carruseles si existen
-        const allSplides = document.querySelectorAll('.splide:not(#momentos-ajupam .splide):not(#galeria .splide):not(#galeria-splide)');
-        allSplides.forEach((element, index) => {
-            if (typeof Splide !== 'undefined') {
-                try {
-                    const genericSplide = new Splide(element, {
-                        type: 'loop',
+    // Verificar que Splide esté disponible
+    if (typeof Splide === 'undefined') {
+        console.warn('⚠️ Splide no está cargado todavía');
+        setTimeout(initCarousel, 500);
+        return;
+    }
+    
+    // Carrusel general de momentos
+    const splideElement = document.querySelector('#momentos-ajupam .splide');
+    if (splideElement) {
+        try {
+            const splide = new Splide(splideElement, {
+                type: 'loop',
+                perPage: 3,
+                perMove: 1,
+                autoplay: true,
+                interval: 4000,
+                pauseOnHover: true,
+                pauseOnFocus: true,
+                gap: '20px',
+                pagination: false,
+                arrows: true,
+                keyboard: true,
+                reducedMotion: {
+                    autoplay: false,
+                    speed: 0
+                },
+                accessibility: {
+                    liveRegion: true,
+                    label: 'Galería de imágenes de la comunidad AJuPaM'
+                },
+                breakpoints: {
+                    768: {
                         perPage: 1,
-                        autoplay: true,
-                        interval: 4000,
-                        pauseOnHover: true,
-                        pauseOnFocus: true,
-                        pagination: true,
-                        arrows: true,
-                        keyboard: true
-                    });
-
-                    genericSplide.mount();
-                    console.log(`✅ Carrusel genérico ${index + 1} inicializado`);
-                } catch (error) {
-                    console.error(`❌ Error al inicializar carrusel genérico ${index + 1}:`, error);
+                        arrows: false,
+                        pagination: true
+                    },
+                    1024: {
+                        perPage: 2
+                    }
                 }
-            }
-        });
-        
-    }, 200); // FIX: Aumentado delay para asegurar renderizado completo
+            });
+
+            splide.mount();
+            console.log('✅ Carrusel momentos inicializado');
+        } catch (error) {
+            console.error('❌ Error al inicializar carrusel momentos:', error);
+        }
+    }
+
+    // Configuración específica para galería de premiadores
+    const galeriaElement = document.querySelector('#galeria .splide, #galeria-splide');
+    if (galeriaElement) {
+        try {
+            const galeriaSplide = new Splide(galeriaElement, {
+                type: 'loop',
+                perPage: 3,
+                perMove: 1,
+                autoplay: true,
+                interval: 3000,
+                pauseOnHover: true,
+                pauseOnFocus: true,
+                gap: '30px',
+                padding: '20px',
+                pagination: true,
+                arrows: true,
+                lazyLoad: 'nearby',
+                preloadPages: 1,
+                keyboard: true,
+                reducedMotion: {
+                    autoplay: false,
+                    speed: 0
+                },
+                accessibility: {
+                    liveRegion: true,
+                    label: 'Galería de premiaciones AJuPaM'
+                },
+                breakpoints: {
+                    480: {
+                        perPage: 1,
+                        gap: '15px',
+                        padding: '10px',
+                        arrows: false,
+                        pagination: true
+                    },
+                    768: {
+                        perPage: 2,
+                        gap: '20px',
+                        arrows: false,
+                        pagination: true
+                    },
+                    1024: {
+                        perPage: 3
+                    }
+                }
+            });
+
+            const galleryImages = galeriaElement.querySelectorAll('img');
+            galleryImages.forEach(img => {
+                img.addEventListener('error', function () {
+                    this.src = 'https://via.placeholder.com/600x600/cccccc/666666?text=Imagen+No+Disponible';
+                    this.alt = 'Imagen temporalmente no disponible';
+                });
+
+                img.addEventListener('load', function () {
+                    this.classList.add('loaded');
+                });
+            });
+
+            galeriaSplide.mount();
+            console.log('✅ Galería de premiadores inicializada correctamente');
+            
+            setTimeout(() => {
+                if (typeof AOS !== 'undefined') {
+                    AOS.refresh();
+                }
+                checkSectionsVisibility();
+            }, 500);
+            
+        } catch (error) {
+            console.error('❌ Error al inicializar galería:', error);
+            setTimeout(() => {
+                checkSectionsVisibility();
+            }, 1000);
+        }
+    }
+
+    // Configuración específica para otros carruseles si existen
+    const allSplides = document.querySelectorAll('.splide:not(#momentos-ajupam .splide):not(#galeria .splide):not(#galeria-splide)');
+    allSplides.forEach((element, index) => {
+        try {
+            const genericSplide = new Splide(element, {
+                type: 'loop',
+                perPage: 1,
+                autoplay: true,
+                interval: 4000,
+                pauseOnHover: true,
+                pauseOnFocus: true,
+                pagination: true,
+                arrows: true,
+                keyboard: true
+            });
+
+            genericSplide.mount();
+            console.log(`✅ Carrusel genérico ${index + 1} inicializado`);
+        } catch (error) {
+            console.error(`❌ Error al inicializar carrusel genérico ${index + 1}:`, error);
+        }
+    });
 }
 
 /**
- * FIX: Función para verificar visibilidad de secciones después de la galería
+ * Función para verificar visibilidad de secciones después de la galería
  */
 function checkSectionsVisibility() {
     const sectionsAfterGallery = document.querySelectorAll('#galeria ~ section, #galeria + section');
@@ -579,29 +531,25 @@ function checkSectionsVisibility() {
         if (section.offsetHeight === 0 || getComputedStyle(section).display === 'none') {
             console.warn(`⚠️ Sección ${section.id} no está visible, forzando refresh`);
             
-            // Forzar refresh de estilos
             section.style.display = 'block';
             section.style.visibility = 'visible';
             
             // Trigger reflow
             section.offsetHeight;
             
-            // Re-inicializar observadores para esta sección
             initSectionObservers(section);
         }
     });
 }
 
 /**
- * FIX: Inicializar observadores específicos para una sección
+ * Inicializar observadores específicos para una sección
  */
 function initSectionObservers(section) {
-    // Re-observar contadores en esta sección
     const counters = section.querySelectorAll('.stat-number');
     if (counters.length > 0) {
         counters.forEach(counter => {
             if (!counter.classList.contains('is-visible')) {
-                // Recrear observador específico para este contador
                 const specificObserver = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
                         if (entry.isIntersecting) {
@@ -623,7 +571,6 @@ function initSectionObservers(section) {
         });
     }
     
-    // Re-aplicar AOS si existe
     if (typeof AOS !== 'undefined' && section.querySelector('[data-aos]')) {
         AOS.refresh();
     }
@@ -646,22 +593,19 @@ function throttle(func, limit) {
 }
 
 /**
- * FIX: Setup de fallbacks para imágenes
+ * Setup de fallbacks para imágenes
  */
 function setupImageFallbacks() {
     const images = document.querySelectorAll('img');
 
     images.forEach(img => {
-        // Skip si ya tiene un listener
         if (img.dataset.fallbackSet) return;
 
         img.dataset.fallbackSet = 'true';
 
         img.addEventListener('error', function () {
-            // No aplicar fallback si ya es un placeholder
             if (this.src.includes('placeholder.com')) return;
 
-            // Determinar el tipo de placeholder basado en el contexto
             let placeholderUrl = 'https://via.placeholder.com/400x400/f5f5f5/999999?text=Imagen+No+Disponible';
 
             if (this.closest('.premiador-logo-item')) {
@@ -681,22 +625,21 @@ function setupImageFallbacks() {
 }
 
 /**
- * FIX: Inicialización principal corregida
+ * Inicialización principal
  */
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('🚀 Inicializando AJuPaM Web App v2.1...');
+    console.log('🚀 Inicializando AJuPaM Web App v2.2...');
 
-    // Guardar tiempo de carga de la página
     window.pageLoadTime = Date.now();
 
     try {
-        // FIX: Inicializar AOS con configuración optimizada para móvil
+        // Inicializar AOS con configuración optimizada
         if (typeof AOS !== 'undefined') {
             AOS.init({
                 duration: 700,
                 once: true,
                 offset: getDeviceType() === 'mobile' ? 20 : 50,
-                disable: false, // FIX: No deshabilitar en móvil
+                disable: false,
                 easing: 'ease-out-cubic'
             });
             
@@ -712,14 +655,23 @@ document.addEventListener('DOMContentLoaded', () => {
         // Mejorar accesibilidad
         enhanceAccessibility();
 
-        // Monitorear rendimiento
-        monitorPerformance();
-
         // Inicializar menú móvil
         initMobileMenu();
 
-        // FIX: Inicializar carrusel con delay
-        setTimeout(initCarousel, 300);
+        // Inicializar carrusel después de que Splide se cargue
+        if (document.querySelector('.splide')) {
+            if (typeof Splide !== 'undefined') {
+                setTimeout(initCarousel, 300);
+            } else {
+                // Esperar a que Splide se cargue
+                const checkSplide = setInterval(() => {
+                    if (typeof Splide !== 'undefined') {
+                        clearInterval(checkSplide);
+                        initCarousel();
+                    }
+                }, 100);
+            }
+        }
 
         // Navegación suave
         document.querySelectorAll('a.nav-link').forEach(link => {
@@ -732,7 +684,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (targetSection) {
                     targetSection.scrollIntoView({ behavior: 'smooth' });
 
-                    // Cerrar menú móvil si está abierto
                     if (window.closeMenu) {
                         const navMenu = document.querySelector('.nav-menu.active');
                         if (navMenu) window.closeMenu();
@@ -741,7 +692,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        // FIX: Observador mejorado para contadores animados - Optimizado para móvil
+        // Observador mejorado para contadores animados
         const countersObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (!entry.isIntersecting) return;
@@ -751,7 +702,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     const targetAttr = counter.getAttribute('data-target');
                     if (targetAttr !== null && !counter.classList.contains('is-visible')) {
                         const target = parseInt(targetAttr, 10);
-                        // FIX: Delay adicional para móvil
                         setTimeout(() => {
                             animateCounter(counter, target);
                         }, getDeviceType() === 'mobile' ? 200 : 0);
@@ -759,12 +709,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             });
         }, {
-            // FIX: Parámetros optimizados para móvil
             threshold: getDeviceType() === 'mobile' ? 0.1 : 0.3,
             rootMargin: getDeviceType() === 'mobile' ? '50px 0px' : '0px 0px -100px 0px'
         });
 
-        // FIX: Observar todas las secciones con contadores con un delay
+        // Observar todas las secciones con contadores
         setTimeout(() => {
             document.querySelectorAll('section').forEach(section => {
                 if (section.querySelector('.stat-number')) {
@@ -779,25 +728,20 @@ document.addEventListener('DOMContentLoaded', () => {
             handleFormSubmission(form);
         });
 
-        // Setup tracking de eventos
-        setupEventTracking();
-
         // Actualizar año de copyright
         const copyrightYear = document.getElementById('copyright-year');
         if (copyrightYear) {
             copyrightYear.textContent = new Date().getFullYear();
         }
 
-        // FIX: Verificación adicional para elementos después de la galería
+        // Verificación adicional para elementos después de la galería
         setTimeout(() => {
             checkSectionsVisibility();
             
-            // Re-inicializar AOS si es necesario
             if (typeof AOS !== 'undefined') {
                 AOS.refresh();
             }
             
-            // FIX: Verificar específicamente el formulario de contacto
             const contactSection = document.getElementById('contacto');
             if (contactSection && (contactSection.offsetHeight === 0 || getComputedStyle(contactSection).display === 'none')) {
                 console.warn('⚠️ Sección de contacto no visible, forzando refresh');
@@ -807,7 +751,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }, 1000);
 
-        // FIX: Manejo del resize para reajustar elementos
+        // Manejo del resize para reajustar elementos
         let resizeTimeout;
         window.addEventListener('resize', () => {
             clearTimeout(resizeTimeout);
@@ -819,7 +763,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 250);
         });
 
-        console.log('✅ AJuPaM Web App v2.1 inicializada correctamente');
+        console.log('✅ AJuPaM Web App v2.2 inicializada correctamente');
 
     } catch (error) {
         console.error('❌ Error durante la inicialización:', error);
