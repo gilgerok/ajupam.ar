@@ -166,7 +166,9 @@ class AjupamPager {
     async registerServiceWorker() {
         if ('serviceWorker' in navigator && messaging) {
             try {
-                const registration = await navigator.serviceWorker.register('/firebase-messaging-sw.js');
+                const registration = await navigator.serviceWorker.register('/pager/firebase-messaging-sw.js', {
+                    scope: '/pager/'
+                });
                 const token = await messaging.getToken({
                     vapidKey: 'BDvXtlHcZfdSathkkJEk9N6WcHqtz5x7lVcmzQw4hNObLfhcW8XfS63UEKmRY-3JDWBLYGr5Lr7C4IqDkvJBSvA',
                     serviceWorkerRegistration: registration
