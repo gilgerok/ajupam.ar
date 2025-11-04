@@ -500,6 +500,30 @@ class AjupamPager {
     }
 
     async generateQrCodes() {
+        // Verificar que la librería QRCode esté cargada
+        if (typeof QRCode === 'undefined') {
+            console.warn('QRCode library not loaded yet, waiting...');
+            await new Promise(resolve => {
+                const checkQRCode = setInterval(() => {
+                    if (typeof QRCode !== 'undefined') {
+                        clearInterval(checkQRCode);
+                        resolve();
+                    }
+                }, 100);
+                // Timeout después de 5 segundos
+                setTimeout(() => {
+                    clearInterval(checkQRCode);
+                    console.error('QRCode library failed to load');
+                    resolve();
+                }, 5000);
+            });
+        }
+        
+        if (typeof QRCode === 'undefined') {
+            this.showToast('Error: No se pudo cargar la librería de códigos QR', 'error');
+            return;
+        }
+        
         const count = parseInt(this.elements.courtCount.value);
         const container = this.elements.qrCodesGrid;
         container.innerHTML = '';
@@ -510,14 +534,20 @@ class AjupamPager {
             card.className = 'qr-card';
             
             const canvas = document.createElement('canvas');
-            await QRCode.toCanvas(canvas, code, {
-                width: 200,
-                margin: 2,
-                color: {
-                    dark: '#0066CC',
-                    light: '#FFFFFF'
-                }
-            });
+            
+            try {
+                await QRCode.toCanvas(canvas, code, {
+                    width: 200,
+                    margin: 2,
+                    color: {
+                        dark: '#0066CC',
+                        light: '#FFFFFF'
+                    }
+                });
+            } catch (error) {
+                console.error(`Error generando QR para cancha ${i}:`, error);
+                continue;
+            }
             
             card.innerHTML = `
                 <h4>CANCHA ${i}</h4>
@@ -538,22 +568,32 @@ class AjupamPager {
     }
 
     async downloadQr(courtNumber) {
+        if (typeof QRCode === 'undefined') {
+            this.showToast('Error: Librería de códigos QR no disponible', 'error');
+            return;
+        }
+        
         const code = `AJUPAM-CANCHA-${courtNumber}`;
         const canvas = document.createElement('canvas');
         
-        await QRCode.toCanvas(canvas, code, {
-            width: 500,
-            margin: 4,
-            color: {
-                dark: '#0066CC',
-                light: '#FFFFFF'
-            }
-        });
-        
-        const link = document.createElement('a');
-        link.download = `ajupam-cancha-${courtNumber}.png`;
-        link.href = canvas.toDataURL();
-        link.click();
+        try {
+            await QRCode.toCanvas(canvas, code, {
+                width: 500,
+                margin: 4,
+                color: {
+                    dark: '#0066CC',
+                    light: '#FFFFFF'
+                }
+            });
+            
+            const link = document.createElement('a');
+            link.download = `ajupam-cancha-${courtNumber}.png`;
+            link.href = canvas.toDataURL();
+            link.click();
+        } catch (error) {
+            console.error('Error al descargar QR:', error);
+            this.showToast('Error al generar código QR', 'error');
+        }
     }
 
     async downloadAllQr() {
