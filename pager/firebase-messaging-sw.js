@@ -24,25 +24,23 @@ messaging.onBackgroundMessage((payload) => {
     const notificationTitle = payload.notification?.title || 'AJUPAM Pager';
     const notificationOptions = {
         body: payload.notification?.body || 'Tienes una nueva notificación',
-        icon: '/icons/icon-192.png',
-        badge: '/icons/badge-72.png',
+        icon: '/pager/icons/icon-192.png',
+        badge: '/pager/icons/icon-72.png',
         tag: 'ajupam-notification',
         requireInteraction: true,
         vibrate: [200, 100, 200],
         data: {
-            url: payload.data?.url || '/',
+            url: payload.data?.url || '/pager/',
             courtNumber: payload.data?.courtNumber
         },
         actions: [
             {
                 action: 'open',
-                title: 'Ver',
-                icon: '/icons/action-view.png'
+                title: 'Ver'
             },
             {
                 action: 'close',
-                title: 'Cerrar',
-                icon: '/icons/action-close.png'
+                title: 'Cerrar'
             }
         ]
     };
@@ -80,14 +78,14 @@ self.addEventListener('notificationclick', (event) => {
 // Cache de la aplicación para funcionamiento offline
 const CACHE_NAME = 'ajupam-pager-v1';
 const urlsToCache = [
-    '/',
-    '/index.html',
-    '/css/styles.css',
-    '/js/firebase-config.js',
-    '/js/app.js',
-    '/manifest.json',
-    '/icons/icon-192.png',
-    '/icons/icon-512.png'
+    '/pager/',
+    '/pager/index.html',
+    '/pager/css/styles.css',
+    '/pager/js/firebase-config.js',
+    '/pager/js/app.js',
+    '/pager/manifest.json',
+    '/pager/icons/icon-192.png',
+    '/pager/icons/icon-512.png'
 ];
 
 self.addEventListener('install', (event) => {
