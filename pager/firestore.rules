@@ -1,0 +1,61 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Funciones auxiliares
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isAdmin() {
+      return isAuthenticated() && 
+             request.auth.token.email in ['admin@ajupam.ar'];
+    }
+    
+    // Configuración del sistema
+    match /config/{document} {
+      // Cualquiera puede leer la configuración
+      allow read: if true;
+      // Solo admins pueden escribir
+      allow write: if isAdmin();
+    }
+    
+    // Canchas
+    match /courts/{courtId} {
+      // Cualquiera puede leer las canchas
+      allow read: if true;
+      // Solo admins pueden crear/actualizar/eliminar
+      allow create, update, delete: if isAdmin();
+    }
+    
+    // Suscripciones
+    match /subscriptions/{subscriptionId} {
+      // Cualquiera puede leer y crear suscripciones
+      allow read, create: if true;
+      
+      // Solo se puede actualizar/eliminar si es del mismo dispositivo
+      allow update, delete: if request.auth != null ||
+                              resource.data.deviceId == request.resource.data.deviceId;
+    }
+    
+    // Notificaciones
+    match /notifications/{notificationId} {
+      // Cualquiera puede leer notificaciones
+      allow read: if true;
+      // Solo admins pueden crear notificaciones
+      allow create: if isAdmin();
+      // Solo el sistema puede actualizar (via Cloud Functions)
+      allow update: if false;
+      // Solo admins pueden eliminar
+      allow delete: if isAdmin();
+    }
+    
+    // Estadísticas
+    match /stats/{statId} {
+      // Admins pueden leer
+      allow read: if isAdmin();
+      // Solo Cloud Functions pueden escribir
+      allow write: if false;
+    }
+  }
+}

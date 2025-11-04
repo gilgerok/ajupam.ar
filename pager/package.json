@@ -1,0 +1,40 @@
+{
+  "name": "ajupam-pager",
+  "version": "1.0.0",
+  "description": "Sistema de notificaciones de canchas disponibles para AJUPAM",
+  "main": "index.html",
+  "scripts": {
+    "start": "firebase serve",
+    "deploy": "firebase deploy",
+    "deploy:hosting": "firebase deploy --only hosting",
+    "deploy:functions": "firebase deploy --only functions",
+    "deploy:firestore": "firebase deploy --only firestore:rules",
+    "functions:log": "firebase functions:log",
+    "functions:shell": "firebase functions:shell"
+  },
+  "keywords": [
+    "pager",
+    "notifications",
+    "pwa",
+    "firebase",
+    "sports",
+    "ajupam",
+    "padel"
+  ],
+  "author": "Tandem (https://tandempadel.pro)",
+  "license": "MIT",
+  "devDependencies": {
+    "firebase-tools": "^13.0.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ajupam/pager"
+  },
+  "bugs": {
+    "url": "https://github.com/ajupam/pager/issues"
+  },
+  "homepage": "https://pager.ajupam.ar"
+}
