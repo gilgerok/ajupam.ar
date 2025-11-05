@@ -1,0 +1,22 @@
+# Activar motor de reescritura
+RewriteEngine Off
+RewriteBase /pager/
+
+# Redirigir todas las rutas internas a index.html
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.html [L]
+
+# Evitar listado de archivos
+Options -Indexes
+
+# Control de caché para archivos estáticos
+<FilesMatch "\.(js|css|png|jpg|svg|woff|woff2)$">
+  Header set Cache-Control "max-age=604800, public"
+</FilesMatch>
+
+# Seguridad básica: evitar acceso a archivos sensibles
+<FilesMatch "\.(env|htaccess|json|lock|gitignore)$">
+  Order allow,deny
+  Deny from all
+</FilesMatch>
