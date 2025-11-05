@@ -1,36 +1,32 @@
 /* ============================================
-   AJUPAM PAGER - APLICACIÓN PRINCIPAL
+   AJUPAM PAGER - APLICACIÓN REDISEÑADA
    ============================================ */
 
 class AjupamPager {
     constructor() {
         this.currentUser = null;
         this.currentView = 'user';
-        this.subscriptions = new Map();
+        this.subscriptions = new Set();
         this.courts = new Map();
-        this.qrScanner = null;
         
         this.init();
     }
 
     async init() {
         try {
-            // Esperar a que Firebase esté listo
             await this.waitForFirebase();
-            
-            // Inicializar componentes
             this.initializeElements();
             this.attachEventListeners();
             await this.requestNotificationPermission();
-            await this.loadUserSubscriptions();
             
-            // Ocultar pantalla de carga
+            // Cargar canchas disponibles para el usuario
+            await this.loadUserCourts();
+            
             setTimeout(() => {
                 document.getElementById('loading-screen').style.display = 'none';
                 document.getElementById('app').style.display = 'flex';
             }, 1500);
             
-            // Escuchar cambios de autenticación
             auth.onAuthStateChanged(user => {
                 this.currentUser = user;
                 if (user && this.currentView === 'admin') {
@@ -56,36 +52,28 @@ class AjupamPager {
 
     initializeElements() {
         this.elements = {
-            // Views
             userView: document.getElementById('user-view'),
             adminView: document.getElementById('admin-view'),
             adminLogin: document.getElementById('admin-login'),
             adminDashboard: document.getElementById('admin-dashboard'),
             
-            // User elements
-            scanQrBtn: document.getElementById('scan-qr-btn'),
-            manualCode: document.getElementById('manual-code'),
-            manualSubmit: document.getElementById('manual-submit'),
-            subscriptionsList: document.getElementById('subscriptions-list'),
+            userCourtsList: document.getElementById('user-courts-list'),
             
-            // Admin elements
             adminToggle: document.getElementById('admin-toggle'),
             loginForm: document.getElementById('login-form'),
             backToUser: document.getElementById('back-to-user'),
             logoutBtn: document.getElementById('logout-btn'),
             courtCount: document.getElementById('court-count'),
             saveConfig: document.getElementById('save-config'),
-            qrCodesGrid: document.getElementById('qr-codes-grid'),
+            qrCodeSingle: document.getElementById('qr-code-single'),
+            downloadQr: document.getElementById('download-qr'),
+            printQr: document.getElementById('print-qr'),
             courtsGrid: document.getElementById('courts-grid'),
-            downloadAllQr: document.getElementById('download-all-qr'),
             
-            // Modals
-            qrScannerModal: document.getElementById('qr-scanner-modal'),
             notificationModal: document.getElementById('notification-modal'),
             notificationMessage: document.getElementById('notification-message'),
             sendNotification: document.getElementById('send-notification'),
             
-            // Stats
             totalSubscribers: document.getElementById('total-subscribers'),
             notificationsToday: document.getElementById('notifications-today'),
             activeCourts: document.getElementById('active-courts')
@@ -93,49 +81,30 @@ class AjupamPager {
     }
 
     attachEventListeners() {
-        // User view
-        this.elements.scanQrBtn.addEventListener('click', () => this.openQrScanner());
-        this.elements.manualSubmit.addEventListener('click', () => this.subscribeManual());
-        this.elements.manualCode.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') this.subscribeManual();
-        });
-        
-        // Admin toggle
         this.elements.adminToggle.addEventListener('click', () => this.switchToAdmin());
         this.elements.backToUser.addEventListener('click', () => this.switchToUser());
-        
-        // Admin login/logout
         this.elements.loginForm.addEventListener('submit', (e) => this.handleLogin(e));
         this.elements.logoutBtn.addEventListener('click', () => this.handleLogout());
         
-        // Court configuration
         document.querySelectorAll('.btn-number').forEach(btn => {
             btn.addEventListener('click', (e) => this.adjustCourtCount(e));
         });
         this.elements.saveConfig.addEventListener('click', () => this.saveCourtConfig());
-        this.elements.downloadAllQr.addEventListener('click', () => this.downloadAllQr());
+        this.elements.downloadQr?.addEventListener('click', () => this.downloadMainQr());
+        this.elements.printQr?.addEventListener('click', () => this.printMainQr());
         
-        // Notification modal
         this.elements.sendNotification.addEventListener('click', () => this.sendCourtNotification());
         
-        // Modal close buttons
         document.querySelectorAll('.close-modal').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 e.target.closest('.modal').classList.remove('active');
-                if (this.qrScanner) {
-                    this.qrScanner.stop();
-                }
             });
         });
         
-        // Click outside modal to close
         document.querySelectorAll('.modal').forEach(modal => {
             modal.addEventListener('click', (e) => {
                 if (e.target === modal) {
                     modal.classList.remove('active');
-                    if (this.qrScanner) {
-                        this.qrScanner.stop();
-                    }
                 }
             });
         });
@@ -176,7 +145,7 @@ class AjupamPager {
                 
                 if (token) {
                     localStorage.setItem('fcm_token', token);
-                    console.log('Token FCM:', token);
+                    console.log('Token FCM registrado');
                 }
             } catch (error) {
                 console.error('Error al registrar service worker:', error);
@@ -184,95 +153,115 @@ class AjupamPager {
         }
     }
 
-    // ==================== QR SCANNER ====================
+    // ==================== VISTA DE USUARIO ====================
     
-    openQrScanner() {
-        this.elements.qrScannerModal.classList.add('active');
+    async loadUserCourts() {
+        try {
+            const deviceId = this.getDeviceId();
+            
+            // Cargar todas las canchas
+            const courtsSnapshot = await db.collection(COLLECTIONS.COURTS)
+                .orderBy('number')
+                .get();
+            
+            // Cargar suscripciones del usuario
+            const subscriptionsSnapshot = await db.collection(COLLECTIONS.SUBSCRIPTIONS)
+                .where('deviceId', '==', deviceId)
+                .get();
+            
+            this.subscriptions.clear();
+            subscriptionsSnapshot.forEach(doc => {
+                this.subscriptions.add(doc.data().courtNumber);
+            });
+            
+            this.renderUserCourts(courtsSnapshot);
+            
+        } catch (error) {
+            console.error('Error al cargar canchas:', error);
+            this.elements.userCourtsList.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <p>Error al cargar las canchas</p>
+                    <button class="btn-primary" onclick="location.reload()">Reintentar</button>
+                </div>
+            `;
+        }
+    }
+
+    renderUserCourts(courtsSnapshot) {
+        const container = this.elements.userCourtsList;
         
-        this.qrScanner = new Html5Qrcode("qr-reader");
+        if (courtsSnapshot.empty) {
+            container.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-inbox"></i>
+                    <p>Aún no hay canchas disponibles</p>
+                    <p class="hint">Contacta al administrador</p>
+                </div>
+            `;
+            return;
+        }
         
-        const config = {
-            fps: 10,
-            qrbox: { width: 250, height: 250 }
-        };
+        container.innerHTML = '';
         
-        this.qrScanner.start(
-            { facingMode: "environment" },
-            config,
-            (decodedText) => {
-                this.handleQrScan(decodedText);
-                this.qrScanner.stop();
-                this.elements.qrScannerModal.classList.remove('active');
-            },
-            (errorMessage) => {
-                // Silenciar errores de escaneo continuo
+        courtsSnapshot.forEach(doc => {
+            const court = doc.data();
+            const isSubscribed = this.subscriptions.has(court.number);
+            const isActive = court.active !== false;
+            
+            const card = document.createElement('div');
+            card.className = `user-court-card ${isSubscribed ? 'subscribed' : ''} ${!isActive ? 'disabled' : ''}`;
+            card.dataset.courtNumber = court.number;
+            
+            if (isActive) {
+                card.addEventListener('click', () => this.toggleCourtSubscription(court.number));
             }
-        ).catch(err => {
-            console.error('Error al iniciar scanner:', err);
-            this.showToast('Error al acceder a la cámara', 'error');
-            this.elements.qrScannerModal.classList.remove('active');
+            
+            card.innerHTML = `
+                <div class="user-court-info">
+                    <div class="user-court-number">${court.number}</div>
+                    <div class="user-court-details">
+                        <h4>Cancha ${court.number}</h4>
+                        <p>${isActive ? (isSubscribed ? 'Notificaciones activadas' : 'Toca para activar notificaciones') : 'Cancha no disponible'}</p>
+                    </div>
+                </div>
+                <label class="user-court-toggle">
+                    <input type="checkbox" ${isSubscribed ? 'checked' : ''} ${!isActive ? 'disabled' : ''}>
+                    <span class="toggle-slider"></span>
+                </label>
+            `;
+            
+            // Prevenir que el click en el toggle propague al card
+            const toggle = card.querySelector('input');
+            toggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+            });
+            
+            container.appendChild(card);
         });
     }
 
-    async handleQrScan(code) {
+    async toggleCourtSubscription(courtNumber) {
         try {
-            // Validar código (formato: AJUPAM-CANCHA-XX)
-            const match = code.match(/AJUPAM-CANCHA-(\d+)/);
-            if (!match) {
-                this.showToast('Código QR inválido', 'error');
-                return;
-            }
+            const isSubscribed = this.subscriptions.has(courtNumber);
             
-            const courtNumber = parseInt(match[1]);
-            await this.subscribeToCoart(courtNumber);
+            if (isSubscribed) {
+                await this.unsubscribeFromCourt(courtNumber);
+            } else {
+                await this.subscribeToCourt(courtNumber);
+            }
             
         } catch (error) {
-            console.error('Error al procesar QR:', error);
-            this.showToast('Error al procesar el código', 'error');
+            console.error('Error al cambiar suscripción:', error);
+            this.showToast('Error al actualizar suscripción', 'error');
         }
     }
 
-    async subscribeManual() {
-        const code = this.elements.manualCode.value.trim().toUpperCase();
-        
-        if (!code) {
-            this.showToast('Ingresá un código', 'error');
-            return;
-        }
-        
-        // Intentar extraer número de cancha
-        const match = code.match(/(\d+)/);
-        if (!match) {
-            this.showToast('Código inválido', 'error');
-            return;
-        }
-        
-        const courtNumber = parseInt(match[1]);
-        await this.subscribeToCoart(courtNumber);
-        this.elements.manualCode.value = '';
-    }
-
-    async subscribeToCoart(courtNumber) {
+    async subscribeToCourt(courtNumber) {
         try {
-            // Verificar si la cancha existe
-            const courtDoc = await db.collection(COLLECTIONS.COURTS).doc(`court-${courtNumber}`).get();
-            
-            if (!courtDoc.exists) {
-                this.showToast(`La cancha ${courtNumber} no existe`, 'error');
-                return;
-            }
-            
-            // Verificar si ya está suscripto
-            if (this.subscriptions.has(courtNumber)) {
-                this.showToast(`Ya estás suscripto a la cancha ${courtNumber}`, 'info');
-                return;
-            }
-            
-            // Crear ID único para el dispositivo
             const deviceId = this.getDeviceId();
             const fcmToken = localStorage.getItem('fcm_token');
             
-            // Guardar suscripción en Firestore
             await db.collection(COLLECTIONS.SUBSCRIPTIONS).add({
                 courtNumber,
                 deviceId,
@@ -280,13 +269,9 @@ class AjupamPager {
                 subscribedAt: firebase.firestore.FieldValue.serverTimestamp()
             });
             
-            // Actualizar localmente
-            this.subscriptions.set(courtNumber, {
-                courtNumber,
-                subscribedAt: new Date()
-            });
+            this.subscriptions.add(courtNumber);
+            await this.loadUserCourts();
             
-            this.renderSubscriptions();
             this.showToast(`¡Suscripto a la cancha ${courtNumber}!`, 'success');
             
         } catch (error) {
@@ -299,7 +284,6 @@ class AjupamPager {
         try {
             const deviceId = this.getDeviceId();
             
-            // Eliminar de Firestore
             const querySnapshot = await db.collection(COLLECTIONS.SUBSCRIPTIONS)
                 .where('courtNumber', '==', courtNumber)
                 .where('deviceId', '==', deviceId)
@@ -309,9 +293,8 @@ class AjupamPager {
             querySnapshot.forEach(doc => batch.delete(doc.ref));
             await batch.commit();
             
-            // Actualizar localmente
             this.subscriptions.delete(courtNumber);
-            this.renderSubscriptions();
+            await this.loadUserCourts();
             
             this.showToast(`Desuscripto de la cancha ${courtNumber}`, 'success');
             
@@ -319,63 +302,6 @@ class AjupamPager {
             console.error('Error al desuscribirse:', error);
             this.showToast('Error al desuscribirse', 'error');
         }
-    }
-
-    async loadUserSubscriptions() {
-        try {
-            const deviceId = this.getDeviceId();
-            
-            const querySnapshot = await db.collection(COLLECTIONS.SUBSCRIPTIONS)
-                .where('deviceId', '==', deviceId)
-                .get();
-            
-            this.subscriptions.clear();
-            querySnapshot.forEach(doc => {
-                const data = doc.data();
-                this.subscriptions.set(data.courtNumber, {
-                    courtNumber: data.courtNumber,
-                    subscribedAt: data.subscribedAt?.toDate()
-                });
-            });
-            
-            this.renderSubscriptions();
-            
-        } catch (error) {
-            console.error('Error al cargar suscripciones:', error);
-        }
-    }
-
-    renderSubscriptions() {
-        const container = this.elements.subscriptionsList;
-        
-        if (this.subscriptions.size === 0) {
-            container.innerHTML = `
-                <div class="empty-state">
-                    <i class="fas fa-inbox"></i>
-                    <p>Aún no estás suscripto a ninguna cancha</p>
-                    <p class="hint">Escaneá un código QR para comenzar</p>
-                </div>
-            `;
-            return;
-        }
-        
-        const subscriptionsArray = Array.from(this.subscriptions.values())
-            .sort((a, b) => a.courtNumber - b.courtNumber);
-        
-        container.innerHTML = subscriptionsArray.map(sub => `
-            <div class="subscription-card">
-                <div class="subscription-info">
-                    <div class="subscription-icon">${sub.courtNumber}</div>
-                    <div class="subscription-details">
-                        <h4>Cancha ${sub.courtNumber}</h4>
-                        <p>Te notificaremos cuando esté disponible</p>
-                    </div>
-                </div>
-                <button class="unsubscribe-btn" onclick="app.unsubscribeFromCourt(${sub.courtNumber})">
-                    <i class="fas fa-bell-slash"></i>
-                </button>
-            </div>
-        `).join('');
     }
 
     // ==================== ADMIN ====================
@@ -433,8 +359,8 @@ class AjupamPager {
     async loadAdminDashboard() {
         try {
             await this.loadCourtConfig();
-            await this.generateQrCodes();
-            await this.loadCourts();
+            await this.generateMainQr();
+            await this.loadAdminCourts();
             await this.loadStats();
         } catch (error) {
             console.error('Error al cargar dashboard:', error);
@@ -470,13 +396,11 @@ class AjupamPager {
         try {
             const count = parseInt(this.elements.courtCount.value);
             
-            // Guardar configuración
             await db.collection(COLLECTIONS.CONFIG).doc('courts').set({
                 count,
                 updatedAt: firebase.firestore.FieldValue.serverTimestamp()
             });
             
-            // Crear/actualizar documentos de canchas
             const batch = db.batch();
             for (let i = 1; i <= count; i++) {
                 const courtRef = db.collection(COLLECTIONS.COURTS).doc(`court-${i}`);
@@ -488,8 +412,7 @@ class AjupamPager {
             }
             await batch.commit();
             
-            await this.generateQrCodes();
-            await this.loadCourts();
+            await this.loadAdminCourts();
             
             this.showToast('Configuración guardada', 'success');
             
@@ -499,8 +422,7 @@ class AjupamPager {
         }
     }
 
-    async generateQrCodes() {
-        // Verificar que la librería QRCode esté cargada
+    async generateMainQr() {
         if (typeof QRCode === 'undefined') {
             console.warn('QRCode library not loaded yet, waiting...');
             await new Promise(resolve => {
@@ -510,74 +432,50 @@ class AjupamPager {
                         resolve();
                     }
                 }, 100);
-                // Timeout después de 5 segundos
                 setTimeout(() => {
                     clearInterval(checkQRCode);
-                    console.error('QRCode library failed to load');
                     resolve();
                 }, 5000);
             });
         }
         
         if (typeof QRCode === 'undefined') {
-            this.showToast('Error: No se pudo cargar la librería de códigos QR', 'error');
+            this.elements.qrCodeSingle.innerHTML = '<p style="color: red;">Error: No se pudo cargar la librería QR</p>';
             return;
         }
         
-        const count = parseInt(this.elements.courtCount.value);
-        const container = this.elements.qrCodesGrid;
+        const container = this.elements.qrCodeSingle;
         container.innerHTML = '';
         
-        for (let i = 1; i <= count; i++) {
-            const code = `AJUPAM-CANCHA-${i}`;
-            const card = document.createElement('div');
-            card.className = 'qr-card';
+        const canvas = document.createElement('canvas');
+        
+        try {
+            await QRCode.toCanvas(canvas, 'https://ajupam.ar/pager/', {
+                width: 280,
+                margin: 2,
+                color: {
+                    dark: '#0066CC',
+                    light: '#FFFFFF'
+                }
+            });
             
-            const canvas = document.createElement('canvas');
-            
-            try {
-                await QRCode.toCanvas(canvas, code, {
-                    width: 200,
-                    margin: 2,
-                    color: {
-                        dark: '#0066CC',
-                        light: '#FFFFFF'
-                    }
-                });
-            } catch (error) {
-                console.error(`Error generando QR para cancha ${i}:`, error);
-                continue;
-            }
-            
-            card.innerHTML = `
-                <h4>CANCHA ${i}</h4>
-                <div class="qr-code-img"></div>
-                <div class="qr-card-actions">
-                    <button class="btn-secondary small" onclick="app.downloadQr(${i})">
-                        <i class="fas fa-download"></i>
-                    </button>
-                    <button class="btn-secondary small" onclick="app.printQr(${i})">
-                        <i class="fas fa-print"></i>
-                    </button>
-                </div>
-            `;
-            
-            card.querySelector('.qr-code-img').appendChild(canvas);
-            container.appendChild(card);
+            container.appendChild(canvas);
+        } catch (error) {
+            console.error('Error generando QR:', error);
+            container.innerHTML = '<p style="color: red;">Error al generar código QR</p>';
         }
     }
 
-    async downloadQr(courtNumber) {
+    async downloadMainQr() {
         if (typeof QRCode === 'undefined') {
             this.showToast('Error: Librería de códigos QR no disponible', 'error');
             return;
         }
         
-        const code = `AJUPAM-CANCHA-${courtNumber}`;
         const canvas = document.createElement('canvas');
         
         try {
-            await QRCode.toCanvas(canvas, code, {
+            await QRCode.toCanvas(canvas, 'https://ajupam.ar/pager/', {
                 width: 500,
                 margin: 4,
                 color: {
@@ -587,32 +485,30 @@ class AjupamPager {
             });
             
             const link = document.createElement('a');
-            link.download = `ajupam-cancha-${courtNumber}.png`;
+            link.download = 'ajupam-pager-qr.png';
             link.href = canvas.toDataURL();
             link.click();
+            
+            this.showToast('Código QR descargado', 'success');
         } catch (error) {
             console.error('Error al descargar QR:', error);
             this.showToast('Error al generar código QR', 'error');
         }
     }
 
-    async downloadAllQr() {
-        const count = parseInt(this.elements.courtCount.value);
-        for (let i = 1; i <= count; i++) {
-            await this.downloadQr(i);
-            await new Promise(resolve => setTimeout(resolve, 500));
-        }
-        this.showToast(`${count} códigos QR descargados`, 'success');
-    }
-
-    printQr(courtNumber) {
-        const qrCard = this.elements.qrCodesGrid.children[courtNumber - 1];
+    printMainQr() {
         const printWindow = window.open('', '', 'width=600,height=600');
+        const qrCanvas = this.elements.qrCodeSingle.querySelector('canvas');
+        
+        if (!qrCanvas) {
+            this.showToast('Error: QR no disponible', 'error');
+            return;
+        }
         
         printWindow.document.write(`
             <html>
                 <head>
-                    <title>AJUPAM - Cancha ${courtNumber}</title>
+                    <title>AJUPAM Pager - Código QR</title>
                     <style>
                         body {
                             display: flex;
@@ -635,13 +531,20 @@ class AjupamPager {
                         p {
                             font-size: 24px;
                             margin-top: 20px;
+                            color: #333;
+                        }
+                        .url {
+                            font-size: 18px;
+                            color: #666;
+                            margin-top: 10px;
                         }
                     </style>
                 </head>
                 <body>
-                    <h1>CANCHA ${courtNumber}</h1>
-                    ${qrCard.querySelector('.qr-code-img').innerHTML}
+                    <h1>AJUPAM PAGER</h1>
+                    ${qrCanvas.outerHTML}
                     <p>Escaneá para recibir notificaciones</p>
+                    <p class="url">ajupam.ar/pager</p>
                 </body>
             </html>
         `);
@@ -654,35 +557,59 @@ class AjupamPager {
         }, 250);
     }
 
-    async loadCourts() {
+    async loadAdminCourts() {
         const count = parseInt(this.elements.courtCount.value);
         const container = this.elements.courtsGrid;
         container.innerHTML = '';
         
         for (let i = 1; i <= count; i++) {
-            // Obtener número de suscriptores
+            const courtDoc = await db.collection(COLLECTIONS.COURTS).doc(`court-${i}`).get();
+            const court = courtDoc.data() || { number: i, active: true };
+            
             const subscribersSnapshot = await db.collection(COLLECTIONS.SUBSCRIPTIONS)
                 .where('courtNumber', '==', i)
                 .get();
             
-            const subscribersCount = subscribersSnapshot.size;
-            
             const card = document.createElement('div');
-            card.className = 'court-card';
+            card.className = `court-card admin-court-card ${!court.active ? 'disabled-court' : ''}`;
             card.innerHTML = `
+                <span class="admin-court-status ${court.active ? 'enabled' : 'disabled'}">
+                    ${court.active ? 'Activa' : 'Deshabilitada'}
+                </span>
                 <div class="court-number">${i}</div>
                 <div class="court-info">
                     <i class="fas fa-users"></i>
-                    <span>${subscribersCount} suscriptor${subscribersCount !== 1 ? 'es' : ''}</span>
+                    <span>${subscribersSnapshot.size} suscriptor${subscribersSnapshot.size !== 1 ? 'es' : ''}</span>
                 </div>
-                <button class="btn-primary court-notify-btn" onclick="app.openNotificationModal(${i})">
-                    <i class="fas fa-bell"></i>
-                    <span>NOTIFICAR DISPONIBLE</span>
-                </button>
+                <div class="admin-court-actions">
+                    <button class="btn-primary court-notify-btn" ${!court.active ? 'disabled' : ''} 
+                            onclick="app.openNotificationModal(${i})">
+                        <i class="fas fa-bell"></i>
+                        <span>NOTIFICAR DISPONIBLE</span>
+                    </button>
+                    <button class="btn-secondary" onclick="app.toggleCourtStatus(${i}, ${!court.active})">
+                        <i class="fas fa-${court.active ? 'ban' : 'check'}"></i>
+                        <span>${court.active ? 'Deshabilitar' : 'Habilitar'}</span>
+                    </button>
+                </div>
             `;
             
             container.appendChild(card);
-            this.courts.set(i, { number: i, subscribers: subscribersCount });
+        }
+    }
+
+    async toggleCourtStatus(courtNumber, enable) {
+        try {
+            await db.collection(COLLECTIONS.COURTS).doc(`court-${courtNumber}`).update({
+                active: enable
+            });
+            
+            await this.loadAdminCourts();
+            
+            this.showToast(`Cancha ${courtNumber} ${enable ? 'habilitada' : 'deshabilitada'}`, 'success');
+        } catch (error) {
+            console.error('Error al cambiar estado:', error);
+            this.showToast('Error al cambiar estado de la cancha', 'error');
         }
     }
 
@@ -698,7 +625,6 @@ class AjupamPager {
             const courtNumber = this.selectedCourt;
             const message = this.elements.notificationMessage.value.trim();
             
-            // Obtener todos los suscriptores de esta cancha
             const subscribersSnapshot = await db.collection(COLLECTIONS.SUBSCRIPTIONS)
                 .where('courtNumber', '==', courtNumber)
                 .get();
@@ -708,7 +634,6 @@ class AjupamPager {
                 return;
             }
             
-            // Guardar notificación en Firestore (Cloud Function la enviará)
             await db.collection(COLLECTIONS.NOTIFICATIONS).add({
                 courtNumber,
                 message: message || `¡La cancha ${courtNumber} está libre!`,
@@ -717,8 +642,6 @@ class AjupamPager {
                 sentBy: this.currentUser.email
             });
             
-            // En producción, una Cloud Function procesaría esto y enviaría via FCM
-            // Por ahora simulamos el envío
             this.showToast(`Notificación enviada a ${subscribersSnapshot.size} usuario${subscribersSnapshot.size !== 1 ? 's' : ''}`, 'success');
             
             this.elements.notificationModal.classList.remove('active');
@@ -732,13 +655,11 @@ class AjupamPager {
 
     async loadStats() {
         try {
-            // Total de suscriptores únicos
             const subscribersSnapshot = await db.collection(COLLECTIONS.SUBSCRIPTIONS).get();
             const uniqueDevices = new Set();
             subscribersSnapshot.forEach(doc => uniqueDevices.add(doc.data().deviceId));
             this.elements.totalSubscribers.textContent = uniqueDevices.size;
             
-            // Notificaciones hoy
             const today = new Date();
             today.setHours(0, 0, 0, 0);
             const notificationsSnapshot = await db.collection(COLLECTIONS.NOTIFICATIONS)
@@ -746,7 +667,6 @@ class AjupamPager {
                 .get();
             this.elements.notificationsToday.textContent = notificationsSnapshot.size;
             
-            // Canchas activas
             const courtsSnapshot = await db.collection(COLLECTIONS.COURTS)
                 .where('active', '==', true)
                 .get();
@@ -804,7 +724,6 @@ class AjupamPager {
     }
 }
 
-// Inicializar aplicación cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', () => {
     window.app = new AjupamPager();
 });

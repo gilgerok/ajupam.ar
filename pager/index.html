@@ -61,33 +61,16 @@
                         <i class="fas fa-bell"></i>
                     </div>
                     <h2 class="hero-title">¡RECIBÍ NOTIFICACIONES!</h2>
-                    <p class="hero-subtitle">Escaneá el QR de tu cancha favorita y te avisaremos cuando esté libre</p>
+                    <p class="hero-subtitle">Activá las notificaciones de las canchas que te interesen</p>
                 </div>
             </section>
 
-            <section class="scan-section">
-                <div class="scan-container">
-                    <button id="scan-qr-btn" class="btn-primary large">
-                        <i class="fas fa-qrcode"></i>
-                        <span>ESCANEAR QR</span>
-                    </button>
-                    <p class="scan-hint">O ingresá el código manualmente</p>
-                    <div class="manual-input">
-                        <input type="text" id="manual-code" placeholder="Código de cancha" maxlength="10">
-                        <button id="manual-submit" class="btn-secondary">
-                            <i class="fas fa-check"></i>
-                        </button>
-                    </div>
-                </div>
-            </section>
-
-            <section class="subscriptions-section">
-                <h3 class="section-title">MIS SUSCRIPCIONES</h3>
-                <div id="subscriptions-list" class="subscriptions-list">
-                    <div class="empty-state">
-                        <i class="fas fa-inbox"></i>
-                        <p>Aún no estás suscripto a ninguna cancha</p>
-                        <p class="hint">Escaneá un código QR para comenzar</p>
+            <section class="courts-list-section">
+                <h3 class="section-title">CANCHAS DISPONIBLES</h3>
+                <div id="user-courts-list" class="user-courts-list">
+                    <div class="loading-courts">
+                        <div class="loading-spinner"></div>
+                        <p>Cargando canchas...</p>
                     </div>
                 </div>
             </section>
@@ -152,20 +135,31 @@
                 <!-- QR Codes -->
                 <div class="qr-section">
                     <div class="qr-header">
-                        <h3 class="section-title">CÓDIGOS QR</h3>
-                        <button id="download-all-qr" class="btn-secondary">
-                            <i class="fas fa-download"></i>
-                            <span>Descargar todos</span>
-                        </button>
+                        <h3 class="section-title">CÓDIGO QR ÚNICO</h3>
+                        <p class="qr-description">Imprimí este código QR para que los usuarios accedan al sistema de notificaciones</p>
                     </div>
-                    <div id="qr-codes-grid" class="qr-grid">
-                        <!-- QR codes will be generated here -->
+                    <div class="qr-single-container">
+                        <div class="qr-card-single">
+                            <h4>AJUPAM PAGER</h4>
+                            <div id="qr-code-single" class="qr-code-img-single"></div>
+                            <p class="qr-url">https://ajupam.ar/pager/</p>
+                            <div class="qr-card-actions">
+                                <button id="download-qr" class="btn-primary">
+                                    <i class="fas fa-download"></i>
+                                    <span>Descargar</span>
+                                </button>
+                                <button id="print-qr" class="btn-secondary">
+                                    <i class="fas fa-print"></i>
+                                    <span>Imprimir</span>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Courts Management -->
                 <div class="courts-section">
-                    <h3 class="section-title">NOTIFICAR CANCHA DISPONIBLE</h3>
+                    <h3 class="section-title">GESTIÓN DE CANCHAS</h3>
                     <div id="courts-grid" class="courts-grid">
                         <!-- Courts will be generated here -->
                     </div>
@@ -203,19 +197,6 @@
     </div>
 
     <!-- QR Scanner Modal -->
-    <div id="qr-scanner-modal" class="modal">
-        <div class="modal-content scanner-modal">
-            <div class="modal-header">
-                <h3>ESCANEAR CÓDIGO QR</h3>
-                <button class="close-modal">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div id="qr-reader"></div>
-            <p class="scanner-hint">Apuntá la cámara al código QR de la cancha</p>
-        </div>
-    </div>
-
     <!-- Notification Message Modal -->
     <div id="notification-modal" class="modal">
         <div class="modal-content notification-modal">
@@ -250,8 +231,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
     
-    <!-- QR Code Libraries -->
-    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+    <!-- QR Code Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
     
